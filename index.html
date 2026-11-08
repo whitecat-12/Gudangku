@@ -14,6 +14,7 @@ canvas#c{position:fixed;inset:0;width:100%;height:100%;touch-action:none;display
 .logo{width:38px;height:38px;border-radius:10px;background:var(--ac);display:grid;place-items:center;font-size:20px;color:#04261f}.brand div:nth-child(2){flex:1}
 button,input,select{font:inherit;color:inherit}
 button{cursor:pointer;border:0;background:var(--in);border-radius:10px;padding:8px 12px}
+.mkc{padding:10px;border:1px solid var(--bd);border-radius:10px;margin-bottom:8px;background:var(--in)}.mkc .ab{margin:8px 0 0}.mkc input{margin:0}#mk-t .on{background:var(--ac);color:#04261f;font-weight:600}.tg{font-size:11px;padding:2px 8px;border-radius:99px;background:var(--in)}
 #nav{display:flex;gap:4px;padding:0 12px 8px}#nav button{flex:1;padding:8px 4px;font-size:12px}#nav .on{background:var(--ac);color:#04261f;font-weight:600}
 .pn{overflow:auto;padding:4px 12px 12px}
 label{display:block;font-size:12px;color:var(--mut);margin-bottom:8px}
@@ -89,7 +90,7 @@ body.fps #nv,body.fps #stat,body.fps #bar button:not(#fp){display:none!important
 <canvas id="c"></canvas>
 <aside id="side" class="glass">
  <div class="brand"><div class="logo">▤</div><div><b>Sistem Gudang</b><small>TETA SAINS</small></div><button id="tg" title="Tutup">✕</button></div>
- <nav id="nav"><button data-p="in" class="on">Penerimaan</button><button data-p="st">Stok Barang</button><button data-p="pg">Pengaturan</button></nav>
+ <nav id="nav"><button data-p="in" class="on">Penerimaan</button><button data-p="st">Stok Barang</button><button data-p="mk">Pasar</button><button data-p="pg">Pengaturan</button></nav>
  <section class="pn" id="p-in"><form id="f">
   <label>Nama barang<input id="nm" required maxlength="24" placeholder="mis. Laptop Asus"></label>
   <label>Jenis<input id="jn" required maxlength="16" list="jl" placeholder="mis. Elektronik"></label>
@@ -101,6 +102,7 @@ body.fps #nv,body.fps #stat,body.fps #bar button:not(#fp){display:none!important
   <div id="man" class="g3" hidden><label>Rak<select id="rk"></select></label><label>Tingkat<select id="lv"></select></label><label>Sekat<select id="by"></select></label></div>
   <button class="pr">Tambah ke rak</button></form></section>
  <section class="pn" id="p-st" hidden><input id="q" placeholder="Cari nama, SKU, deskripsi, atau jenis..."><div id="ls"></div></section>
+ <section class="pn" id="p-mk" hidden><div class="ab" id="mk-t" style="margin-bottom:10px"><button data-m="k">Katalog</button><button data-m="j">Jual</button><button data-m="o">Pesanan</button></div><div id="mk-b"></div></section>
  <section class="pn" id="p-pg" hidden>
   <div id="tm" style="margin-bottom:12px"></div>
   <p class="mut">Gudang baru otomatis berjejer di sebelah kanan gudang sebelumnya. Pengaturan di bawah berlaku untuk gudang yang aktif.</p>
@@ -336,7 +338,7 @@ $('#md').onchange=()=>{$('#man').hidden=$('#md').value!='m';manHl()};
 $('#f').onsubmit=e=>{e.preventDefault();const u0=uid;addItem($('#nm').value.trim(),$('#jn').value.trim(),+$('#bt').value,clamp(+$('#qt').value||1,1,50),$('#md').value=='m'?manLoc():null,$('#sk').value.trim().toUpperCase(),$('#ds').value.trim());$('#nm').value='';$('#sk').value='';$('#ds').value='';if(uid>u0){toast('Barang masuk ke '+code(items[items.length-1]));select(uid)}};
 $('#ls').onclick=e=>{const d=e.target.closest('[data-del]');if(d)return remove(+d.dataset.del);const r=e.target.closest('.row');if(r)select(+r.dataset.id)};
 $('#q').oninput=renderList;$('#dx').onclick=()=>remove(selId);
-$('#nav').onclick=e=>{const p=e.target.dataset.p;if(!p)return;[...$('#nav').children].forEach(b=>b.classList.toggle('on',b==e.target));['in','st','pg'].forEach(k=>$('#p-'+k).hidden=k!=p);cellHl.visible=false;if(p=='in')manHl()};
+$('#nav').onclick=e=>{const p=e.target.dataset.p;if(!p)return;[...$('#nav').children].forEach(b=>b.classList.toggle('on',b==e.target));['in','st','mk','pg'].forEach(k=>$('#p-'+k).hidden=k!=p);cellHl.visible=false;if(p=='in')manHl();if(p=='mk'&&CL.mk)CL.mk()};
 $('#tg').onclick=()=>$('#side').classList.remove('open');$('#fab').onclick=()=>{$('#side').classList.add('open');if(fp.on){fp.k={};fp.jx=fp.jy=0;fp.mv=null;fp.look=null;$('#fpj').classList.remove('show');if(document.pointerLockElement)document.exitPointerLock()}};$('#stat').onclick=()=>$('#stat').classList.toggle('ex');
 function autoB(){const a=cfg.aw,d=cfg.ad;cfg.aw=cfg.ad=0;const b=bnd();cfg.aw=a;cfg.ad=d;return b}
 function areaUI(){const b=bnd(),m=autoB(),f=v=>+v.toFixed(1);$('#aw').value=f(b.x1-b.x0);$('#ah').value=f(b.z1-b.z0);
@@ -610,7 +612,7 @@ if(/^ISI/.test(FIREBASE_CONFIG.apiKey))return;
 CL.on=true;const au=$('#auth'),err=m=>$('#aer').textContent=m||'',view=v=>{['in','rg','st'].forEach(k=>$('#a-'+k).hidden=k!=v);if(v)err('')};
 au.classList.add('show');view('');err('Memuat…');
 try{
-let A,Au,F,le;for(const v of['13.2.0','10.12.2']){const V='https://www.gstatic.com/firebasejs/'+v+'/';try{[A,Au,F]=await Promise.all([import(V+'firebase-app.js'),import(V+'firebase-auth.js'),import(V+'firebase-firestore.js')]);le=null;break}catch(e){le=e}}
+let A,Au,F,Fn,le;for(const v of['13.2.0','10.12.2']){const V='https://www.gstatic.com/firebasejs/'+v+'/';try{[A,Au,F,Fn]=await Promise.all([import(V+'firebase-app.js'),import(V+'firebase-auth.js'),import(V+'firebase-firestore.js'),import(V+'firebase-functions.js')]);le=null;break}catch(e){le=e}}
 if(le)throw new Error('Tidak bisa memuat Firebase dari gstatic.com. Buka lewat hosting sendiri (bukan pratinjau/file lokal) dan cek koneksi.');
 const app=A.initializeApp(FIREBASE_CONFIG),auth=Au.getAuth(app);let db;
 try{db=F.initializeFirestore(app,{localCache:F.persistentLocalCache({tabManager:F.persistentMultipleTabManager()})})}catch(e){db=F.getFirestore(app)}
@@ -680,6 +682,55 @@ $('#tm').onclick=e=>{const b=e.target.closest('[data-t]');if(!b)return;const t=b
  else if(t=='rm'){if(!ok('rm'+b.dataset.u,'Hapus karyawan ini dari gudang?'))return;updateDoc(doc(db,WC,WH[cur].id),{memberUids:arrayRemove(b.dataset.u),['members.'+b.dataset.u]:deleteField(),updatedAt:serverTimestamp()}).catch(x=>toast(msg(x)))}};
 $('#dw').onclick=()=>{const w=WH[cur];if(!w.id)return;const o=w.role=='owner';if(!ok('dw'+w.id,o?'Hapus '+w.n+' beserta isinya untuk semua anggota?':'Keluar dari '+w.n+'?'))return;
  (o?deleteDoc(doc(db,WC,w.id)):updateDoc(doc(db,WC,w.id),{memberUids:arrayRemove(me.uid),['members.'+me.uid]:deleteField(),updatedAt:serverTimestamp()})).catch(x=>toast(msg(x)))};
+
+/* ---------- PASAR: jual-beli antar perusahaan (bayar via Midtrans) ---------- */
+const MIDTRANS_CLIENT_KEY='ISI_CLIENT_KEY_SANDBOX',MIDTRANS_PROD=false,FN_REGION='asia-southeast2';
+const callCreate=Fn.httpsCallable(Fn.getFunctions(app,FN_REGION),'createOrder'),LC='gudang_listings',OC='gudang_orders';
+const MK={tab:'k',L:[],O:{},w:{},q:'',g:[]},rp=n=>'Rp'+Number(n||0).toLocaleString('id-ID'),ST={pending:'Menunggu bayar',paid:'Lunas',cancelled:'Dibatalkan'};
+let snapP=null;
+const loadSnap=()=>snapP||(snapP=new Promise((res,rej)=>{if(/^ISI/.test(MIDTRANS_CLIENT_KEY)){snapP=null;return rej({message:'Isi MIDTRANS_CLIENT_KEY di file dulu'})}
+ const sc=document.createElement('script');sc.src=(MIDTRANS_PROD?'https://app.midtrans.com':'https://app.sandbox.midtrans.com')+'/snap/snap.js';sc.setAttribute('data-client-key',MIDTRANS_CLIENT_KEY);
+ sc.onload=()=>res(window.snap);sc.onerror=()=>{snapP=null;rej({message:'Gagal memuat Midtrans'})};document.head.appendChild(sc)}));
+async function pay(token){const sn=await loadSnap();sn.pay(token,{onSuccess:()=>toast('Pembayaran berhasil, barang segera tersedia'),onPending:()=>toast('Menunggu pembayaran'),onError:()=>toast('Pembayaran gagal'),onClose:()=>{}})}
+async function buy(id,q){const w=WH[cur];if(!w.id||w.role!='owner')return toast('Pilih gudang milik Anda (pemilik) sebagai pembeli');
+ try{toast('Membuat pesanan…');const r=await callCreate({listingId:id,qty:q,buyerWhId:w.id});await pay(r.data.token)}catch(e){toast(msg(e))}}
+async function sell(){const w=WH[cur];if(!w.id||w.role!='owner')return toast('Hanya pemilik gudang yang bisa menjual');
+ const g=MK.g[+$('#mk-s').value],q=Math.floor(+$('#mk-q').value),pr=Math.floor(+$('#mk-p').value);
+ if(!g)return toast('Pilih barang dulu');if(!(q>=1&&q<=g.n))return toast('Jumlah 1–'+g.n);if(!(pr>=1000))return toast('Harga minimal Rp1.000 per kotak');
+ try{await setDoc(doc(collection(db,LC)),{whId:w.id,whName:w.n,ownerUid:me.uid,nama:g.nama,jenis:g.jenis,sku:g.sku,berat:g.berat,price:pr,qty:q,status:'active',createdAt:serverTimestamp(),updatedAt:serverTimestamp()});toast('Barang dipasang di katalog')}catch(e){toast(msg(e))}}
+async function recv(id){const o=MK.O[id];if(!o||o.received)return;const i=WH.findIndex(w=>w.id==o.buyerWhId);if(i<0)return toast('Gudang tujuan tidak ditemukan');
+ if(i!=cur)activate(i);const n=o.delivered||0;
+ if(n){if(!TR())return toast('Belum ada rak di gudang tujuan');if(TR()*NL*NB*cfg.cap-items.length<n)return toast('Gudang penuh, tambah rak/kapasitas dulu');addItem(o.nama,o.jenis,o.berat,n,null,o.sku,('Dari '+o.sellerName).slice(0,140))}
+ try{await updateDoc(doc(db,OC,id),{received:true,receivedAt:serverTimestamp()});toast(n?n+' kotak masuk ke '+WH[cur].n:'Stok penjual habis, hubungi penjual untuk refund')}catch(e){toast(msg(e))}}
+function mkList(){const l=$('#mk-l');if(!l)return;const q=MK.q.toLowerCase(),a=MK.L.filter(x=>x.ownerUid!=me.uid&&x.qty>0&&(x.nama+' '+x.sku+' '+x.jenis+' '+x.whName).toLowerCase().includes(q));
+ l.innerHTML=a.length?a.map(x=>`<div class="mkc"><b>${esc(x.nama)}</b> <span class="tg">${esc(x.jenis)}</span><br><span class="mut">${x.sku?'SKU '+esc(x.sku)+' · ':''}${x.berat} kg/kotak · Penjual: ${esc(x.whName)} · stok ${x.qty}</span>
+ <div class="ab"><input type="number" min="1" max="${x.qty}" value="1" data-q="${x.id}" style="flex:1"><button class="pr" data-b="${x.id}" style="flex:2">Beli · ${rp(x.price)}/kotak</button></div></div>`).join(''):'<p class="mut">Belum ada barang dari perusahaan lain.</p>'}
+function mk(){const b=$('#mk-b');if(!b||!me)return;const f=document.activeElement;if(f&&b.contains(f)&&/INPUT|SELECT/.test(f.tagName))return;
+ [...$('#mk-t').children].forEach(x=>x.classList.toggle('on',x.dataset.m==MK.tab));const w=WH[cur],o=w&&w.id&&w.role=='owner';
+ if(MK.tab=='k'){b.innerHTML=`<p class="mut">Membeli untuk: <b>${esc(w&&w.id?w.n:'-')}</b>${o?'':' (hanya pemilik yang bisa membeli — pilih gudang milik Anda)'}</p><input id="mk-q" placeholder="Cari barang, SKU, perusahaan..." value="${esc(MK.q)}"><div id="mk-l" style="margin-top:10px"></div>`;mkList()}
+ else if(MK.tab=='j'){if(!o){b.innerHTML='<p class="mut">Pilih gudang milik Anda (sebagai pemilik) untuk menjual barang.</p>';return}
+  const m={};w.items.forEach(i=>{const k=i.nama+'\u0001'+(i.sku||'');(m[k]=m[k]||{nama:i.nama,jenis:i.jenis,sku:i.sku||'',berat:i.berat,n:0}).n++});MK.g=Object.values(m);
+  const mine=MK.L.filter(x=>x.whId==w.id);
+  b.innerHTML=`<p class="mut">Jual stok <b>${esc(w.n)}</b> ke perusahaan lain. Harga per kotak dalam rupiah.</p><label>Barang<select id="mk-s">${MK.g.map((g,i)=>`<option value="${i}">${esc(g.nama)}${g.sku?' ('+esc(g.sku)+')':''} · ${g.n} kotak</option>`).join('')}</select></label>
+  <div class="g2"><label>Jumlah kotak<input id="mk-q" type="number" min="1" value="1"></label><label>Harga/kotak (Rp)<input id="mk-p" type="number" min="1000" step="1000" inputmode="numeric"></label></div>
+  <button class="pr" data-j="new" style="margin-top:8px">Pasang di katalog</button><h4 style="margin:14px 0 6px">Sedang dijual</h4>`
+  +(mine.length?mine.map(x=>`<div class="sp"><span>${esc(x.nama)} · sisa ${x.qty} · ${rp(x.price)}</span><button type="button" data-j="${x.id}" style="width:auto;padding:0 12px;min-height:34px;background:var(--er);color:#fff">Tarik</button></div>`).join(''):'<p class="mut">Belum ada.</p>')}
+ else{const a=Object.values(MK.O).sort((x,y)=>(y.createdAt?y.createdAt.toMillis():0)-(x.createdAt?x.createdAt.toMillis():0));
+  b.innerHTML=`<div class="mkc"><span class="mut">Saldo hasil penjualan</span><br><b style="font-size:18px">${rp(MK.w.balance)}</b><br><span class="mut">Pencairan ke rekening dilakukan manual oleh admin platform.</span></div>`
+  +(a.length?a.map(x=>{const buyer=x.buyerUid==me.uid;return `<div class="mkc"><b>${esc(x.nama)} × ${x.qty}</b> <span class="tg">${buyer?'Beli':'Jual'}</span> <span class="tg">${ST[x.status]||x.status}</span><br><span class="mut">${rp(x.total)} · ${buyer?'dari '+esc(x.sellerName):'ke '+esc(x.buyerName)}</span>`
+   +(buyer&&x.status=='pending'&&x.snapToken?`<div class="ab"><button class="pr" data-p2="${x.id}">Bayar sekarang</button></div>`:'')
+   +(buyer&&x.status=='paid'&&!x.received?`<div class="ab"><button class="pr" data-r="${x.id}">Terima ke gudang</button></div>`:'')
+   +(x.status=='paid'&&x.received?`<br><span class="mut">Sudah diterima ${x.delivered} kotak</span>`:'')+'</div>'}).join(''):'<p class="mut">Belum ada pesanan.</p>')}}
+CL.mk=mk;
+$('#mk-t').onclick=e=>{const m=e.target.dataset.m;if(m){MK.tab=m;mk()}};
+$('#mk-b').oninput=e=>{if(e.target.id=='mk-q'&&$('#mk-l')){MK.q=e.target.value;mkList()}};
+$('#mk-b').onclick=e=>{const t=e.target.closest('button');if(!t)return;const d=t.dataset;
+ if(d.b)buy(d.b,Math.floor(+$('#mk-l input[data-q="'+d.b+'"]').value)||1);else if(d.p2)pay(MK.O[d.p2].snapToken).catch(x=>toast(msg(x)));else if(d.r)recv(d.r);
+ else if(d.j=='new')sell();else if(d.j)updateDoc(doc(db,LC,d.j),{status:'closed',updatedAt:serverTimestamp()}).then(()=>toast('Ditarik dari katalog')).catch(x=>toast(msg(x)))};
+let mkU=[];Au.onAuthStateChanged(auth,u=>{mkU.forEach(f=>f());mkU=[];MK.L=[];MK.O={};MK.w={};if(!u)return;const er=()=>{};
+ mkU.push(onSnapshot(query(collection(db,LC),where('status','==','active')),sn=>{MK.L=sn.docs.map(d=>({id:d.id,...d.data()}));mk()},er));
+ for(const k of['buyerUid','sellerUid'])mkU.push(onSnapshot(query(collection(db,OC),where(k,'==',u.uid)),sn=>{sn.docs.forEach(d=>MK.O[d.id]={id:d.id,...d.data()});mk()},er));
+ mkU.push(onSnapshot(doc(db,'gudang_wallets',u.uid),sn=>{MK.w=sn.exists()?sn.data():{};mk()},er))});
 }catch(e){err('Gagal memuat Firebase: '+(e.message||e))}
 })();
 </script></body></html>
