@@ -114,11 +114,17 @@ select option{color:var(--ink);background:#fff}
 .auth-pill{display:inline-flex;align-items:center;gap:5px;flex:none;
   background:linear-gradient(135deg,#e0ecff,#e6f7ff);color:#1d4ed8;font-size:10px;font-weight:800;letter-spacing:.03em;
   padding:5px 9px;border-radius:99px;border:1px solid #cfe0fb;white-space:nowrap;}
+.auth-tabs{display:flex;background:#e4edf9;border:1px solid var(--line);border-radius:14px;padding:4px;gap:3px;margin-bottom:2px}
+.auth-tabs button{flex:1;border:0;background:none;padding:11px 8px;border-radius:11px;font-weight:700;font-size:12.5px;
+  color:var(--mut);cursor:pointer;transition:background .16s,color .16s,box-shadow .16s;min-width:0;
+  white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.auth-tabs button.on{background:#fff;color:#1d4ed8;box-shadow:0 2px 8px -2px rgba(11,27,51,.18)}
+.auth-form{display:grid;gap:9px}
 .auth-field label{margin-bottom:4px;font-size:11px;letter-spacing:.01em}
 .auth-field input{padding:11px 13px;font-size:14px;border-radius:12px}
-.auth-actions{display:grid;gap:8px;margin-top:2px}
 .auth-actions .btn{padding:12px 14px;font-size:14px;border-radius:13px}
 .auth-actions .btn.g{padding:11px 14px}
+.auth-form .btn{padding:12px 14px;font-size:14px;border-radius:13px}
 .auth-divider{display:flex;align-items:center;gap:10px;color:#a3b6ce;font-size:10px;font-weight:700;
   letter-spacing:.12em;text-transform:uppercase;margin:1px 0;}
 .auth-divider:before,.auth-divider:after{content:"";flex:1;height:1px;background:linear-gradient(90deg,transparent,#d3e2f3,transparent)}
@@ -345,7 +351,6 @@ h3 i{color:var(--brand);font-size:13px}
   font-size:10.5px;font-weight:800;padding:4px 11px;border-radius:99px;
   box-shadow:0 8px 16px -6px rgba(245,158,11,.95);letter-spacing:.03em;text-transform:uppercase}
 
-/* ============ LANGUAGE SWITCHER ============ */
 .lang-btn{display:inline-flex;align-items:center;gap:6px;border:1px solid var(--line);background:#fff;
   color:var(--ink);border-radius:12px;padding:8px 11px;font-size:11.5px;font-weight:800;cursor:pointer;
   box-shadow:var(--sh);transition:transform .16s,box-shadow .16s,border-color .16s;flex:none;line-height:1}
@@ -362,7 +367,6 @@ h3 i{color:var(--brand);font-size:13px}
 .lang-opt b{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .lang-opt i{margin-left:auto;color:var(--mint);font-size:12px;flex:none}
 
-/* ============ NAV BOTTOM ============ */
 nav{
   position:fixed;
   left:12px;
@@ -468,7 +472,6 @@ code{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:11.5px;ba
 #view .card:nth-child(3){animation-delay:.08s}
 #view .card:nth-child(4){animation-delay:.12s}
 
-/* ============ RESPONSIVE ============ */
 @media(max-width:480px){
   header{padding:11px 14px}
   main{padding:14px 12px;gap:13px}
@@ -545,19 +548,47 @@ code{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:11.5px;ba
       </div>
       <span class="auth-pill"><i class="fa-solid fa-bolt"></i> B2B</span>
     </div>
-    <div class="auth-field">
-      <label for="em" data-i18n="email">Email</label>
-      <input id="em" type="email" autocomplete="username" placeholder="nama@perusahaan.com">
+
+    <!-- Tab switcher Login / Daftar -->
+    <div class="auth-tabs" role="tablist">
+      <button class="on" data-auth="login" data-i18n="login">Masuk</button>
+      <button data-auth="register" data-i18n="reg.tab">Daftar</button>
     </div>
-    <div class="auth-field">
-      <label for="pw" data-i18n="password">Kata sandi</label>
-      <input id="pw" type="password" autocomplete="current-password" data-i18n-ph="ph.pass" placeholder="Minimal 6 karakter">
-    </div>
-    <div class="err" id="err"></div>
-    <div class="auth-actions">
+
+    <!-- ===== FORM LOGIN ===== -->
+    <div id="form-login" class="auth-form">
+      <div class="auth-field">
+        <label for="em" data-i18n="email">Email</label>
+        <input id="em" type="email" autocomplete="username" placeholder="nama@perusahaan.com">
+      </div>
+      <div class="auth-field">
+        <label for="pw" data-i18n="password">Kata sandi</label>
+        <input id="pw" type="password" autocomplete="current-password" data-i18n-ph="ph.pass" placeholder="Minimal 6 karakter">
+      </div>
+      <div class="err" id="err"></div>
       <button class="btn" id="go"><i class="fa-solid fa-right-to-bracket"></i><span data-i18n="login">Masuk</span></button>
-      <div class="auth-divider" data-i18n="or">atau</div>
-      <button class="btn g" id="reg"><i class="fa-solid fa-user-plus"></i><span data-i18n="register">Daftar akun baru</span></button>
+    </div>
+
+    <!-- ===== FORM DAFTAR ===== -->
+    <div id="form-register" class="auth-form hide">
+      <div class="auth-field">
+        <label for="rname" data-i18n="reg.name">Nama / Perusahaan</label>
+        <input id="rname" type="text" autocomplete="organization" data-i18n-ph="reg.name.ph" placeholder="Nama Anda atau PT">
+      </div>
+      <div class="auth-field">
+        <label for="rem" data-i18n="email">Email</label>
+        <input id="rem" type="email" autocomplete="username" placeholder="nama@perusahaan.com">
+      </div>
+      <div class="auth-field">
+        <label for="rpw" data-i18n="password">Kata sandi</label>
+        <input id="rpw" type="password" autocomplete="new-password" data-i18n-ph="ph.pass" placeholder="Minimal 6 karakter">
+      </div>
+      <div class="auth-field">
+        <label for="rpw2" data-i18n="reg.confirm">Konfirmasi kata sandi</label>
+        <input id="rpw2" type="password" autocomplete="new-password" data-i18n-ph="reg.confirm.ph" placeholder="Ulangi kata sandi">
+      </div>
+      <div class="err" id="rerr"></div>
+      <button class="btn ok" id="reg"><i class="fa-solid fa-user-plus"></i><span data-i18n="register">Daftar akun baru</span></button>
     </div>
   </div>
   <div class="auth-foot" id="legal"></div>
@@ -610,6 +641,12 @@ password:["Kata sandi","Password","비밀번호","密码","パスワード","Mot
 login:["Masuk","Sign in","로그인","登录","ログイン","Connexion","Войти","Anmelden","Accedi"],
 or:["atau","or","또는","或","または","ou","или","oder","oppure"],
 register:["Daftar akun baru","Create account","새 계정 만들기","注册新账号","新規アカウント作成","Créer un compte","Создать аккаунт","Konto erstellen","Crea un account"],
+"reg.tab":["Daftar","Sign up","회원가입","注册","新規登録","S'inscrire","Регистрация","Registrieren","Registrati"],
+"reg.name":["Nama / Perusahaan","Name / Company","이름 / 회사","姓名 / 公司","名前 / 会社","Nom / Entreprise","Имя / Компания","Name / Firma","Nome / Azienda"],
+"reg.name.ph":["Nama Anda atau PT","Your name or company","이름 또는 회사명","您的姓名或公司","お名前または会社名","Votre nom ou entreprise","Ваше имя или компания","Ihr Name oder Firma","Il tuo nome o azienda"],
+"reg.confirm":["Konfirmasi kata sandi","Confirm password","비밀번호 확인","确认密码","パスワード確認","Confirmer le mot de passe","Подтвердите пароль","Passwort bestätigen","Conferma password"],
+"reg.confirm.ph":["Ulangi kata sandi","Repeat password","비밀번호 재입력","重复密码","パスワードを再入力","Répétez le mot de passe","Повторите пароль","Passwort wiederholen","Ripeti la password"],
+"reg.mismatch":["Kata sandi tidak cocok","Passwords don't match","비밀번호가 일치하지 않습니다","密码不一致","パスワードが一致しません","Les mots de passe ne correspondent pas","Пароли не совпадают","Passwörter stimmen nicht überein","Le password non corrispondono"],
 "ph.pass":["Minimal 6 karakter","At least 6 characters","6자 이상","至少6个字符","6文字以上","Au moins 6 caractères","Не менее 6 символов","Mindestens 6 Zeichen","Almeno 6 caratteri"],
 legal:["Dengan masuk, Anda menyetujui","By signing in you agree to the","로그인하면 다음에 동의하게 됩니다:","登录即表示您同意","ログインすると以下に同意したものとみなされます:","En vous connectant, vous acceptez les","Входя, вы принимаете","Mit der Anmeldung akzeptieren Sie die","Accedendo accetti i"],
 "legal.terms":["Ketentuan Layanan","Terms of Service","서비스 약관","服务条款","利用規約","Conditions d'utilisation","Условия использования","Nutzungsbedingungen","Termini di servizio"],
@@ -1032,20 +1069,40 @@ function enter(){$('#login').classList.add('hide');$('#app').classList.remove('h
 const nm=v=>(v.split('@')[0]||t('user')).replace(/[._-]+/g,' ').replace(/\b\w/g,c=>c.toUpperCase());
 const AE={'auth/invalid-credential':'ae.cred','auth/wrong-password':'ae.cred','auth/user-not-found':'ae.cred','auth/email-already-in-use':'ae.inuse','auth/weak-password':'ae.weak','auth/invalid-email':'ae.invalid','auth/network-request-failed':'ae.net'};
 
-async function authGo(reg){const e=$('#em').value.trim(),p=$('#pw').value,er=$('#err');er.textContent='';
- if(!READY)return er.textContent=t('e.nocfg');
- if(!e||!p)return er.textContent=t('e.fillall');
- try{
-  if(reg){const c=await auth.createUserWithEmailAndPassword(e,p);
-    await c.user.updateProfile({displayName:nm(e)});
-    await db.doc('users/'+c.user.uid).set({name:nm(e),plan:'free',exp:0,prof:{},lang,at:Date.now()})}
-  else await auth.signInWithEmailAndPassword(e,p)
- }catch(x){er.textContent=AE[x.code]?t(AE[x.code]):(x.message||t('e.generic'))}}
+async function authGo(reg){
+  const erEl = reg ? $('#rerr') : $('#err');
+  erEl.textContent='';
+  if(!READY)return erEl.textContent=t('e.nocfg');
+
+  if(reg){
+    const name = $('#rname').value.trim();
+    const e = $('#rem').value.trim();
+    const p = $('#rpw').value;
+    const p2 = $('#rpw2').value;
+    if(!e||!p)return erEl.textContent=t('e.fillall');
+    if(p.length<6)return erEl.textContent=t('ae.weak');
+    if(p!==p2)return erEl.textContent=t('reg.mismatch');
+    try{
+      const c = await auth.createUserWithEmailAndPassword(e,p);
+      const dn = name || nm(e);
+      await c.user.updateProfile({displayName: dn});
+      await db.doc('users/'+c.user.uid).set({name: dn, plan:'free', exp:0, prof:{}, lang, at:Date.now()});
+    }catch(x){erEl.textContent=AE[x.code]?t(AE[x.code]):(x.message||t('e.generic'))}
+  } else {
+    const e = $('#em').value.trim();
+    const p = $('#pw').value;
+    if(!e||!p)return erEl.textContent=t('e.fillall');
+    try{
+      await auth.signInWithEmailAndPassword(e,p);
+    }catch(x){erEl.textContent=AE[x.code]?t(AE[x.code]):(x.message||t('e.generic'))}
+  }
+}
 
 /* ======================= EVENTS ======================= */
 $('#go').onclick=()=>authGo(false);
 $('#reg').onclick=()=>authGo(true);
 $('#pw').addEventListener('keydown',e=>{if(e.key==='Enter')$('#go').click()});
+$('#rpw2').addEventListener('keydown',e=>{if(e.key==='Enter')$('#reg').click()});
 $('#out').onclick=()=>auth&&auth.signOut();
 $('#langbtn').onclick=langSheet;
 $('#langbtn2').onclick=langSheet;
@@ -1057,6 +1114,14 @@ document.addEventListener('click',e=>{const q=s=>e.target.closest(s);let x;
  if(x=q('[data-copy]')){navigator.clipboard&&navigator.clipboard.writeText(x.dataset.copy).then(()=>toast(t('t.copied')));return}
  if(x=q('[data-lang]')){setLang(x.dataset.lang);closeSheet();return}
  if(q('[data-lang-sheet]'))return langSheet();
+ if(x=q('[data-auth]')){
+  document.querySelectorAll('[data-auth]').forEach(b=>b.classList.toggle('on',b.dataset.auth===x.dataset.auth));
+  $('#form-login').classList.toggle('hide',x.dataset.auth!=='login');
+  $('#form-register').classList.toggle('hide',x.dataset.auth!=='register');
+  $('#err').textContent='';
+  $('#rerr').textContent='';
+  return;
+ }
  if(x=q('[data-go]'))return go(x.dataset.go);
  if(q('[data-open]')){location.href=WMS_URL;return}
  if(x=q('[data-pt]')){pasarTab=x.dataset.pt;return render()}
@@ -1103,7 +1168,7 @@ setInterval(()=>{document.querySelectorAll('[data-end]').forEach(e=>{const m=+e.
 paintStatic();
 if(READY)auth.onAuthStateChanged(u=>{unsub.forEach(f=>f());unsub=[];
  if(u){sync(u);enter()}
- else{S=EMPTY();uid=user='';$('#app').classList.add('hide');$('#login').classList.remove('hide');$('#pw').value=''}});
+ else{S=EMPTY();uid=user='';$('#app').classList.add('hide');$('#login').classList.remove('hide');$('#pw').value='';$('#rpw').value='';$('#rpw2').value=''}});
 </script>
 </body>
 </html>
