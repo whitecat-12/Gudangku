@@ -22,20 +22,30 @@
   --sh2:0 2px 4px rgba(11,27,51,.06),0 24px 48px -22px rgba(11,27,51,.30);
   --sh3:0 2px 4px rgba(11,27,51,.06),0 40px 80px -32px rgba(11,27,51,.40);
   --r:20px; color-scheme:light;
+  --nav-h:64px;
+  --nav-icon:22px;
+  --nav-font:11px;
 }
 *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
-html,body{margin:0;min-height:100%}
-html{scroll-padding-top:env(safe-area-inset-top,0px);-webkit-text-size-adjust:100%}
+html,body{margin:0;padding:0;width:100%;max-width:100%;min-height:100%}
+html{overflow-x:hidden;overflow-x:clip;-webkit-text-size-adjust:100%;scroll-padding-top:env(safe-area-inset-top,0px)}
 body{
   font:15px/1.55 "Plus Jakarta Sans",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
-  color:var(--ink); background:#eaf2fc;
+  color:var(--ink);
+  background:#eaf2fc;
+  overflow-x:hidden;
+  overflow-x:clip;
+  -webkit-font-smoothing:antialiased;
+  text-rendering:optimizeLegibility;
+  position:relative;
+}
+body::before{
+  content:"";position:fixed;inset:0;z-index:-1;pointer-events:none;
   background-image:
-    radial-gradient(1200px 700px at 100% -10%, #cfe6ff 0%, transparent 60%),
-    radial-gradient(1000px 600px at -10% 0%, #d8f3ff 0%, transparent 55%),
-    radial-gradient(900px 600px at 50% 110%, #e8e0ff 0%, transparent 55%),
+    radial-gradient(1100px 620px at 100% -10%, #cfe6ff 0%, transparent 60%),
+    radial-gradient(900px 540px at -10% 0%, #d8f3ff 0%, transparent 55%),
+    radial-gradient(800px 540px at 50% 110%, #e8e0ff 0%, transparent 55%),
     linear-gradient(180deg,#eaf2fc 0%,#e2edfa 100%);
-  background-attachment:fixed; overflow-x:hidden;
-  -webkit-font-smoothing:antialiased; text-rendering:optimizeLegibility;
 }
 button,input,select,textarea{font:inherit;color:inherit}
 .hide{display:none!important}
@@ -43,13 +53,12 @@ button,input,select,textarea{font:inherit;color:inherit}
 h1,h2,h3{font-family:"Space Grotesk","Plus Jakarta Sans",sans-serif;letter-spacing:-.03em}
 .mono{font-family:ui-monospace,SFMono-Regular,Menlo,monospace}
 
-/* buttons */
 .btn{border:0;border-radius:15px;padding:14px 18px;font-weight:700;letter-spacing:-.01em;
   background:linear-gradient(135deg,#1d4ed8 0%,#2563eb 45%,#0ea5e9 100%);
   color:#fff;width:100%;cursor:pointer;display:inline-flex;gap:9px;align-items:center;justify-content:center;
   box-shadow:0 8px 22px -12px rgba(37,99,235,.9),inset 0 1px 0 rgba(255,255,255,.22);
   transition:transform .18s cubic-bezier(.2,.8,.25,1), box-shadow .18s ease, filter .18s ease;
-  position:relative;overflow:hidden;}
+  position:relative;overflow:hidden;max-width:100%}
 .btn:after{content:"";position:absolute;inset:0;background:linear-gradient(120deg,transparent 30%,rgba(255,255,255,.18) 50%,transparent 70%);transform:translateX(-120%);transition:transform .6s ease}
 .btn:hover{filter:brightness(1.05)}
 .btn:hover:after{transform:translateX(120%)}
@@ -60,43 +69,46 @@ h1,h2,h3{font-family:"Space Grotesk","Plus Jakarta Sans",sans-serif;letter-spaci
 .btn.ok{background:linear-gradient(135deg,#047857,#10b981);box-shadow:0 8px 22px -12px rgba(16,185,129,.9)}
 .btn.danger{background:linear-gradient(135deg,#b91c1c,#ef4444);box-shadow:0 8px 22px -12px rgba(239,68,68,.9)}
 
-/* brand */
-.brandmark{display:flex;align-items:center;gap:12px;font-weight:800;font-size:20px;letter-spacing:-.03em}
-.brandmark>span{width:42px;height:42px;border-radius:14px;display:grid;place-items:center;color:#fff;font-weight:800;font-size:17px;
+.brandmark{display:flex;align-items:center;gap:12px;font-weight:800;font-size:20px;letter-spacing:-.03em;min-width:0}
+.brandmark>span{width:42px;height:42px;border-radius:14px;display:grid;place-items:center;color:#fff;font-weight:800;font-size:17px;flex:none;
   background:linear-gradient(135deg,#1e40af 0%,#2563eb 50%,#22d3ee 100%);
   box-shadow:0 10px 24px -12px rgba(37,99,235,1),inset 0 1px 0 rgba(255,255,255,.3);position:relative;}
 .brandmark>span:after{content:"";position:absolute;inset:1px;border-radius:13px;background:linear-gradient(180deg,rgba(255,255,255,.18),transparent 55%);pointer-events:none}
 .brandmark small{display:block;font-size:10.5px;color:var(--mut);font-weight:700;letter-spacing:.1em;text-transform:uppercase}
+.brandmark>div{min-width:0}
 
-/* inputs */
 label{font-size:12.5px;color:var(--mut);display:block;margin-bottom:6px;font-weight:700;letter-spacing:.005em}
 input[type=text],input[type=email],input[type=password],input[type=tel],input[type=number],select,textarea{
   width:100%;background:var(--field);border:1.5px solid var(--line);border-radius:14px;padding:13px 15px;outline:0;
-  transition:border-color .16s,box-shadow .16s,background .16s;color:var(--ink);font-size:14.5px;}
+  transition:border-color .16s,box-shadow .16s,background .16s;color:var(--ink);font-size:14.5px;max-width:100%}
 input::placeholder,textarea::placeholder{color:#9db0c8}
 input:focus,select:focus,textarea:focus{border-color:#7fb0f0;background:#fff;box-shadow:0 0 0 4px rgba(37,99,235,.12)}
 select option{color:var(--ink);background:#fff}
 .err{color:var(--rose);font-size:12.5px;min-height:18px;font-weight:600}
 
-/* ============ LOGIN ============ */
-#login{min-height:100dvh;display:flex;flex-direction:column;justify-content:center;align-items:center;
-  padding:14px 16px calc(14px + env(safe-area-inset-bottom,0px));max-width:430px;margin:auto;gap:10px;position:relative;}
-#login:before{content:"";position:absolute;inset:0;pointer-events:none;
-  background:radial-gradient(500px 340px at 110% 0%, rgba(14,165,233,.22), transparent 60%),
-             radial-gradient(440px 300px at -10% 100%, rgba(99,102,241,.18), transparent 60%);
-  filter:blur(6px);}
+#login{min-height:100vh;min-height:100dvh;display:flex;flex-direction:column;justify-content:center;align-items:center;
+  padding:14px 16px calc(14px + env(safe-area-inset-bottom,0px));
+  width:100%;max-width:430px;margin:0 auto;gap:10px;
+  position:relative;overflow:hidden;isolation:isolate}
+#login::before{content:"";position:absolute;inset:0;pointer-events:none;z-index:0;
+  background:
+    radial-gradient(500px 340px at 110% 0%, rgba(14,165,233,.22), transparent 60%),
+    radial-gradient(440px 300px at -10% 100%, rgba(99,102,241,.18), transparent 60%);}
 #login>*{position:relative;z-index:1}
 .brand-top{display:flex;align-items:center;gap:10px;font-weight:800;font-size:17.5px;letter-spacing:-.03em;
-  align-self:stretch;padding:0 2px;margin-bottom:2px;}
-.brand-top>span{width:36px;height:36px;border-radius:11px;display:grid;place-items:center;color:#fff;font-weight:800;font-size:15px;
+  align-self:stretch;padding:0 2px;margin-bottom:2px;min-width:0}
+.brand-top>span{width:36px;height:36px;border-radius:11px;display:grid;place-items:center;color:#fff;font-weight:800;font-size:15px;flex:none;
   background:linear-gradient(135deg,#1e40af 0%,#2563eb 50%,#22d3ee 100%);
   box-shadow:0 10px 22px -12px rgba(37,99,235,1),inset 0 1px 0 rgba(255,255,255,.3);}
 .brand-top small{display:block;font-size:9.5px;color:var(--mut);font-weight:700;letter-spacing:.1em;text-transform:uppercase}
-.auth-card{background:rgba(255,255,255,.86);backdrop-filter:blur(24px) saturate(1.6);-webkit-backdrop-filter:blur(24px) saturate(1.6);
+.brand-top>div{min-width:0}
+.auth-card{background:rgba(255,255,255,.9);
+  backdrop-filter:blur(24px) saturate(1.6);-webkit-backdrop-filter:blur(24px) saturate(1.6);
   border:1px solid rgba(255,255,255,.95);border-radius:24px;padding:18px 16px 16px;box-shadow:var(--sh3);
-  display:grid;gap:10px;width:100%;animation:pop .45s cubic-bezier(.2,.8,.25,1) both;}
+  display:grid;gap:10px;width:100%;animation:pop .45s cubic-bezier(.2,.8,.25,1) both}
 @keyframes pop{from{opacity:0;transform:translateY(12px) scale(.985)}to{opacity:1;transform:none}}
-.auth-head{display:flex;align-items:flex-start;justify-content:space-between;gap:8px;margin-bottom:2px}
+.auth-head{display:flex;align-items:flex-start;justify-content:space-between;gap:8px;margin-bottom:2px;min-width:0}
+.auth-head>div{min-width:0}
 .auth-head h1{font-size:21px;margin:0;font-weight:800;line-height:1.1;letter-spacing:-.035em}
 .auth-head p{color:var(--mut);margin:4px 0 0;font-size:12px;line-height:1.45}
 .auth-pill{display:inline-flex;align-items:center;gap:5px;flex:none;
@@ -110,158 +122,127 @@ select option{color:var(--ink);background:#fff}
 .auth-divider{display:flex;align-items:center;gap:10px;color:#a3b6ce;font-size:10px;font-weight:700;
   letter-spacing:.12em;text-transform:uppercase;margin:1px 0;}
 .auth-divider:before,.auth-divider:after{content:"";flex:1;height:1px;background:linear-gradient(90deg,transparent,#d3e2f3,transparent)}
-.auth-foot{text-align:center;font-size:10.5px;color:var(--mut);line-height:1.6;max-width:400px}
+.auth-foot{text-align:center;font-size:10.5px;color:var(--mut);line-height:1.6;max-width:400px;padding:0 4px}
 .auth-foot a{color:var(--brand);font-weight:700;text-decoration:none}
 .auth-foot a:hover{text-decoration:underline}
 
-/* ============ APP SHELL ============ */
-#app{min-height:100dvh;max-width:760px;margin:auto;padding-bottom:calc(104px + env(safe-area-inset-bottom,0px))}
-header{position:sticky;top:0;z-index:30;display:flex;justify-content:space-between;align-items:center;gap:12px;
-  padding:12px 16px;background:rgba(234,242,252,.72);
+#app{
+  min-height:100vh;min-height:100dvh;
+  width:100%;max-width:760px;margin:0 auto;
+  padding-bottom:calc(var(--nav-h) + 40px + env(safe-area-inset-bottom,0px));
+  position:relative;
+}
+header{
+  position:sticky;top:0;z-index:30;
+  display:flex;justify-content:space-between;align-items:center;gap:12px;
+  padding:12px 16px;
+  background:rgba(234,242,252,.78);
   backdrop-filter:blur(20px) saturate(1.6);-webkit-backdrop-filter:blur(20px) saturate(1.6);
-  border-bottom:1px solid rgba(197,216,238,.5);}
-header .brandmark{font-size:16px}
+  border-bottom:1px solid rgba(197,216,238,.5);
+  min-width:0;
+}
+header .brandmark{font-size:16px;flex:1 1 auto;min-width:0}
 header .brandmark>span{width:34px;height:34px;border-radius:11px;font-size:13px}
-header #ttl{font-weight:800;letter-spacing:-.03em;font-family:"Space Grotesk","Plus Jakarta Sans",sans-serif;font-size:15.5px}
-main{padding:16px 14px;display:grid;gap:16px;align-content:start}
+header #ttl{
+  font-weight:800;letter-spacing:-.03em;
+  font-family:"Space Grotesk","Plus Jakarta Sans",sans-serif;
+  font-size:15.5px;
+  min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;
+}
+header #out{flex:none}
+main{padding:16px 14px;display:grid;gap:14px;align-content:start;min-width:0;width:100%}
+main>*{min-width:0}
 
-.card{background:var(--paper);border:1px solid var(--line);border-radius:var(--r);padding:16px;box-shadow:var(--sh);}
+.card{background:var(--paper);border:1px solid var(--line);border-radius:var(--r);padding:16px;box-shadow:var(--sh);min-width:0}
 h2{font-size:19px;margin:0;font-weight:800}
 h3{font-size:14.5px;margin:0 0 10px;font-weight:800;display:flex;align-items:center;gap:8px}
 h3 i{color:var(--brand);font-size:13px}
 .mut{color:var(--mut);font-size:12.5px;line-height:1.5}
 .mut i{color:var(--mut2);margin-right:4px}
 
-/* ============ HOME REDESIGN ============ */
-.home-top{display:grid;gap:11px}
-
-.greet{display:flex;justify-content:space-between;align-items:center;gap:12px}
-.greet-info{min-width:0}
+.home-top{display:grid;gap:11px;min-width:0}
+.greet{display:flex;justify-content:space-between;align-items:center;gap:12px;min-width:0}
+.greet-info{min-width:0;flex:1 1 auto}
 .greet-hi{font-size:11.5px;color:var(--mut);font-weight:600;letter-spacing:.02em;display:block;margin-bottom:2px}
 .greet h2{font-size:21px;margin:0;letter-spacing:-.04em;font-weight:800;line-height:1.15;
-  white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.greet h2 span{font-size:19px;margin-left:2px}
-
-.icon-btn{
-  position:relative;width:42px;height:42px;border-radius:13px;flex:none;
+  white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:100%}
+.icon-btn{position:relative;width:42px;height:42px;border-radius:13px;flex:none;
   border:1px solid var(--line);background:#fff;color:var(--ink);
   display:grid;place-items:center;cursor:pointer;font-size:15px;
-  box-shadow:var(--sh);transition:transform .16s,box-shadow .16s;
-}
+  box-shadow:var(--sh);transition:transform .16s,box-shadow .16s;}
 .icon-btn:hover{transform:translateY(-1px);box-shadow:var(--sh2)}
 .icon-btn:active{transform:scale(.96)}
 .icon-btn .dot{position:absolute;top:10px;right:10px;width:8px;height:8px;border-radius:50%;
   background:var(--rose);border:2px solid #fff}
 
-/* Search */
-.search-bar{
-  display:flex;align-items:center;gap:10px;
+.search-bar{display:flex;align-items:center;gap:10px;
   background:#fff;border:1px solid var(--line);border-radius:16px;
   padding:6px 6px 6px 14px;box-shadow:var(--sh);
-  transition:border-color .16s,box-shadow .16s;
-}
+  transition:border-color .16s,box-shadow .16s;min-width:0}
 .search-bar:focus-within{border-color:#7fb0f0;box-shadow:0 0 0 4px rgba(37,99,235,.10)}
 .search-bar>i{color:var(--mut);font-size:14px;flex:none}
-.search-bar input{
-  flex:1;border:0!important;background:none!important;padding:10px 0!important;
+.search-bar input{flex:1 1 auto;border:0!important;background:none!important;padding:10px 0!important;
   font-size:14px!important;outline:none;box-shadow:none!important;border-radius:0!important;
-  color:var(--ink);min-width:0;
-}
+  color:var(--ink);min-width:0}
 .search-bar input:focus{box-shadow:none!important;background:none!important;border:0!important}
-.search-filter{
-  width:36px;height:36px;border-radius:11px;flex:none;border:0;cursor:pointer;
+.search-filter{width:36px;height:36px;border-radius:11px;flex:none;border:0;cursor:pointer;
   background:linear-gradient(135deg,#e0ecff,#eff6ff);color:var(--brand);
-  display:grid;place-items:center;font-size:13px;
-  transition:transform .16s;
-}
+  display:grid;place-items:center;font-size:13px;transition:transform .16s;}
 .search-filter:active{transform:scale(.94)}
 
-/* Promo banner */
-.promo{
-  position:relative;border-radius:22px;padding:18px 16px;padding-right:120px;
+.promo{position:relative;border-radius:22px;padding:18px 16px;padding-right:120px;
   background:
     radial-gradient(500px 280px at 100% 0%, rgba(34,211,238,.45), transparent 60%),
     linear-gradient(135deg,#0b2545 0%,#1d4ed8 55%,#0891b2 100%);
   color:#fff;overflow:hidden;
   box-shadow:0 20px 40px -20px rgba(29,78,216,.85),inset 0 1px 0 rgba(255,255,255,.15);
-}
-.promo:before{
-  content:"";position:absolute;inset:0;pointer-events:none;
+  min-width:0}
+.promo:before{content:"";position:absolute;inset:0;pointer-events:none;
   background-image:
     linear-gradient(rgba(255,255,255,.06) 1px,transparent 1px),
     linear-gradient(90deg,rgba(255,255,255,.06) 1px,transparent 1px);
   background-size:28px 28px;
   mask-image:radial-gradient(ellipse at 100% 0%,#000 0%,transparent 70%);
-  -webkit-mask-image:radial-gradient(ellipse at 100% 0%,#000 0%,transparent 70%);
-}
+  -webkit-mask-image:radial-gradient(ellipse at 100% 0%,#000 0%,transparent 70%);}
 .promo>*{position:relative;z-index:1}
-.promo-badge{
-  display:inline-flex;align-items:center;gap:6px;
+.promo-badge{display:inline-flex;align-items:center;gap:6px;
   background:rgba(255,255,255,.18);border:1px solid rgba(255,255,255,.25);
   padding:4px 10px;border-radius:99px;font-size:10px;font-weight:800;letter-spacing:.06em;
-  text-transform:uppercase;color:#fff;margin-bottom:8px;
-  backdrop-filter:blur(6px);
-}
+  text-transform:uppercase;color:#fff;margin-bottom:8px;backdrop-filter:blur(6px);}
 .promo-badge i{color:#fde68a;font-size:10px}
 .promo h3{font-size:17px;margin:0 0 4px;letter-spacing:-.03em;color:#fff;font-weight:800;line-height:1.2}
 .promo p{font-size:11.5px;color:#cfe6ff;margin:0 0 12px;line-height:1.4;max-width:180px}
-.promo-btn{
-  width:auto;border:0;border-radius:11px;padding:9px 16px;
+.promo-btn{width:auto;border:0;border-radius:11px;padding:9px 16px;
   background:#fff;color:#1d4ed8;font-weight:800;font-size:12.5px;
   display:inline-flex;align-items:center;gap:6px;cursor:pointer;
-  box-shadow:0 8px 16px -8px rgba(0,0,0,.35);
-  transition:transform .16s,box-shadow .16s;
-}
+  box-shadow:0 8px 16px -8px rgba(0,0,0,.35);transition:transform .16s,box-shadow .16s;}
 .promo-btn:hover{transform:translateY(-1px);box-shadow:0 12px 20px -8px rgba(0,0,0,.4)}
 .promo-btn:active{transform:scale(.97)}
-.promo-art{
-  position:absolute;right:14px;top:50%;
-  transform:translateY(-50%) rotate(-9deg);
-  width:88px;height:88px;border-radius:24px;
-  display:grid;place-items:center;
+.promo-art{position:absolute;right:14px;top:50%;transform:translateY(-50%) rotate(-9deg);
+  width:88px;height:88px;border-radius:24px;display:grid;place-items:center;
   background:linear-gradient(135deg,rgba(255,255,255,.32),rgba(255,255,255,.10));
-  border:1px solid rgba(255,255,255,.35);
-  color:#fff;font-size:36px;
+  border:1px solid rgba(255,255,255,.35);color:#fff;font-size:36px;
   box-shadow:0 20px 40px -16px rgba(0,0,0,.5),inset 0 1px 0 rgba(255,255,255,.5);
-  backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);
-}
+  backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);}
 
-/* Section title */
-.section-title{
-  font-size:14px;font-weight:800;letter-spacing:-.02em;margin:0 0 10px;color:var(--ink);
-  display:flex;align-items:center;justify-content:space-between;gap:8px;
-}
-.section-title a{
-  font-size:11.5px;font-weight:700;color:var(--brand);cursor:pointer;text-decoration:none;
-}
+.section-title{font-size:14px;font-weight:800;letter-spacing:-.02em;margin:0 0 10px;color:var(--ink);
+  display:flex;align-items:center;justify-content:space-between;gap:8px;min-width:0}
 
-/* Quick actions — horizontal circles */
-.quick{
-  display:flex;gap:10px;overflow-x:auto;
-  margin:0 -14px;padding:0 14px 4px;
+.quick-wrap{position:relative;min-width:0;width:100%}
+.quick{display:flex;gap:10px;overflow-x:auto;overflow-y:hidden;
+  padding:0 2px 4px;
   scrollbar-width:none;-webkit-overflow-scrolling:touch;
-  scroll-snap-type:x proximity;
-}
+  min-width:0;max-width:100%}
 .quick::-webkit-scrollbar{display:none}
-.q-item{
-  flex:none;width:72px;background:none;border:0;padding:0;cursor:pointer;
-  display:flex;flex-direction:column;align-items:center;gap:7px;
-  scroll-snap-align:start;
-}
-.q-ic{
-  width:58px;height:58px;border-radius:19px;display:grid;place-items:center;font-size:21px;
-  position:relative;
-  box-shadow:0 6px 14px -8px rgba(37,99,235,.3),inset 0 1px 0 rgba(255,255,255,.7);
-  transition:transform .18s cubic-bezier(.2,.8,.25,1),box-shadow .18s;
-}
+.q-item{flex:0 0 72px;width:72px;background:none;border:0;padding:0;cursor:pointer;
+  display:flex;flex-direction:column;align-items:center;gap:7px;min-width:0}
+.q-ic{width:58px;height:58px;border-radius:19px;display:grid;place-items:center;font-size:21px;
+  position:relative;box-shadow:0 6px 14px -8px rgba(37,99,235,.3),inset 0 1px 0 rgba(255,255,255,.7);
+  transition:transform .18s cubic-bezier(.2,.8,.25,1),box-shadow .18s;}
 .q-item:hover .q-ic{transform:translateY(-3px);box-shadow:0 12px 20px -8px rgba(37,99,235,.4),inset 0 1px 0 rgba(255,255,255,.7)}
 .q-item:active .q-ic{transform:translateY(0) scale(.96)}
-.q-item small{
-  font-size:10.5px;font-weight:700;color:var(--ink);letter-spacing:-.01em;
-  text-align:center;line-height:1.2;max-width:72px;
-  white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
-}
-/* blue-family tints */
+.q-item small{font-size:10.5px;font-weight:700;color:var(--ink);letter-spacing:-.01em;
+  text-align:center;line-height:1.2;max-width:72px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
 .q-ic.blue{background:linear-gradient(135deg,#dbeafe,#eff6ff);color:#1d4ed8}
 .q-ic.cyan{background:linear-gradient(135deg,#cffafe,#ecfeff);color:#0891b2}
 .q-ic.indigo{background:linear-gradient(135deg,#e0e7ff,#eef2ff);color:#4338ca}
@@ -269,100 +250,72 @@ h3 i{color:var(--brand);font-size:13px}
 .q-ic.teal{background:linear-gradient(135deg,#ccfbf1,#f0fdfa);color:#0d9488}
 .q-ic.navy{background:linear-gradient(135deg,#dbeafe,#eef2ff);color:#1e3a8a}
 
-/* Stats row — 4 mini */
-.stats-row{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}
-.mini-stat{
-  background:#fff;border:1px solid var(--line);border-radius:14px;
+.stats-row{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px;min-width:0;width:100%}
+.mini-stat{background:#fff;border:1px solid var(--line);border-radius:14px;
   padding:11px 6px;text-align:center;box-shadow:var(--sh);
   position:relative;overflow:hidden;transition:transform .16s,box-shadow .16s;
-}
-.mini-stat:before{
-  content:"";position:absolute;top:0;left:0;right:0;height:2px;
-  background:linear-gradient(90deg,#2563eb,#0ea5e9,#22d3ee);
-  opacity:.85;
-}
-.mini-stat b{
-  display:block;font-size:17px;font-weight:800;letter-spacing:-.03em;
+  min-width:0}
+.mini-stat:before{content:"";position:absolute;top:0;left:0;right:0;height:2px;
+  background:linear-gradient(90deg,#2563eb,#0ea5e9,#22d3ee);opacity:.85;}
+.mini-stat b{display:block;font-size:17px;font-weight:800;letter-spacing:-.03em;
   line-height:1.15;color:var(--ink);
   font-family:"Space Grotesk","Plus Jakarta Sans",sans-serif;
-}
-.mini-stat small{
-  display:block;font-size:9px;color:var(--mut);font-weight:800;
+  white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.mini-stat small{display:block;font-size:9px;color:var(--mut);font-weight:800;
   text-transform:uppercase;letter-spacing:.08em;margin-top:2px;
-}
+  white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 
-/* Shortcuts — 2-col grid */
-.grid2{display:grid;grid-template-columns:1fr 1fr;gap:10px}
-.shortcut{
-  background:#fff;border:1px solid var(--line);border-radius:16px;
-  padding:13px;text-align:left;cursor:pointer;
-  box-shadow:var(--sh);
-  display:flex;flex-direction:column;gap:6px;
+.grid2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;min-width:0;width:100%}
+.shortcut{background:#fff;border:1px solid var(--line);border-radius:16px;
+  padding:13px;text-align:left;cursor:pointer;box-shadow:var(--sh);
+  display:flex;flex-direction:column;gap:6px;min-width:0;
   transition:transform .18s cubic-bezier(.2,.8,.25,1),box-shadow .18s,border-color .18s;
-  position:relative;overflow:hidden;
-}
-.shortcut:before{
-  content:"";position:absolute;inset:0;
+  position:relative;overflow:hidden;}
+.shortcut:before{content:"";position:absolute;inset:0;
   background:radial-gradient(320px 160px at 100% 0%, rgba(37,99,235,.06), transparent 60%);
-  opacity:0;transition:opacity .2s;
-}
+  opacity:0;transition:opacity .2s;pointer-events:none}
 .shortcut:hover{transform:translateY(-2px);box-shadow:var(--sh2);border-color:#b9d3f2}
 .shortcut:hover:before{opacity:1}
 .shortcut:active{transform:translateY(0) scale(.99)}
-.shortcut .sc-ic{
-  width:38px;height:38px;border-radius:12px;display:grid;place-items:center;
-  font-size:15px;margin-bottom:2px;position:relative;z-index:1;
-  box-shadow:inset 0 1px 0 rgba(255,255,255,.7);
-}
+.shortcut .sc-ic{width:38px;height:38px;border-radius:12px;display:grid;place-items:center;
+  font-size:15px;margin-bottom:2px;position:relative;z-index:1;flex:none;
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.7);}
 .shortcut .sc-ic.blue{background:linear-gradient(135deg,#dbeafe,#eff6ff);color:#1d4ed8}
 .shortcut .sc-ic.cyan{background:linear-gradient(135deg,#cffafe,#ecfeff);color:#0891b2}
 .shortcut .sc-ic.sky{background:linear-gradient(135deg,#e0f2fe,#f0f9ff);color:#0284c7}
 .shortcut .sc-ic.indigo{background:linear-gradient(135deg,#e0e7ff,#eef2ff);color:#4338ca}
-.shortcut b{font-size:12.5px;font-weight:800;letter-spacing:-.02em;color:var(--ink);position:relative;z-index:1}
-.shortcut small{font-size:10.5px;color:var(--mut);line-height:1.35;position:relative;z-index:1}
+.shortcut b{font-size:12.5px;font-weight:800;letter-spacing:-.02em;color:var(--ink);position:relative;z-index:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.shortcut small{font-size:10.5px;color:var(--mut);line-height:1.35;position:relative;z-index:1;min-width:0}
 
-/* Hero (dipakai di tab lain) */
-.hero{
-  background:
+.hero{background:
     radial-gradient(700px 380px at 100% 0%, rgba(34,211,238,.35), transparent 60%),
     radial-gradient(600px 340px at 0% 100%, rgba(99,102,241,.30), transparent 60%),
     linear-gradient(135deg,#0b2545 0%,#1d4ed8 55%,#0891b2 100%);
   color:#fff;border:0;border-radius:24px;padding:22px;
   box-shadow:0 24px 48px -24px rgba(11,37,69,.75),inset 0 1px 0 rgba(255,255,255,.15);
-  position:relative;overflow:hidden;
-}
-.hero:before{content:"";position:absolute;inset:0;pointer-events:none;
-  background-image:
-    linear-gradient(rgba(255,255,255,.05) 1px,transparent 1px),
-    linear-gradient(90deg,rgba(255,255,255,.05) 1px,transparent 1px);
-  background-size:32px 32px;
-  mask-image:radial-gradient(ellipse at 100% 0%,#000 0%,transparent 70%);
-  -webkit-mask-image:radial-gradient(ellipse at 100% 0%,#000 0%,transparent 70%);}
+  position:relative;overflow:hidden;min-width:0}
 .hero>*{position:relative;z-index:1}
 .hero h2{font-size:22px;letter-spacing:-.04em;margin-bottom:6px}
 .hero .mut{color:#bfdbfe;font-size:13px}
 .hero .mut b{color:#fff}
-.hero-tag{display:inline-flex;align-items:center;gap:6px;
-  background:rgba(255,255,255,.16);border:1px solid rgba(255,255,255,.22);
-  padding:5px 11px;border-radius:99px;font-size:10.5px;font-weight:800;letter-spacing:.06em;
-  text-transform:uppercase;margin-bottom:10px;color:#fff;backdrop-filter:blur(8px);}
 
-.g2{display:grid;grid-template-columns:1fr 1fr;gap:11px}
+.g2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:11px;min-width:0}
 .stat{display:grid;gap:4px;padding:16px;border-radius:18px;
   background:linear-gradient(180deg,#ffffff,#f8fbff);border:1px solid var(--line);
-  box-shadow:var(--sh);position:relative;overflow:hidden;}
+  box-shadow:var(--sh);position:relative;overflow:hidden;min-width:0}
 .stat:before{content:"";position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,#2563eb,#0ea5e9,#22d3ee);opacity:.85}
 .stat .mut{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--mut)}
 .stat b{display:block;font-size:26px;letter-spacing:-.04em;line-height:1.1;font-family:"Space Grotesk","Plus Jakarta Sans",sans-serif}
 
-.seg{display:flex;background:#e4edf9;border:1px solid var(--line);border-radius:14px;padding:4px;gap:3px}
+.seg{display:flex;background:#e4edf9;border:1px solid var(--line);border-radius:14px;padding:4px;gap:3px;min-width:0}
 .seg button{flex:1;border:0;background:none;padding:11px 8px;border-radius:11px;font-weight:700;font-size:12.5px;
-  color:var(--mut);cursor:pointer;transition:background .16s,color .16s,box-shadow .16s}
+  color:var(--mut);cursor:pointer;transition:background .16s,color .16s,box-shadow .16s;min-width:0;
+  white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .seg button.on{background:#fff;color:#1d4ed8;box-shadow:0 2px 8px -2px rgba(11,27,51,.18)}
 
-.row{display:flex;justify-content:space-between;align-items:center;gap:10px}
+.row{display:flex;justify-content:space-between;align-items:center;gap:10px;min-width:0}
 .tag{font-size:10.5px;padding:4px 9px;border-radius:99px;background:#d1fae5;color:#047857;
-  font-weight:800;white-space:nowrap;letter-spacing:.02em}
+  font-weight:800;white-space:nowrap;letter-spacing:.02em;flex:none}
 .tag.w{background:#fef3c7;color:#a16207}
 .tag.i{background:#dbeafe;color:#1d4ed8}
 
@@ -381,35 +334,103 @@ h3 i{color:var(--brand);font-size:13px}
 
 .fld{margin-bottom:11px}
 
-.plan{position:relative;transition:border-color .18s,box-shadow .18s,transform .18s}
+.plan{position:relative;transition:border-color .18s,box-shadow .18s,transform .18s;min-width:0}
 .plan.cur{border-color:#7fb0f0;box-shadow:0 0 0 4px rgba(37,99,235,.10),var(--sh)}
 .plan .price{font-size:28px;font-weight:800;letter-spacing:-.04em;margin:8px 0 2px;font-family:"Space Grotesk","Plus Jakarta Sans",sans-serif}
 .plan .price small{font-size:12px;font-weight:600;color:var(--mut)}
 .plan ul{list-style:none;padding:0;margin:12px 0;display:grid;gap:8px;font-size:13px;color:#27405f}
-.plan li{display:flex;align-items:flex-start;gap:9px;line-height:1.4}
-.plan li i{color:var(--mint);margin-top:3px;font-size:11px}
+.plan li{display:flex;align-items:flex-start;gap:9px;line-height:1.4;min-width:0}
+.plan li i{color:var(--mint);margin-top:3px;font-size:11px;flex:none}
 .pop{position:absolute;top:-11px;right:16px;background:linear-gradient(135deg,#f59e0b,#f97316);color:#fff;
   font-size:10.5px;font-weight:800;padding:4px 11px;border-radius:99px;
   box-shadow:0 8px 16px -6px rgba(245,158,11,.95);letter-spacing:.03em;text-transform:uppercase}
 
-nav{position:fixed;left:0;right:0;bottom:0;z-index:40;background:rgba(255,255,255,.88);
-  backdrop-filter:blur(24px) saturate(1.6);-webkit-backdrop-filter:blur(24px) saturate(1.6);
-  border-top:1px solid rgba(197,216,238,.6);
-  display:flex;padding:8px 8px calc(8px + env(safe-area-inset-bottom,0px));
-  max-width:760px;margin:auto;box-shadow:0 -8px 30px -20px rgba(11,27,51,.4);}
-nav button{flex:1;background:none;border:0;display:flex;flex-direction:column;align-items:center;gap:3px;
-  font-size:10px;font-weight:700;color:var(--mut);padding:8px 0 5px;cursor:pointer;border-radius:14px;
-  transition:color .16s,background .16s,transform .16s;position:relative;}
-nav button i{font-size:18px;transition:transform .18s cubic-bezier(.2,.8,.25,1)}
-nav button.on{color:#1d4ed8}
-nav button.on i{transform:translateY(-2px) scale(1.08)}
-nav button.on::after{content:"";position:absolute;bottom:2px;width:16px;height:3px;border-radius:99px;
-  background:linear-gradient(90deg,#2563eb,#0ea5e9);}
+/* ============ LANGUAGE SWITCHER ============ */
+.lang-btn{display:inline-flex;align-items:center;gap:6px;border:1px solid var(--line);background:#fff;
+  color:var(--ink);border-radius:12px;padding:8px 11px;font-size:11.5px;font-weight:800;cursor:pointer;
+  box-shadow:var(--sh);transition:transform .16s,box-shadow .16s,border-color .16s;flex:none;line-height:1}
+.lang-btn:hover{transform:translateY(-1px);box-shadow:var(--sh2);border-color:#b9d3f2}
+.lang-btn:active{transform:scale(.96)}
+.lang-btn i{color:var(--brand);font-size:12px}
+.lang-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:9px}
+.lang-opt{display:flex;align-items:center;gap:9px;padding:12px;border:1.5px solid var(--line);
+  border-radius:14px;background:var(--field);cursor:pointer;font-weight:700;font-size:12.5px;
+  transition:border-color .16s,background .16s,transform .16s;min-width:0}
+.lang-opt:hover{transform:translateY(-1px)}
+.lang-opt.on{border-color:#2563eb;background:#eaf2ff;color:#1d4ed8;box-shadow:0 0 0 3px rgba(37,99,235,.12)}
+.lang-opt .fl{font-size:18px;line-height:1;flex:none}
+.lang-opt b{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.lang-opt i{margin-left:auto;color:var(--mint);font-size:12px;flex:none}
 
-#wms{position:fixed;inset:0;z-index:60;background:#000}
-#wms iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
-#back{position:absolute;z-index:2;left:14px;bottom:calc(18px + env(safe-area-inset-bottom,0px));
-  width:auto;padding:12px 18px;font-size:13px;box-shadow:0 16px 32px rgba(0,0,0,.45)}
+/* ============ NAV BOTTOM ============ */
+nav{
+  position:fixed;
+  left:12px;
+  right:12px;
+  bottom:calc(14px + env(safe-area-inset-bottom,0px));
+  z-index:40;
+  display:flex;
+  gap:4px;
+  padding:6px;
+  margin:0 auto;
+  max-width:460px;
+  background:linear-gradient(180deg,rgba(255,255,255,.96) 0%,rgba(255,255,255,.86) 100%);
+  backdrop-filter:blur(28px) saturate(1.8);
+  -webkit-backdrop-filter:blur(28px) saturate(1.8);
+  border:1px solid rgba(255,255,255,.95);
+  border-radius:26px;
+  box-shadow:
+    0 18px 44px -12px rgba(11,27,51,.35),
+    0 8px 18px -6px rgba(11,27,51,.20),
+    inset 0 1px 0 rgba(255,255,255,.95),
+    inset 0 -1px 0 rgba(0,0,0,.03),
+    inset 1px 0 0 rgba(255,255,255,.55),
+    inset -1px 0 0 rgba(255,255,255,.55);
+}
+nav button{
+  flex:1 1 0;
+  min-width:0;
+  min-height:var(--nav-h);
+  background:transparent;
+  border:0;
+  cursor:pointer;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  gap:4px;
+  font-size:var(--nav-font);
+  font-weight:700;
+  letter-spacing:-.01em;
+  color:var(--mut);
+  padding:6px 4px;
+  border-radius:19px;
+  transition:color .2s ease, background .22s ease, box-shadow .22s ease, transform .18s ease;
+  position:relative;
+  overflow:hidden;
+  -webkit-tap-highlight-color:transparent;
+  -webkit-user-select:none;
+  user-select:none;
+  white-space:nowrap;
+  text-overflow:ellipsis;
+}
+nav button i{
+  font-size:var(--nav-icon);
+  transition:transform .22s cubic-bezier(.2,.8,.25,1);
+  display:block;
+  flex:none;
+  line-height:1;
+}
+nav button:active{transform:scale(.94)}
+nav button.on{
+  color:#fff;
+  background:linear-gradient(135deg,#1d4ed8 0%,#2563eb 45%,#0ea5e9 100%);
+  box-shadow:
+    0 8px 18px -6px rgba(37,99,235,.65),
+    0 2px 6px -1px rgba(37,99,235,.35),
+    inset 0 1px 0 rgba(255,255,255,.32);
+}
+nav button.on i{transform:translateY(-1px) scale(1.06)}
 
 #sheet{position:fixed;inset:0;z-index:80;background:rgba(11,27,51,.48);
   backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);
@@ -429,14 +450,17 @@ nav button.on::after{content:"";position:absolute;bottom:2px;width:16px;height:3
 .opt.on{border-color:#2563eb;background:#eaf2ff;color:#1d4ed8;box-shadow:0 0 0 3px rgba(37,99,235,.12)}
 .opt i{font-size:16px}
 
-.toast{position:fixed;left:50%;transform:translateX(-50%);bottom:110px;
+.toast{position:fixed;left:50%;transform:translateX(-50%);
+  bottom:calc(var(--nav-h) + 46px + env(safe-area-inset-bottom,0px));
   background:#0b2545;color:#fff;padding:12px 18px;border-radius:14px;font-weight:600;font-size:13px;
   z-index:90;white-space:nowrap;box-shadow:0 16px 32px -10px rgba(11,27,51,.6);
-  animation:toastIn .3s cubic-bezier(.2,.8,.25,1) both;}
+  animation:toastIn .3s cubic-bezier(.2,.8,.25,1) both;
+  max-width:calc(100vw - 32px);overflow:hidden;text-overflow:ellipsis}
 @keyframes toastIn{from{opacity:0;transform:translate(-50%,12px)}to{opacity:1;transform:translate(-50%,0)}}
 
 code{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:11.5px;background:var(--field);
-  padding:2px 7px;border-radius:6px;border:1px solid var(--line);color:var(--ink2)}
+  padding:2px 7px;border-radius:6px;border:1px solid var(--line);color:var(--ink2);
+  word-break:break-all;max-width:100%;display:inline-block}
 .card .row + .card{margin-top:10px}
 #view .card{animation:rise .4s cubic-bezier(.2,.8,.25,1) both}
 @keyframes rise{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
@@ -444,18 +468,62 @@ code{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:11.5px;ba
 #view .card:nth-child(3){animation-delay:.08s}
 #view .card:nth-child(4){animation-delay:.12s}
 
+/* ============ RESPONSIVE ============ */
+@media(max-width:480px){
+  header{padding:11px 14px}
+  main{padding:14px 12px;gap:13px}
+  .promo{padding:16px 14px 16px;padding-right:104px}
+  .promo-art{width:76px;height:76px;font-size:30px;border-radius:20px}
+  nav{left:10px;right:10px}
+}
+
 @media(max-width:400px){
+  :root{--nav-h:60px;--nav-icon:20px;--nav-font:10.5px}
   .stats-row{gap:6px}
+  .mini-stat{padding:10px 4px}
   .mini-stat b{font-size:15px}
-  .mini-stat small{font-size:8px}
+  .mini-stat small{font-size:8px;letter-spacing:.06em}
   header .brandmark small{display:none}
+  header .brandmark{font-size:15px}
+  header .brandmark>span{width:32px;height:32px;font-size:12px}
+  header #ttl{font-size:15px}
   .auth-head{flex-direction:column;gap:6px}
   .auth-pill{align-self:flex-start}
-}
-@media(max-width:360px){
-  .promo{padding-right:16px}
+  nav{left:8px;right:8px;bottom:calc(10px + env(safe-area-inset-bottom,0px));padding:5px;gap:3px;border-radius:24px}
+  nav button{border-radius:18px;padding:5px 3px}
+  .promo{padding-right:14px}
   .promo-art{display:none}
   .promo p{max-width:none}
+  .q-item{flex:0 0 64px;width:64px}
+  .q-ic{width:52px;height:52px;font-size:19px;border-radius:17px}
+  .q-item small{font-size:9.5px;max-width:64px}
+  main{padding:12px 10px;gap:12px}
+}
+
+@media(max-width:340px){
+  :root{--nav-h:56px;--nav-icon:18px;--nav-font:10px}
+  nav{left:6px;right:6px;padding:4px;border-radius:22px;gap:2px}
+  nav button{border-radius:16px;padding:4px 2px;gap:2px}
+  header{padding:10px 12px}
+  main{padding:12px 10px;gap:11px}
+  .stats-row{gap:5px}
+  .mini-stat{padding:9px 3px}
+  .mini-stat b{font-size:14px}
+  .mini-stat small{font-size:7.5px;letter-spacing:.04em}
+  .q-item{flex:0 0 58px;width:58px}
+  .q-ic{width:48px;height:48px;font-size:17px;border-radius:15px}
+  .lang-grid{grid-template-columns:1fr}
+}
+
+@media(max-height:500px) and (orientation:landscape){
+  :root{--nav-h:52px;--nav-icon:18px;--nav-font:10px}
+  nav{bottom:calc(8px + env(safe-area-inset-bottom,0px));padding:4px;left:20px;right:20px;max-width:520px;gap:3px}
+  nav button{padding:4px 3px;gap:2px;border-radius:16px}
+}
+
+@media(min-width:768px){
+  :root{--nav-h:68px;--nav-icon:24px;--nav-font:14px}
+  nav{max-width:520px;left:auto;right:auto;width:calc(100% - 40px)}
 }
 </style>
 </head>
@@ -465,291 +533,577 @@ code{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:11.5px;ba
   <div class="brand-top">
     <span><i class="fa-solid fa-warehouse"></i></span>
     <div>Bifetindo WMS<small>by Pivotal Indo</small></div>
+    <button class="lang-btn" id="langbtn" style="margin-left:auto" aria-label="Language">
+      <i class="fa-solid fa-globe"></i><span id="langcur">ID</span>
+    </button>
   </div>
   <div class="auth-card">
     <div class="auth-head">
       <div>
-        <h1>Selamat datang</h1>
-        <p>Kelola gudang, stok 3D, dan pasar B2B dalam satu platform.</p>
+        <h1 data-i18n="welcome">Selamat datang</h1>
+        <p data-i18n="auth.sub">Kelola gudang, stok 3D, dan pasar B2B dalam satu platform.</p>
       </div>
       <span class="auth-pill"><i class="fa-solid fa-bolt"></i> B2B</span>
     </div>
-    <div class="auth-field"><label for="em">Email</label><input id="em" type="email" autocomplete="username" placeholder="nama@perusahaan.com"></div>
-    <div class="auth-field"><label for="pw">Kata sandi</label><input id="pw" type="password" autocomplete="current-password" placeholder="Minimal 6 karakter"></div>
+    <div class="auth-field">
+      <label for="em" data-i18n="email">Email</label>
+      <input id="em" type="email" autocomplete="username" placeholder="nama@perusahaan.com">
+    </div>
+    <div class="auth-field">
+      <label for="pw" data-i18n="password">Kata sandi</label>
+      <input id="pw" type="password" autocomplete="current-password" data-i18n-ph="ph.pass" placeholder="Minimal 6 karakter">
+    </div>
     <div class="err" id="err"></div>
     <div class="auth-actions">
-      <button class="btn" id="go"><i class="fa-solid fa-right-to-bracket"></i>Masuk</button>
-      <div class="auth-divider">atau</div>
-      <button class="btn g" id="reg"><i class="fa-solid fa-user-plus"></i>Daftar akun baru</button>
+      <button class="btn" id="go"><i class="fa-solid fa-right-to-bracket"></i><span data-i18n="login">Masuk</span></button>
+      <div class="auth-divider" data-i18n="or">atau</div>
+      <button class="btn g" id="reg"><i class="fa-solid fa-user-plus"></i><span data-i18n="register">Daftar akun baru</span></button>
     </div>
   </div>
-  <div class="auth-foot">Dengan masuk, Anda menyetujui <a href="#">Ketentuan Layanan</a> dan <a href="#">Kebijakan Privasi</a> Bifetindo WMS.</div>
+  <div class="auth-foot" id="legal"></div>
 </section>
 
 <div id="app" class="hide">
   <header>
     <div class="brandmark"><span><i class="fa-solid fa-warehouse"></i></span><div id="ttl">Beranda</div></div>
-    <button class="btn g s" id="out"><i class="fa-solid fa-right-from-bracket"></i>Keluar</button>
+    <div style="display:flex;gap:8px;align-items:center;flex:none">
+      <button class="lang-btn" id="langbtn2" aria-label="Language">
+        <i class="fa-solid fa-globe"></i><span id="langcur2">ID</span>
+      </button>
+      <button class="btn g s" id="out"><i class="fa-solid fa-right-from-bracket"></i><span data-i18n="logout">Keluar</span></button>
+    </div>
   </header>
   <main id="view"></main>
   <nav id="nav"></nav>
 </div>
 
-<div id="wms" class="hide">
-  <button class="btn" id="back"><i class="fa-solid fa-arrow-left"></i>Kembali ke Dashboard</button>
-  <iframe id="fr" title="Sistem Gudang 3D" src="wms3d.html"></iframe>
-</div>
 <div id="sheet" class="hide"><div id="sheetc"></div></div>
 
 <script>
+/* ============================================================
+   BIFETINDO WMS — APP  (dengan dukungan 9 bahasa)
+   ============================================================ */
 const $=s=>document.querySelector(s);
 const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
 const rp=n=>'Rp '+Number(n).toLocaleString('id-ID');
 const ic=n=>'<i class="fa-solid fa-'+n+'"></i>';
+
+/* ======================= i18n ======================= */
+const LANGS=[
+  {c:"id",n:"Indonesia",f:"🇮🇩"},
+  {c:"en",n:"English",f:"🇬🇧"},
+  {c:"ko",n:"한국어",f:"🇰🇷"},
+  {c:"zh",n:"中文",f:"🇨🇳"},
+  {c:"ja",n:"日本語",f:"🇯🇵"},
+  {c:"fr",n:"Français",f:"🇫🇷"},
+  {c:"ru",n:"Русский",f:"🇷🇺"},
+  {c:"de",n:"Deutsch",f:"🇩🇪"},
+  {c:"it",n:"Italiano",f:"🇮🇹"}
+];
+
+/* urutan nilai: [id, en, ko, zh, ja, fr, ru, de, it] */
+const D={
+welcome:["Selamat datang","Welcome","환영합니다","欢迎","ようこそ","Bienvenue","Добро пожаловать","Willkommen","Benvenuto"],
+"auth.sub":["Kelola gudang, stok 3D, dan pasar B2B dalam satu platform.","Manage your warehouse, 3D stock, and B2B market in one platform.","창고, 3D 재고, B2B 마켓을 하나의 플랫폼에서 관리하세요.","在一个平台管理仓库、3D库存和B2B市场。","倉庫・3D在庫・B2Bマーケットを1つのプラットフォームで。","Gérez entrepôt, stock 3D et marché B2B sur une seule plateforme.","Управляйте складом, 3D-запасами и B2B-рынком на одной платформе.","Verwalten Sie Lager, 3D-Bestand und B2B-Markt auf einer Plattform.","Gestisci magazzino, stock 3D e mercato B2B in un'unica piattaforma."],
+email:["Email","Email","이메일","邮箱","メール","E-mail","Эл. почта","E-Mail","Email"],
+password:["Kata sandi","Password","비밀번호","密码","パスワード","Mot de passe","Пароль","Passwort","Password"],
+login:["Masuk","Sign in","로그인","登录","ログイン","Connexion","Войти","Anmelden","Accedi"],
+or:["atau","or","또는","或","または","ou","или","oder","oppure"],
+register:["Daftar akun baru","Create account","새 계정 만들기","注册新账号","新規アカウント作成","Créer un compte","Создать аккаунт","Konto erstellen","Crea un account"],
+"ph.pass":["Minimal 6 karakter","At least 6 characters","6자 이상","至少6个字符","6文字以上","Au moins 6 caractères","Не менее 6 символов","Mindestens 6 Zeichen","Almeno 6 caratteri"],
+legal:["Dengan masuk, Anda menyetujui","By signing in you agree to the","로그인하면 다음에 동의하게 됩니다:","登录即表示您同意","ログインすると以下に同意したものとみなされます:","En vous connectant, vous acceptez les","Входя, вы принимаете","Mit der Anmeldung akzeptieren Sie die","Accedendo accetti i"],
+"legal.terms":["Ketentuan Layanan","Terms of Service","서비스 약관","服务条款","利用規約","Conditions d'utilisation","Условия использования","Nutzungsbedingungen","Termini di servizio"],
+"legal.and":["dan","and","및","和","および","et","и","und","e"],
+"legal.privacy":["Kebijakan Privasi","Privacy Policy","개인정보 처리방침","隐私政策","プライバシーポリシー","Politique de confidentialité","Политика конфиденциальности","Datenschutzrichtlinie","Informativa sulla privacy"],
+logout:["Keluar","Sign out","로그아웃","退出","ログアウト","Déconnexion","Выйти","Abmelden","Esci"],
+
+"nav.home":["Beranda","Home","홈","首页","ホーム","Accueil","Главная","Start","Home"],
+"nav.wms":["3D WMS","3D WMS","3D WMS","3D WMS","3D WMS","3D WMS","3D WMS","3D WMS","3D WMS"],
+"nav.market":["Pasar","Market","마켓","市场","マーケット","Marché","Рынок","Markt","Mercato"],
+"nav.plans":["Paket","Plans","요금제","套餐","プラン","Forfaits","Тарифы","Tarife","Piani"],
+"nav.ads":["Iklan","Ads","광고","广告","広告","Publicités","Реклама","Anzeigen","Annunci"],
+"nav.auction":["Lelang","Auction","경매","拍卖","オークション","Enchères","Аукцион","Auktion","Aste"],
+"nav.settings":["Pengaturan","Settings","설정","设置","設定","Paramètres","Настройки","Einstellungen","Impostazioni"],
+
+"greet.hi":["Selamat datang 👋","Welcome 👋","환영합니다 👋","欢迎 👋","ようこそ 👋","Bienvenue 👋","Добро пожаловать 👋","Willkommen 👋","Benvenuto 👋"],
+"greet.hello":["Halo, {0}","Hi, {0}","안녕하세요, {0}","你好，{0}","こんにちは、{0}","Bonjour, {0}","Здравствуйте, {0}","Hallo, {0}","Ciao, {0}"],
+notif:["Notifikasi","Notifications","알림","通知","通知","Notifications","Уведомления","Benachrichtigungen","Notifiche"],
+filter:["Filter","Filter","필터","筛选","絞り込み","Filtrer","Фильтр","Filter","Filtra"],
+"search.ph":["Cari produk, mitra, atau layanan...","Search products, partners, or services...","상품, 파트너, 서비스 검색...","搜索产品、合作伙伴或服务...","商品・パートナー・サービスを検索...","Rechercher produits, partenaires ou services...","Поиск товаров, партнёров или услуг...","Produkte, Partner oder Dienste suchen...","Cerca prodotti, partner o servizi..."],
+"plan.badge":["Paket {0}","{0} Plan","{0} 요금제","{0} 套餐","{0}プラン","Forfait {0}","Тариф {0}","Tarif {0}","Piano {0}"],
+"promo.active":["Langganan aktif","Subscription active","구독 활성","订阅已激活","サブスク有効","Abonnement actif","Подписка активна","Abo aktiv","Abbonamento attivo"],
+"promo.up":["Upgrade & Hemat 20%","Upgrade & save 20%","업그레이드 & 20% 할인","升级并节省20%","アップグレードで20%節約","Passez à la version supérieure et économisez 20 %","Обновите и сэкономьте 20%","Upgrade & 20 % sparen","Aggiorna e risparmia il 20%"],
+"promo.d1":["Nikmati semua fitur B2B tanpa batas","Enjoy unlimited B2B features","B2B 기능을 무제한으로 즐기세요","畅享无限B2B功能","B2B機能を無制限に","Profitez de toutes les fonctions B2B","Все B2B-функции без ограничений","Alle B2B-Funktionen unbegrenzt","Tutte le funzioni B2B senza limiti"],
+"promo.d2":["Buka fitur B2B lengkap sekarang","Unlock full B2B features now","지금 모든 B2B 기능을 여세요","立即解锁完整B2B功能","今すぐB2B機能をすべて解放","Débloquez toutes les fonctions B2B","Откройте все B2B-функции","Jetzt alle B2B-Funktionen freischalten","Sblocca ora tutte le funzioni B2B"],
+"promo.renew":["Perpanjang","Renew","갱신","续费","更新","Renouveler","Продлить","Verlängern","Rinnova"],
+"promo.upgrade":["Upgrade","Upgrade","업그레이드","升级","アップグレード","Améliorer","Обновить","Upgrade","Aggiorna"],
+quick:["Menu Cepat","Quick Menu","빠른 메뉴","快捷菜单","クイックメニュー","Menu rapide","Быстрое меню","Schnellmenü","Menu rapido"],
+"q.profile":["Profil","Profile","프로필","资料","プロフィール","Profil","Профиль","Profil","Profilo"],
+"q.verify":["Verifikasi","Verify","인증","验证","認証","Vérifier","Проверка","Prüfen","Verifica"],
+"st.racks":["Rak","Racks","랙","货架","ラック","Rayons","Стеллажи","Regale","Scaffali"],
+"st.products":["Produk","Products","상품","商品","商品","Produits","Товары","Produkte","Prodotti"],
+"st.ads":["Iklan","Ads","광고","广告","広告","Pubs","Реклама","Anzeigen","Annunci"],
+"st.trx":["Trx","Trx","거래","交易","取引","Trans.","Сдел.","Trans.","Trans."],
+shortcuts:["Pintasan","Shortcuts","바로가기","快捷入口","ショートカット","Raccourcis","Быстрый доступ","Verknüpfungen","Scorciatoie"],
+"sc.explore":["Jelajahi Pasar","Explore Market","마켓 둘러보기","浏览市场","マーケットを見る","Explorer le marché","Открыть рынок","Markt entdecken","Esplora il mercato"],
+"sc.explore.d":["Temukan produk B2B","Find B2B products","B2B 상품 찾기","寻找B2B产品","B2B商品を探す","Trouvez des produits B2B","Найдите B2B-товары","B2B-Produkte finden","Trova prodotti B2B"],
+"sc.upgrade":["Upgrade Paket","Upgrade Plan","요금제 업그레이드","升级套餐","プランをアップグレード","Améliorer le forfait","Обновить тариф","Tarif upgraden","Aggiorna piano"],
+"sc.upgrade.d":["Buka fitur lengkap","Unlock all features","모든 기능 열기","解锁全部功能","全機能を解放","Débloquez tout","Откройте все функции","Alle Funktionen freischalten","Sblocca tutto"],
+"sc.profile":["Lengkapi Profil","Complete Profile","프로필 완성","完善资料","プロフィールを完成","Compléter le profil","Заполнить профиль","Profil vervollständigen","Completa il profilo"],
+"sc.profile.d":["Verifikasi perusahaan","Verify company","기업 인증","企业认证","企業認証","Vérifier l'entreprise","Проверить компанию","Firma verifizieren","Verifica azienda"],
+"sc.auction":["Ikut Lelang","Join Auction","경매 참여","参与拍卖","オークションに参加","Participer aux enchères","Участвовать в аукционе","Auktion beitreten","Partecipa all'asta"],
+"sc.auction.d":["Tawar barang impian","Bid on desired items","원하는 물건에 입찰","竞拍心仪商品","欲しい商品に入札","Enchérissez sur vos articles","Сделайте ставку на товар","Auf Wunschartikel bieten","Offri sull'articolo desiderato"],
+
+"m.explore":["Jelajah","Explore","둘러보기","浏览","見る","Explorer","Обзор","Entdecken","Esplora"],
+"m.mine":["Jualan Saya","My Listings","내 판매","我的商品","出品商品","Mes annonces","Мои товары","Meine Angebote","I miei annunci"],
+"m.empty":["Belum ada produk di pasar.","No products in the market yet.","아직 마켓에 상품이 없습니다.","市场暂无商品。","マーケットに商品がまだありません。","Aucun produit sur le marché.","На рынке пока нет товаров.","Noch keine Produkte im Markt.","Nessun prodotto sul mercato."],
+"m.locked":["Fitur jual beli tersedia untuk paket Pro dan Bisnis.","Selling is available on Pro and Business plans.","판매 기능은 Pro 및 Business 요금제에서 사용할 수 있습니다.","买卖功能适用于Pro和商业套餐。","出品機能はPro・ビジネスプランで利用できます。","La vente est disponible avec les forfaits Pro et Business.","Продажа доступна на тарифах Pro и Business.","Verkaufen ist in Pro- und Business-Tarifen verfügbar.","La vendita è disponibile nei piani Pro e Business."],
+"m.count":["{0} / {1} produk","{0} / {1} products","{0} / {1} 상품","{0} / {1} 件商品","{0} / {1} 商品","{0} / {1} produits","{0} / {1} товаров","{0} / {1} Produkte","{0} / {1} prodotti"],
+"m.add":["Tambah Produk","Add Product","상품 추가","添加商品","商品を追加","Ajouter un produit","Добавить товар","Produkt hinzufügen","Aggiungi prodotto"],
+"m.none":["Belum ada produk yang kamu jual.","You have no products yet.","판매 중인 상품이 없습니다.","你还没有商品。","出品中の商品はありません。","Vous n'avez aucun produit.","У вас пока нет товаров.","Noch keine Produkte.","Non hai ancora prodotti."],
+"view.plans":["Lihat Paket Langganan","View Subscription Plans","요금제 보기","查看订阅套餐","プランを見る","Voir les forfaits","Посмотреть тарифы","Tarife ansehen","Vedi i piani"],
+"tag.sponsor":["Sponsor","Sponsored","스폰서","赞助","スポンサー","Sponsorisé","Спонсор","Gesponsert","Sponsorizzato"],
+stock:["Stok {0}","Stock {0}","재고 {0}","库存 {0}","在庫 {0}","Stock {0}","Склад {0}","Bestand {0}","Scorte {0}"],
+delete:["Hapus","Delete","삭제","删除","削除","Supprimer","Удалить","Löschen","Elimina"],
+
+"ad.locked":["Iklan berbayar tersedia untuk paket Pro dan Bisnis.","Paid ads are available on Pro and Business plans.","유료 광고는 Pro 및 Business 요금제에서 사용할 수 있습니다.","付费广告适用于Pro和商业套餐。","有料広告はPro・ビジネスプランで利用できます。","Les annonces payantes sont disponibles avec les forfaits Pro et Business.","Платная реклама доступна на тарифах Pro и Business.","Bezahlte Anzeigen sind in Pro- und Business-Tarifen verfügbar.","Gli annunci a pagamento sono disponibili nei piani Pro e Business."],
+"ad.count":["{0} / {1} iklan aktif","{0} / {1} active ads","{0} / {1} 활성 광고","{0} / {1} 个有效广告","{0} / {1} 有効広告","{0} / {1} annonces actives","{0} / {1} активных объявлений","{0} / {1} aktive Anzeigen","{0} / {1} annunci attivi"],
+"ad.new":["Buat Iklan","Create Ad","광고 만들기","创建广告","広告を作成","Créer une annonce","Создать объявление","Anzeige erstellen","Crea annuncio"],
+"ad.active":["Aktif","Active","활성","生效中","有効","Actif","Активно","Aktiv","Attivo"],
+"ad.ended":["Berakhir","Ended","종료됨","已结束","終了","Terminé","Завершено","Beendet","Terminato"],
+"ad.3d":["Billboard 3D","3D Billboard","3D 빌보드","3D广告牌","3Dビルボード","Panneau 3D","3D-билборд","3D-Werbetafel","Cartellone 3D"],
+"ad.feed":["Feed Pasar","Market Feed","마켓 피드","市场信息流","マーケットフィード","Fil du marché","Лента рынка","Markt-Feed","Feed del mercato"],
+"ad.until":["s.d. {0}","until {0}","{0}까지","至 {0}","{0}まで","jusqu'au {0}","до {0}","bis {0}","fino al {0}"],
+"ad.none":["Belum ada iklan.","No ads yet.","아직 광고가 없습니다.","暂无广告。","広告はまだありません。","Aucune annonce.","Объявлений пока нет.","Noch keine Anzeigen.","Nessun annuncio."],
+
+"pl.monthly":["Bulanan","Monthly","월간","按月","月払い","Mensuel","Ежемесячно","Monatlich","Mensile"],
+"pl.yearly":["Tahunan","Yearly","연간","按年","年払い","Annuel","Ежегодно","Jährlich","Annuale"],
+"pl.popular":["Populer","Popular","인기","热门","人気","Populaire","Популярный","Beliebt","Popolare"],
+"pl.free":["Gratis","Free","무료","免费","無料","Gratuit","Бесплатно","Kostenlos","Gratis"],
+"pl.permonth":["/bulan","/mo","/월","/月","/月","/mois","/мес","/Monat","/mese"],
+"pl.peryear":["/tahun","/yr","/년","/年","/年","/an","/год","/Jahr","/anno"],
+"pl.choose":["Pilih {0}","Choose {0}","{0} 선택","选择 {0}","{0}を選択","Choisir {0}","Выбрать {0}","{0} wählen","Scegli {0}"],
+"pl.history":["Riwayat pembayaran","Payment history","결제 내역","支付记录","支払い履歴","Historique des paiements","История платежей","Zahlungsverlauf","Cronologia pagamenti"],
+"pl.notx":["Belum ada transaksi.","No transactions yet.","거래 내역이 없습니다.","暂无交易。","取引はまだありません。","Aucune transaction.","Транзакций пока нет.","Noch keine Transaktionen.","Nessuna transazione."],
+"pl.paid":["lunas","paid","완료","已付","支払済","payé","оплачено","bezahlt","pagato"],
+"pl.n.pro":["Pro","Pro","Pro","Pro","Pro","Pro","Pro","Pro","Pro"],
+"pl.n.bisnis":["Bisnis","Business","비즈니스","商业版","ビジネス","Business","Бизнес","Business","Business"],
+
+"f.3dwms":["Akses 3D WMS","3D WMS access","3D WMS 이용","3D WMS访问","3D WMSアクセス","Accès 3D WMS","Доступ к 3D WMS","3D-WMS-Zugang","Accesso 3D WMS"],
+"f.market":["Lihat pasar B2B","Browse the B2B market","B2B 마켓 보기","浏览B2B市场","B2Bマーケットを見る","Voir le marché B2B","Просмотр B2B-рынка","B2B-Markt ansehen","Sfoglia il mercato B2B"],
+"f.buy":["Beli dari mitra","Buy from partners","파트너에게 구매","从合作伙伴购买","パートナーから購入","Acheter auprès des partenaires","Покупка у партнёров","Bei Partnern kaufen","Acquista dai partner"],
+"f.allfree":["Semua fitur Gratis","All Free features","무료 기능 모두","全部免费功能","無料の全機能","Toutes les fonctions gratuites","Все функции Free","Alle Gratis-Funktionen","Tutte le funzioni Free"],
+"f.sell20":["Jual hingga 20 produk","Sell up to 20 products","최대 20개 상품 판매","最多销售20件商品","最大20商品を販売","Vendre jusqu'à 20 produits","Продажа до 20 товаров","Bis zu 20 Produkte verkaufen","Vendita fino a 20 prodotti"],
+"f.ad1":["1 iklan aktif di Pasar B2B","1 active ad in the B2B Market","B2B 마켓 광고 1개","B2B市场1个广告","B2Bマーケット広告1件","1 annonce active sur le marché B2B","1 активное объявление на B2B-рынке","1 aktive Anzeige im B2B-Markt","1 annuncio attivo nel mercato B2B"],
+"f.auc2":["Buka hingga 2 lelang aktif","Open up to 2 live auctions","최대 2개 경매 진행","最多2场拍卖","最大2件のオークション","Ouvrir jusqu'à 2 enchères","До 2 активных аукционов","Bis zu 2 Auktionen","Fino a 2 aste attive"],
+"f.wa":["Hubungi Sales via WhatsApp","Contact Sales via WhatsApp","WhatsApp으로 세일즈 문의","通过WhatsApp联系销售","WhatsAppで営業に連絡","Contacter les ventes via WhatsApp","Связаться с продажами в WhatsApp","Vertrieb per WhatsApp kontaktieren","Contatta le vendite via WhatsApp"],
+"f.allpro":["Semua fitur Pro","All Pro features","Pro 기능 모두","全部Pro功能","Proの全機能","Toutes les fonctions Pro","Все функции Pro","Alle Pro-Funktionen","Tutte le funzioni Pro"],
+"f.unlimited":["Produk jual tanpa batas","Unlimited products","상품 판매 무제한","商品无限","商品販売無制限","Produits illimités","Товары без ограничений","Unbegrenzte Produkte","Prodotti illimitati"],
+"f.ad5":["5 iklan aktif","5 active ads","활성 광고 5개","5个有效广告","有効広告5件","5 annonces actives","5 активных объявлений","5 aktive Anzeigen","5 annunci attivi"],
+"f.auc10":["Buka hingga 10 lelang aktif","Open up to 10 live auctions","최대 10개 경매 진행","最多10场拍卖","最大10件のオークション","Ouvrir jusqu'à 10 enchères","До 10 активных аукционов","Bis zu 10 Auktionen","Fino a 10 aste attive"],
+"f.billboard":["Billboard iklan di gudang 3D","Ad billboard in the 3D warehouse","3D 창고 광고 빌보드","3D仓库广告牌","3D倉庫の広告ビルボード","Panneau publicitaire dans l'entrepôt 3D","Рекламный билборд на 3D-складе","Werbetafel im 3D-Lager","Cartellone pubblicitario nel magazzino 3D"],
+"f.badge":["Badge mitra terverifikasi","Verified partner badge","인증 파트너 배지","认证合作伙伴徽章","認証パートナーバッジ","Badge partenaire vérifié","Значок проверенного партнёра","Verifiziertes Partner-Abzeichen","Badge partner verificato"],
+
+"lel.locked":["Fitur lelang tersedia untuk paket Pro dan Bisnis.","Auctions are available on Pro and Business plans.","경매 기능은 Pro 및 Business 요금제에서 사용할 수 있습니다.","拍卖功能适用于Pro和商业套餐。","オークション機能はPro・ビジネスプランで利用できます。","Les enchères sont disponibles avec les forfaits Pro et Business.","Аукционы доступны на тарифах Pro и Business.","Auktionen sind in Pro- und Business-Tarifen verfügbar.","Le aste sono disponibili nei piani Pro e Business."],
+"lel.live":["Lelang Aktif","Live Auctions","진행 중인 경매","正在拍卖","開催中のオークション","Enchères en cours","Активные аукционы","Laufende Auktionen","Aste attive"],
+"lel.history":["Riwayat","History","내역","历史","履歴","Historique","История","Verlauf","Cronologia"],
+"lel.count":["{0} / {1} lelang aktif","{0} / {1} live auctions","{0} / {1} 진행 중인 경매","{0} / {1} 场拍卖","{0} / {1} 開催中","{0} / {1} enchères actives","{0} / {1} активных аукционов","{0} / {1} aktive Auktionen","{0} / {1} aste attive"],
+"lel.new":["Buka Lelang","Start Auction","경매 열기","发起拍卖","オークションを開始","Lancer une enchère","Открыть аукцион","Auktion starten","Avvia asta"],
+"lel.mine":["Milikmu","Yours","내 경매","你的","あなたの","À vous","Ваш","Deins","Tuo"],
+"lel.top":["Tawaran tertinggi","Highest bid","최고 입찰가","最高出价","最高入札額","Meilleure offre","Лучшая ставка","Höchstgebot","Offerta più alta"],
+"lel.start":["Harga awal","Starting price","시작가","起拍价","開始価格","Prix de départ","Начальная цена","Startpreis","Prezzo iniziale"],
+"lel.remain":["Sisa waktu","Time left","남은 시간","剩余时间","残り時間","Temps restant","Осталось","Restzeit","Tempo rimasto"],
+"lel.status":["Status","Status","상태","状态","ステータス","Statut","Статус","Status","Stato"],
+"lel.done":["Selesai","Ended","종료","已结束","終了","Terminé","Завершён","Beendet","Terminato"],
+"lel.bids":["{0} tawaran","{0} bids","입찰 {0}건","{0} 次出价","{0} 入札","{0} offres","{0} ставок","{0} Gebote","{0} offerte"],
+"lel.step":["kelipatan {0}","increment {0}","최소 단위 {0}","每次加价 {0}","刻み {0}","pas de {0}","шаг {0}","Schritt {0}","passo {0}"],
+"lel.by":["oleh {0}","by {0}","{0}","由 {0}","{0}","par {0}","{0}","von {0}","da {0}"],
+"lel.end":["Akhiri","End","종료하기","结束","終了する","Terminer","Завершить","Beenden","Termina"],
+"lel.bid":["Bid {0}","Bid {0}","입찰 {0}","出价 {0}","入札 {0}","Enchérir {0}","Ставка {0}","Bieten {0}","Offri {0}"],
+"lel.winner":["Pemenang: {0} · {1}","Winner: {0} · {1}","낙찰자: {0} · {1}","中标者：{0} · {1}","落札者: {0} · {1}","Gagnant : {0} · {1}","Победитель: {0} · {1}","Gewinner: {0} · {1}","Vincitore: {0} · {1}"],
+"lel.nobid":["Tidak ada penawar","No bidders","입찰자 없음","无人出价","入札者なし","Aucune offre","Нет участников","Keine Bieter","Nessuna offerta"],
+"lel.empty1":["Belum ada lelang aktif.","No live auctions yet.","진행 중인 경매가 없습니다.","暂无进行中的拍卖。","開催中のオークションはありません。","Aucune enchère en cours.","Активных аукционов нет.","Keine laufenden Auktionen.","Nessuna asta attiva."],
+"lel.empty2":["Belum ada riwayat lelang.","No auction history yet.","경매 내역이 없습니다.","暂无拍卖历史。","オークション履歴はありません。","Aucun historique d'enchères.","История аукционов пуста.","Noch kein Auktionsverlauf.","Nessuna cronologia aste."],
+
+"adm.title":["Verifikasi Pembayaran","Payment Verification","결제 확인","付款核实","支払い確認","Vérification des paiements","Проверка платежей","Zahlungsprüfung","Verifica pagamenti"],
+"adm.locked":["Khusus admin.","Admins only.","관리자 전용입니다.","仅限管理员。","管理者専用です。","Réservé aux admins.","Только для админов.","Nur für Admins.","Solo amministratori."],
+"adm.wait":["Menunggu","Pending","대기 중","待处理","保留中","En attente","Ожидает","Ausstehend","In attesa"],
+"adm.approve":["Setujui","Approve","승인","批准","承認","Approuver","Одобрить","Genehmigen","Approva"],
+"adm.reject":["Tolak","Reject","거절","拒绝","却下","Rejeter","Отклонить","Ablehnen","Rifiuta"],
+"adm.none":["Tidak ada pembayaran yang menunggu.","No pending payments.","대기 중인 결제가 없습니다.","没有待处理的付款。","保留中の支払いはありません。","Aucun paiement en attente.","Нет ожидающих платежей.","Keine ausstehenden Zahlungen.","Nessun pagamento in attesa."],
+"adm.month":["1 bulan","1 month","1개월","1个月","1か月","1 mois","1 месяц","1 Monat","1 mese"],
+"adm.year":["1 tahun","1 year","1년","1年","1年","1 an","1 год","1 Jahr","1 anno"],
+"adm.pkg":["Paket","Plan","요금제","套餐","プラン","Forfait","Тариф","Tarif","Piano"],
+
+"set.lang":["Bahasa","Language","언어","语言","言語","Langue","Язык","Sprache","Lingua"],
+"set.lang.d":["Pilih bahasa tampilan aplikasi","Choose the app display language","앱 표시 언어 선택","选择应用显示语言","アプリの表示言語を選択","Choisissez la langue de l'application","Выберите язык интерфейса","Anzeigesprache wählen","Scegli la lingua dell'app"],
+"set.uid":["UID akun","Account UID","계정 UID","账户UID","アカウントUID","UID du compte","UID аккаунта","Konto-UID","UID account"],
+"set.company":["Profil perusahaan","Company profile","기업 프로필","公司资料","企業プロフィール","Profil de l'entreprise","Профиль компании","Firmenprofil","Profilo aziendale"],
+"set.name":["Nama PT","Company name","회사명","公司名称","会社名","Nom de l'entreprise","Название компании","Firmenname","Nome azienda"],
+"set.field":["Bidang usaha","Industry","업종","行业","業種","Secteur","Сфера деятельности","Branche","Settore"],
+"set.addr":["Alamat kantor","Office address","사무실 주소","办公地址","勤務先住所","Adresse du bureau","Адрес офиса","Büroadresse","Indirizzo ufficio"],
+"set.contact":["Nomor kontak","Contact number","연락처","联系电话","連絡先番号","Numéro de contact","Контактный номер","Kontaktnummer","Numero di contatto"],
+"set.legal":["Dokumen legalitas","Legal documents","법적 서류","法律文件","法的書類","Documents légaux","Юридические документы","Rechtliche Dokumente","Documenti legali"],
+"set.notup":["Belum diunggah","Not uploaded","미업로드","未上传","未アップロード","Non téléchargé","Не загружено","Nicht hochgeladen","Non caricato"],
+"set.ads":["Tampilan iklan & mitra","Ad & partner display","광고 및 파트너 표시","广告与合作伙伴展示","広告・パートナー表示","Affichage annonces & partenaires","Показ рекламы и партнёров","Anzeigen- & Partneranzeige","Visualizzazione annunci e partner"],
+"set.t1":["Tampilkan profil di Pasar B2B","Show profile in B2B Market","B2B 마켓에 프로필 표시","在市场展示资料","B2Bマーケットにプロフィールを表示","Afficher le profil sur le marché B2B","Показывать профиль на B2B-рынке","Profil im B2B-Markt anzeigen","Mostra profilo nel mercato B2B"],
+"set.t3":["Tampilkan produk utama di Hub","Show main products in Hub","허브에 주요 상품 표시","在中心展示主推商品","ハブに主要商品を表示","Afficher les produits principaux dans le Hub","Показывать товары в хабе","Hauptprodukte im Hub anzeigen","Mostra prodotti principali nell'Hub"],
+"set.save":["Simpan Perubahan","Save Changes","변경사항 저장","保存更改","変更を保存","Enregistrer","Сохранить изменения","Änderungen speichern","Salva modifiche"],
+
+"f.pname":["Nama produk","Product name","상품명","商品名称","商品名","Nom du produit","Название товара","Produktname","Nome prodotto"],
+"f.price":["Harga (Rp)","Price (Rp)","가격 (Rp)","价格 (Rp)","価格 (Rp)","Prix (Rp)","Цена (Rp)","Preis (Rp)","Prezzo (Rp)"],
+"f.stock":["Stok","Stock","재고","库存","在庫","Stock","Склад","Bestand","Scorte"],
+"f.cat":["Kategori","Category","카테고리","类别","カテゴリ","Catégorie","Категория","Kategorie","Categoria"],
+"f.ready":["Ready Stock","Ready Stock","재고 있음","现货","在庫あり","En stock","В наличии","Auf Lager","Pronta consegna"],
+"f.po":["Pre-Order","Pre-Order","예약 주문","预售","予約注文","Précommande","Предзаказ","Vorbestellung","Preordine"],
+"f.svc":["Jasa","Service","서비스","服务","サービス","Service","Услуга","Dienstleistung","Servizio"],
+"f.save":["Simpan","Save","저장","保存","保存","Enregistrer","Сохранить","Speichern","Salva"],
+"f.cancel":["Batal","Cancel","취소","取消","キャンセル","Annuler","Отмена","Abbrechen","Annulla"],
+"f.adtitle":["Judul iklan","Ad title","광고 제목","广告标题","広告タイトル","Titre de l'annonce","Заголовок объявления","Anzeigentitel","Titolo annuncio"],
+"f.desc":["Deskripsi","Description","설명","描述","説明","Description","Описание","Beschreibung","Descrizione"],
+"f.type":["Jenis","Type","유형","类型","種類","Type","Тип","Typ","Tipo"],
+"f.days":["Durasi (hari)","Duration (days)","기간 (일)","时长（天）","期間（日）","Durée (jours)","Длительность (дни)","Dauer (Tage)","Durata (giorni)"],
+"f.publish":["Tayangkan","Publish","게시","发布","公開する","Publier","Опубликовать","Veröffentlichen","Pubblica"],
+"f.itemname":["Nama barang","Item name","물품명","商品名称","商品名","Nom de l'article","Название товара","Artikelname","Nome articolo"],
+"f.startprice":["Harga awal (Rp)","Starting price (Rp)","시작가 (Rp)","起拍价 (Rp)","開始価格 (Rp)","Prix de départ (Rp)","Начальная цена (Rp)","Startpreis (Rp)","Prezzo iniziale (Rp)"],
+"f.bidstep":["Kelipatan bid (Rp)","Bid increment (Rp)","입찰 단위 (Rp)","加价幅度 (Rp)","入札単位 (Rp)","Pas d'enchère (Rp)","Шаг ставки (Rp)","Gebotsschritt (Rp)","Passo offerta (Rp)"],
+"f.hours":["Durasi (jam)","Duration (hours)","기간 (시간)","时长（小时）","期間（時間）","Durée (heures)","Длительность (часы)","Dauer (Stunden)","Durata (ore)"],
+"f.startauc":["Mulai Lelang","Start Auction","경매 시작","开始拍卖","オークション開始","Démarrer l'enchère","Начать аукцион","Auktion starten","Avvia asta"],
+
+"pay.title":["Pembayaran","Payment","결제","支付","お支払い","Paiement","Оплата","Zahlung","Pagamento"],
+"pay.plan":["Paket {0} ({1})","{0} plan ({1})","{0} 요금제 ({1})","{0} 套餐（{1}）","{0}プラン（{1}）","Forfait {0} ({1})","Тариф {0} ({1})","Tarif {0} ({1})","Piano {0} ({1})"],
+"pay.unique":["Kode unik","Unique code","고유 코드","唯一码","固有コード","Code unique","Уникальный код","Eindeutiger Code","Codice univoco"],
+"pay.total":["Total transfer","Total transfer","총 이체 금액","转账总额","振込合計","Total à virer","Итого к переводу","Gesamtüberweisung","Totale da versare"],
+"pay.copy":["Salin","Copy","복사","复制","コピー","Copier","Копировать","Kopieren","Copia"],
+"pay.sender":["Nama pengirim / catatan","Sender name / note","보낸 사람 / 메모","汇款人 / 备注","送金者 / メモ","Nom de l'expéditeur / note","Имя отправителя / примечание","Absendername / Notiz","Nome mittente / nota"],
+"pay.ph":["Contoh: Budi, BCA","e.g. Budi, BCA","예: Budi, BCA","例如：Budi, BCA","例: Budi, BCA","Ex. : Budi, BCA","Напр.: Budi, BCA","Z. B. Budi, BCA","Es.: Budi, BCA"],
+"pay.done":["Saya sudah bayar","I have paid","결제 완료했습니다","我已完成付款","支払いました","J'ai payé","Я оплатил","Ich habe bezahlt","Ho pagato"],
+"pay.note":["Paket aktif setelah pembayaran diverifikasi admin.","The plan activates after admin verification.","관리자 확인 후 요금제가 활성화됩니다.","管理员核实后套餐生效。","管理者の確認後にプランが有効になります。","Le forfait s'active après vérification par l'admin.","Тариф активируется после проверки администратором.","Der Tarif wird nach Admin-Prüfung aktiviert.","Il piano si attiva dopo la verifica dell'admin."],
+"pay.usd":["Kirim setara USD sesuai kurs hari ini.","Send the USD equivalent at today's rate.","오늘 환율로 USD 상당액을 보내세요.","按今日汇率发送等值美元。","本日のレートでUSD相当額をお送りください。","Envoyez l'équivalent en USD au taux du jour.","Отправьте эквивалент в USD по сегодняшнему курсу.","Senden Sie den USD-Gegenwert zum heutigen Kurs.","Invia l'equivalente in USD al cambio odierno."],
+"pay.dana":["Kirim ke nomor DANA","Send to DANA number","DANA 번호로 전송","转账至DANA号码","DANA番号へ送金","Envoyer au numéro DANA","Отправить на номер DANA","An DANA-Nummer senden","Invia al numero DANA"],
+"pay.ovo":["Kirim ke nomor OVO","Send to OVO number","OVO 번호로 전송","转账至OVO号码","OVO番号へ送金","Envoyer au numéro OVO","Отправить на номер OVO","An OVO-Nummer senden","Invia al numero OVO"],
+"pay.paypal":["Akun PayPal","PayPal account","PayPal 계정","PayPal账户","PayPalアカウント","Compte PayPal","Аккаунт PayPal","PayPal-Konto","Account PayPal"],
+"pay.an":["a.n. Fajar Abdulloh","a/n Fajar Abdulloh","예금주 Fajar Abdulloh","户名 Fajar Abdulloh","名義 Fajar Abdulloh","au nom de Fajar Abdulloh","на имя Fajar Abdulloh","Inhaber Fajar Abdulloh","intestato a Fajar Abdulloh"],
+
+"t.copied":["Tersalin","Copied","복사됨","已复制","コピーしました","Copié","Скопировано","Kopiert","Copiato"],
+"t.pending":["Menunggu verifikasi admin","Awaiting admin verification","관리자 확인 대기 중","等待管理员核实","管理者の確認待ち","En attente de vérification","Ожидает проверки админом","Wartet auf Admin-Prüfung","In attesa di verifica"],
+"t.approved":["Pembayaran disetujui","Payment approved","결제가 승인되었습니다","付款已批准","支払いが承認されました","Paiement approuvé","Платёж одобрен","Zahlung genehmigt","Pagamento approvato"],
+"t.bidok":["Bid berhasil","Bid placed","입찰 완료","出价成功","入札しました","Offre placée","Ставка сделана","Gebot abgegeben","Offerta inviata"],
+"t.saved":["Perubahan disimpan","Changes saved","변경사항 저장됨","已保存","保存しました","Modifications enregistrées","Изменения сохранены","Änderungen gespeichert","Modifiche salvate"],
+"t.fillnp":["Isi nama dan harga","Fill in name and price","이름과 가격을 입력하세요","请填写名称和价格","名前と価格を入力してください","Renseignez le nom et le prix","Укажите название и цену","Name und Preis angeben","Inserisci nome e prezzo"],
+"t.limitp":["Batas produk tercapai, upgrade paket","Product limit reached, upgrade your plan","상품 한도에 도달했습니다. 요금제를 업그레이드하세요","已达商品上限，请升级套餐","商品上限に達しました。プランをアップグレードしてください","Limite de produits atteinte, améliorez votre forfait","Достигнут лимит товаров, обновите тариф","Produktlimit erreicht, Tarif upgraden","Limite prodotti raggiunto, aggiorna il piano"],
+"t.adtitle":["Judul wajib diisi","Title is required","제목을 입력하세요","标题必填","タイトルは必須です","Le titre est obligatoire","Укажите заголовок","Titel erforderlich","Il titolo è obbligatorio"],
+"t.limitad":["Kuota iklan penuh, upgrade paket","Ad quota full, upgrade your plan","광고 한도가 가득 찼습니다. 요금제를 업그레이드하세요","广告额度已满，请升级套餐","広告枠が満杯です。プランをアップグレードしてください","Quota d'annonces atteint, améliorez votre forfait","Квота объявлений исчерпана, обновите тариф","Anzeigenkontingent voll, Tarif upgraden","Quota annunci piena, aggiorna il piano"],
+"t.fillau":["Isi nama, harga awal, dan kelipatan","Fill in name, starting price, and increment","이름, 시작가, 입찰 단위를 입력하세요","请填写名称、起拍价和加价幅度","名前・開始価格・刻みを入力してください","Renseignez le nom, le prix de départ et le pas","Укажите название, начальную цену и шаг","Name, Startpreis und Schritt angeben","Inserisci nome, prezzo iniziale e passo"],
+"t.limitau":["Kuota lelang penuh, upgrade paket","Auction quota full, upgrade your plan","경매 한도가 가득 찼습니다. 요금제를 업그레이드하세요","拍卖额度已满，请升级套餐","オークション枠が満杯です。プランをアップグレードしてください","Quota d'enchères atteint, améliorez votre forfait","Квота аукционов исчерпана, обновите тариф","Auktionskontingent voll, Tarif upgraden","Quota aste piena, aggiorna il piano"],
+"e.notyours":["Bukan lelangmu","Not your auction","내 경매가 아닙니다","不是你的拍卖","あなたのオークションではありません","Ce n'est pas votre enchère","Это не ваш аукцион","Nicht Ihre Auktion","Non è la tua asta"],
+"e.ended":["Lelang sudah berakhir","The auction has ended","경매가 종료되었습니다","拍卖已结束","オークションは終了しました","L'enchère est terminée","Аукцион завершён","Die Auktion ist beendet","L'asta è terminata"],
+"e.own":["Tidak bisa menawar lelang sendiri","You cannot bid on your own auction","자신의 경매에는 입찰할 수 없습니다","不能对自己的拍卖出价","自分のオークションには入札できません","Impossible d'enchérir sur votre propre enchère","Нельзя делать ставку на свой аукцион","Sie können nicht auf Ihre eigene Auktion bieten","Non puoi offrire sulla tua asta"],
+"e.denied":["Ditolak oleh aturan Firestore","Rejected by Firestore rules","Firestore 규칙에 의해 거부되었습니다","被Firestore规则拒绝","Firestoreルールにより拒否されました","Refusé par les règles Firestore","Отклонено правилами Firestore","Von Firestore-Regeln abgelehnt","Rifiutato dalle regole Firestore"],
+"e.generic":["Terjadi kesalahan","Something went wrong","오류가 발생했습니다","发生错误","エラーが発生しました","Une erreur est survenue","Произошла ошибка","Ein Fehler ist aufgetreten","Si è verificato un errore"],
+"e.fillall":["Isi email dan kata sandi.","Enter email and password.","이메일과 비밀번호를 입력하세요.","请输入邮箱和密码。","メールとパスワードを入力してください。","Saisissez e-mail et mot de passe.","Введите почту и пароль.","E-Mail und Passwort eingeben.","Inserisci email e password."],
+"e.nocfg":["Isi dulu konfigurasi Firebase (CFG) di file ini.","Configure Firebase (CFG) in this file first.","먼저 이 파일의 Firebase(CFG) 설정을 입력하세요.","请先在此文件中配置Firebase（CFG）。","先にこのファイルのFirebase(CFG)を設定してください。","Configurez d'abord Firebase (CFG) dans ce fichier.","Сначала заполните конфигурацию Firebase (CFG).","Zuerst Firebase (CFG) in dieser Datei konfigurieren.","Configura prima Firebase (CFG) in questo file."],
+"ae.cred":["Email atau kata sandi salah.","Wrong email or password.","이메일 또는 비밀번호가 잘못되었습니다.","邮箱或密码错误。","メールまたはパスワードが違います。","E-mail ou mot de passe incorrect.","Неверная почта или пароль.","E-Mail oder Passwort falsch.","Email o password errati."],
+"ae.inuse":["Email sudah terdaftar.","Email already registered.","이미 등록된 이메일입니다.","该邮箱已注册。","このメールは既に登録されています。","E-mail déjà enregistré.","Почта уже зарегистрирована.","E-Mail bereits registriert.","Email già registrata."],
+"ae.weak":["Kata sandi minimal 6 karakter.","Password must be at least 6 characters.","비밀번호는 6자 이상이어야 합니다.","密码至少6个字符。","パスワードは6文字以上必要です。","Le mot de passe doit contenir au moins 6 caractères.","Пароль не короче 6 символов.","Passwort mindestens 6 Zeichen.","La password deve avere almeno 6 caratteri."],
+"ae.invalid":["Format email tidak valid.","Invalid email format.","이메일 형식이 올바르지 않습니다.","邮箱格式无效。","メール形式が正しくありません。","Format d'e-mail invalide.","Неверный формат почты.","Ungültiges E-Mail-Format.","Formato email non valido."],
+"ae.net":["Tidak ada koneksi internet.","No internet connection.","인터넷 연결이 없습니다.","无网络连接。","インターネット接続がありません。","Pas de connexion internet.","Нет подключения к интернету.","Keine Internetverbindung.","Nessuna connessione internet."],
+user:["Pengguna","User","사용자","用户","ユーザー","Utilisateur","Пользователь","Benutzer","Utente"]
+};
+
+let lang="id";
+try{const sv=localStorage.getItem("bifetindo.lang");if(sv&&LANGS.some(l=>l.c===sv))lang=sv}catch(e){}
+const LIX=()=>{const i=LANGS.findIndex(l=>l.c===lang);return i<0?0:i};
+const t=(k,...a)=>{const r=D[k];let s=r?(r[LIX()]!==undefined?r[LIX()]:r[0]):k;
+  for(let i=0;i<a.length;i++)s=String(s).split("{"+i+"}").join(a[i]);return s};
+const lc=()=>lang.toUpperCase();
+
+function paintStatic(){
+  document.documentElement.setAttribute("lang",lang);
+  document.querySelectorAll("[data-i18n]").forEach(e=>{e.textContent=t(e.dataset.i18n)});
+  document.querySelectorAll("[data-i18n-ph]").forEach(e=>{e.placeholder=t(e.dataset.i18nPh)});
+  ["#langcur","#langcur2"].forEach(s=>{const e=$(s);if(e)e.textContent=lc()});
+  const lg=$("#legal");
+  if(lg)lg.innerHTML=t("legal")+' <a href="#">'+t("legal.terms")+'</a> '+t("legal.and")+' <a href="#">'+t("legal.privacy")+'</a>.';
+}
+function setLang(c){
+  if(!LANGS.some(l=>l.c===c))return;
+  lang=c;
+  try{localStorage.setItem("bifetindo.lang",c)}catch(e){}
+  paintStatic();
+  if(uid&&READY)db.doc("users/"+uid).set({lang:c},{merge:true}).catch(()=>{});
+  if(!$("#app").classList.contains("hide"))render();
+}
+function langSheet(){
+  sheet(`<h2>${ic("globe")} ${t("set.lang")}</h2><div class="mut" style="margin:-6px 0 2px">${t("set.lang.d")}</div>
+  <div class="lang-grid">${LANGS.map(l=>`<div class="lang-opt ${lang==l.c?"on":""}" data-lang="${l.c}"><span class="fl">${l.f}</span><b>${l.n}</b>${lang==l.c?ic("check"):""}</div>`).join("")}</div>`);
+}
+
+/* ======================= KONFIG & STATE ======================= */
 const PLANS={
- free:{n:'Gratis',m:0,list:0,ads:0,auc:0,f:['Akses 3D WMS','Lihat pasar B2B','Beli dari mitra']},
- pro:{n:'Pro',m:99000,list:20,ads:1,auc:2,f:['Semua fitur Gratis','Jual hingga 20 produk','1 iklan aktif di Pasar B2B','Buka hingga 2 lelang aktif','Hubungi Sales via WhatsApp']},
- bisnis:{n:'Bisnis',m:299000,list:999,ads:5,auc:10,f:['Semua fitur Pro','Produk jual tanpa batas','5 iklan aktif','Buka hingga 10 lelang aktif','Billboard iklan di gudang 3D','Badge mitra terverifikasi']}};
+ free:{n:"free",m:0,list:0,ads:0,auc:0,f:["f.3dwms","f.market","f.buy"]},
+ pro:{n:"pro",m:99000,list:20,ads:1,auc:2,f:["f.allfree","f.sell20","f.ad1","f.auc2","f.wa"]},
+ bisnis:{n:"bisnis",m:299000,list:999,ads:5,auc:10,f:["f.allpro","f.unlimited","f.ad5","f.auc10","f.billboard","f.badge"]}};
+const pname=k=>k==="free"?t("pl.free"):k==="pro"?t("pl.n.pro"):t("pl.n.bisnis");
 const CFG={apiKey:'AIzaSyBQtmIXHNwkcOXw5C9xlCEz3GoU5ajRu2Q',authDomain:'gudangku-34279.firebaseapp.com',projectId:'gudangku-34279',storageBucket:'gudangku-34279.firebasestorage.app',messagingSenderId:'292899782383',appId:'1:292899782383:web:5117db5a1376262de5251a',measurementId:'G-6017600DDT'};
 const READY=!CFG.apiKey.startsWith('ISI');if(READY)firebase.initializeApp(CFG);
 const auth=READY?firebase.auth():null,db=READY?firebase.firestore():null;
 const EMPTY=()=>({plan:'free',exp:0,items:[],market:[],ads:[],sponsor:[],auc:[],tx:[],pend:[],prof:{}});
 let S=EMPTY(),uid='',unsub=[],user='',tab='home',pasarTab='jelajah',cycle='m',pick='QRIS';
-const save=()=>{};
-const fe=e=>toast(e.code=='permission-denied'?'Ditolak oleh aturan Firestore':(e.message||'Terjadi kesalahan'));
+const fe=e=>toast(e.code=='permission-denied'?t('e.denied'):(e.message||t('e.generic')));
 const plan=()=>(S.plan!=='free'&&S.exp>Date.now())?S.plan:'free';
 const P=()=>PLANS[plan()];
-const sponsorCard=a=>`<div class="card" style="border-color:#fcd34d;background:linear-gradient(180deg,#fffbeb,#fffdf7)"><div class="row"><b>${esc(a.t)}</b><span class="tag w">Sponsor</span></div><div class="mut" style="margin-top:4px">${esc(a.d||'')}</div><div class="mut">${ic('store')} ${esc(a.ownerName||'')}</div></div>`;
+const sponsorCard=a=>`<div class="card" style="border-color:#fcd34d;background:linear-gradient(180deg,#fffbeb,#fffdf7)"><div class="row"><b>${esc(a.t)}</b><span class="tag w">${t('tag.sponsor')}</span></div><div class="mut" style="margin-top:4px">${esc(a.d||'')}</div><div class="mut">${ic('store')} ${esc(a.ownerName||'')}</div></div>`;
 const adsOn=()=>S.ads.filter(a=>a.end>Date.now()).length;
-function toast(t){const e=document.createElement('div');e.className='toast';e.textContent=t;document.body.appendChild(e);setTimeout(()=>e.remove(),2200)}
-const empty=(i,t,b)=>'<div class="empty">'+ic(i)+'<div>'+t+'</div>'+(b||'')+'</div>';
-const lock=(t)=>'<div class="card">'+empty('lock',t,'<button class="btn" data-go="langganan">'+ic('crown')+'Lihat Paket Langganan</button>')+'</div>';
-const T={admin:'Verifikasi Pembayaran',lelang:'Lelang',home:'Beranda',pasar:'Pasar B2B',iklan:'Iklan Saya',langganan:'Langganan',set:'Pengaturan'};
-const NAV=[['home','house','Beranda'],['wms','warehouse','3D WMS'],['pasar','store','Pasar'],['langganan','crown','Paket'],['set','gear','Setelan']];
+function toast(m){const e=document.createElement('div');e.className='toast';e.textContent=m;document.body.appendChild(e);setTimeout(()=>e.remove(),2200)}
+const empty=(i,m,b)=>'<div class="empty">'+ic(i)+'<div>'+m+'</div>'+(b||'')+'</div>';
+const lock=k=>'<div class="card">'+empty('lock',t(k),'<button class="btn" data-go="langganan">'+ic('crown')+t('view.plans')+'</button>')+'</div>';
+const T={admin:'adm.title',lelang:'nav.auction',home:'nav.home',pasar:'nav.market',iklan:'nav.ads',langganan:'nav.plans',set:'nav.settings'};
+const NAV=[['home','house','nav.home'],['wms','warehouse','nav.wms'],['pasar','store','nav.market'],['langganan','crown','nav.plans']];
+const WMS_URL='wms3d.html';
+const CATN=c=>({"Ready Stock":t("f.ready"),"Pre-Order":t("f.po"),"Jasa":t("f.svc")}[c]||c);
 
+/* ======================= VIEWS ======================= */
 const V={
 home(){
-  const p=P();
-  const first=esc((user||'Pengguna').split(' ')[0]);
-  const isPro=plan()!=='free';
+  const p=plan(),pn=pname(p);
+  const first=esc((user||t('user')).split(' ')[0]);
+  const isPro=p!=='free';
   return `
   <div class="home-top">
-
     <div class="greet">
       <div class="greet-info">
-        <span class="greet-hi">Selamat datang 👋</span>
-        <h2>Halo, ${first}</h2>
+        <span class="greet-hi">${t('greet.hi')}</span>
+        <h2>${t('greet.hello',first)}</h2>
       </div>
-      <button class="icon-btn" aria-label="Notifikasi">
-        ${ic('bell')}
-        <span class="dot"></span>
-      </button>
+      <button class="icon-btn" aria-label="${t('notif')}">${ic('bell')}<span class="dot"></span></button>
     </div>
 
     <div class="search-bar">
       <i class="fa-solid fa-magnifying-glass"></i>
-      <input type="text" placeholder="Cari produk, mitra, atau layanan..." aria-label="Cari">
-      <button class="search-filter" aria-label="Filter">${ic('sliders')}</button>
+      <input type="text" placeholder="${t('search.ph')}" aria-label="${t('search.ph')}">
+      <button class="search-filter" aria-label="${t('filter')}">${ic('sliders')}</button>
     </div>
 
     <div class="promo">
-      <span class="promo-badge">${ic('crown')} Paket ${p.n}</span>
-      <h3>${isPro?'Langganan aktif':'Upgrade & Hemat 20%'}</h3>
-      <p>${isPro?'Nikmati semua fitur B2B tanpa batas':'Buka fitur B2B lengkap sekarang'}</p>
-      <button class="promo-btn" data-go="langganan">${isPro?'Perpanjang':ic('arrow-right')+' Upgrade'}</button>
+      <span class="promo-badge">${ic('crown')} ${t('plan.badge',pn)}</span>
+      <h3>${isPro?t('promo.active'):t('promo.up')}</h3>
+      <p>${isPro?t('promo.d1'):t('promo.d2')}</p>
+      <button class="promo-btn" data-go="langganan">${isPro?t('promo.renew'):ic('arrow-right')+' '+t('promo.upgrade')}</button>
       <div class="promo-art">${ic('gift')}</div>
     </div>
-
   </div>
 
   <div>
-    <h3 class="section-title">Menu Cepat</h3>
-    <div class="quick">
-      <button class="q-item" data-open="1">
-        <span class="q-ic blue">${ic('warehouse')}</span>
-        <small>3D WMS</small>
-      </button>
-      <button class="q-item" data-go="pasar">
-        <span class="q-ic cyan">${ic('cart-shopping')}</span>
-        <small>Pasar</small>
-      </button>
-      <button class="q-item" data-go="iklan">
-        <span class="q-ic indigo">${ic('bullhorn')}</span>
-        <small>Iklan</small>
-      </button>
-      <button class="q-item" data-go="lelang">
-        <span class="q-ic sky">${ic('gavel')}</span>
-        <small>Lelang</small>
-      </button>
-      <button class="q-item" data-go="langganan">
-        <span class="q-ic teal">${ic('crown')}</span>
-        <small>Paket</small>
-      </button>
-      <button class="q-item" data-go="set">
-        <span class="q-ic navy">${ic('building')}</span>
-        <small>Profil</small>
-      </button>
-      ${isAdmin()?`<button class="q-item" data-go="admin">
-        <span class="q-ic sky">${ic('user-shield')}</span>
-        <small>Verifikasi</small>
-      </button>`:''}
+    <h3 class="section-title">${t('quick')}</h3>
+    <div class="quick-wrap">
+      <div class="quick">
+        <button class="q-item" data-open="1"><span class="q-ic blue">${ic('warehouse')}</span><small>${t('nav.wms')}</small></button>
+        <button class="q-item" data-go="pasar"><span class="q-ic cyan">${ic('cart-shopping')}</span><small>${t('nav.market')}</small></button>
+        <button class="q-item" data-go="iklan"><span class="q-ic indigo">${ic('bullhorn')}</span><small>${t('nav.ads')}</small></button>
+        <button class="q-item" data-go="lelang"><span class="q-ic sky">${ic('gavel')}</span><small>${t('nav.auction')}</small></button>
+        <button class="q-item" data-go="langganan"><span class="q-ic teal">${ic('crown')}</span><small>${t('nav.plans')}</small></button>
+        <button class="q-item" data-go="set"><span class="q-ic navy">${ic('building')}</span><small>${t('q.profile')}</small></button>
+        ${isAdmin()?`<button class="q-item" data-go="admin"><span class="q-ic sky">${ic('user-shield')}</span><small>${t('q.verify')}</small></button>`:''}
+      </div>
     </div>
   </div>
 
   <div class="stats-row">
-    <div class="mini-stat"><b>0</b><small>Rak</small></div>
-    <div class="mini-stat"><b>${S.items.length}</b><small>Produk</small></div>
-    <div class="mini-stat"><b>${adsOn()}</b><small>Iklan</small></div>
-    <div class="mini-stat"><b>${S.tx.length}</b><small>Trx</small></div>
+    <div class="mini-stat"><b>0</b><small>${t('st.racks')}</small></div>
+    <div class="mini-stat"><b>${S.items.length}</b><small>${t('st.products')}</small></div>
+    <div class="mini-stat"><b>${adsOn()}</b><small>${t('st.ads')}</small></div>
+    <div class="mini-stat"><b>${S.tx.length}</b><small>${t('st.trx')}</small></div>
   </div>
 
   <div>
-    <h3 class="section-title">Pintasan</h3>
+    <h3 class="section-title">${t('shortcuts')}</h3>
     <div class="grid2">
-      <button class="shortcut" data-go="pasar">
-        <span class="sc-ic cyan">${ic('store')}</span>
-        <b>Jelajahi Pasar</b>
-        <small>Temukan produk B2B</small>
-      </button>
-      <button class="shortcut" data-go="langganan">
-        <span class="sc-ic blue">${ic('crown')}</span>
-        <b>Upgrade Paket</b>
-        <small>Buka fitur lengkap</small>
-      </button>
-      <button class="shortcut" data-go="set">
-        <span class="sc-ic sky">${ic('id-badge')}</span>
-        <b>Lengkapi Profil</b>
-        <small>Verifikasi perusahaan</small>
-      </button>
-      <button class="shortcut" data-go="lelang">
-        <span class="sc-ic indigo">${ic('gavel')}</span>
-        <b>Ikut Lelang</b>
-        <small>Tawar barang impian</small>
-      </button>
+      <button class="shortcut" data-go="pasar"><span class="sc-ic cyan">${ic('store')}</span><b>${t('sc.explore')}</b><small>${t('sc.explore.d')}</small></button>
+      <button class="shortcut" data-go="langganan"><span class="sc-ic blue">${ic('crown')}</span><b>${t('sc.upgrade')}</b><small>${t('sc.upgrade.d')}</small></button>
+      <button class="shortcut" data-go="set"><span class="sc-ic sky">${ic('id-badge')}</span><b>${t('sc.profile')}</b><small>${t('sc.profile.d')}</small></button>
+      <button class="shortcut" data-go="lelang"><span class="sc-ic indigo">${ic('gavel')}</span><b>${t('sc.auction')}</b><small>${t('sc.auction.d')}</small></button>
     </div>
   </div>`;
 },
-pasar(){const seg=`<div class="seg"><button data-pt="jelajah" class="${pasarTab=='jelajah'?'on':''}">${ic('magnifying-glass')} Jelajah</button><button data-pt="jual" class="${pasarTab=='jual'?'on':''}">${ic('tags')} Jualan Saya</button></div>`;
- if(pasarTab=='jelajah')return seg+S.sponsor.filter(a=>a.end>Date.now()&&a.k=='feed').map(sponsorCard).join('')+(S.market.length?S.market.map(i=>itemCard(i,false)).join(''):'<div class="card">'+empty('box-open','Belum ada produk di pasar.')+'</div>');
+pasar(){
+ const seg=`<div class="seg"><button data-pt="jelajah" class="${pasarTab=='jelajah'?'on':''}">${ic('magnifying-glass')} ${t('m.explore')}</button><button data-pt="jual" class="${pasarTab=='jual'?'on':''}">${ic('tags')} ${t('m.mine')}</button></div>`;
+ if(pasarTab=='jelajah')return seg+S.sponsor.filter(a=>a.end>Date.now()&&a.k=='feed').map(sponsorCard).join('')+(S.market.length?S.market.map(i=>itemCard(i,false)).join(''):'<div class="card">'+empty('box-open',t('m.empty'))+'</div>');
  const p=P();
- if(!p.list)return seg+lock('Fitur jual beli tersedia untuk paket Pro dan Bisnis.');
- return seg+`<div class="row"><span class="mut">${S.items.length} / ${p.list>900?'∞':p.list} produk</span><button class="btn s" data-act="newitem">${ic('plus')}Tambah Produk</button></div>`+
-  (S.items.length?S.items.map(i=>itemCard(i,true)).join(''):'<div class="card">'+empty('box-open','Belum ada produk yang kamu jual.')+'</div>')},
-iklan(){const p=P();if(!p.ads)return lock('Iklan berbayar tersedia untuk paket Pro dan Bisnis.');
- return `<div class="row"><span class="mut">${adsOn()} / ${p.ads} iklan aktif</span><button class="btn s" data-act="newad">${ic('plus')}Buat Iklan</button></div>`+
-  (S.ads.length?S.ads.map(a=>`<div class="card"><div class="row"><b>${esc(a.t)}</b><span class="tag ${a.end>Date.now()?'':'w'}">${a.end>Date.now()?'Aktif':'Berakhir'}</span></div><div class="mut">${ic(a.k=='3d'?'cube':'rectangle-ad')} ${a.k=='3d'?'Billboard 3D':'Feed Pasar'} · s.d. ${new Date(a.end).toLocaleDateString('id-ID')}</div><div style="margin-top:6px">${esc(a.d)}</div><button class="btn g s" style="margin-top:10px" data-del="ad" data-id="${a.id}">${ic('trash')}Hapus</button></div>`).join(''):'<div class="card">'+empty('bullhorn','Belum ada iklan.')+'</div>')},
+ if(!p.list)return seg+lock('m.locked');
+ return seg+`<div class="row"><span class="mut">${t('m.count',S.items.length,p.list>900?'∞':p.list)}</span><button class="btn s" data-act="newitem">${ic('plus')}${t('m.add')}</button></div>`+
+  (S.items.length?S.items.map(i=>itemCard(i,true)).join(''):'<div class="card">'+empty('box-open',t('m.none'))+'</div>')},
+iklan(){const p=P();if(!p.ads)return lock('ad.locked');
+ return `<div class="row"><span class="mut">${t('ad.count',adsOn(),p.ads)}</span><button class="btn s" data-act="newad">${ic('plus')}${t('ad.new')}</button></div>`+
+  (S.ads.length?S.ads.map(a=>`<div class="card"><div class="row"><b>${esc(a.t)}</b><span class="tag ${a.end>Date.now()?'':'w'}">${a.end>Date.now()?t('ad.active'):t('ad.ended')}</span></div><div class="mut">${ic(a.k=='3d'?'cube':'rectangle-ad')} ${a.k=='3d'?t('ad.3d'):t('ad.feed')} · ${t('ad.until',new Date(a.end).toLocaleDateString(lang))}</div><div style="margin-top:6px">${esc(a.d)}</div><button class="btn g s" style="margin-top:10px" data-del="ad" data-id="${a.id}">${ic('trash')}${t('delete')}</button></div>`).join(''):'<div class="card">'+empty('bullhorn',t('ad.none'))+'</div>')},
 langganan(){const cur=plan();
- return `<div class="seg"><button data-cy="m" class="${cycle=='m'?'on':''}">Bulanan</button><button data-cy="y" class="${cycle=='y'?'on':''}">Tahunan (hemat 2 bln)</button></div>`+
+ return `<div class="seg"><button data-cy="m" class="${cycle=='m'?'on':''}">${t('pl.monthly')}</button><button data-cy="y" class="${cycle=='y'?'on':''}">${t('pl.yearly')}</button></div>`+
  Object.entries(PLANS).map(([k,v])=>{const pr=cycle=='m'?v.m:v.m*10;
-  return `<div class="card plan ${cur==k?'cur':''}">${k=='pro'?'<span class="pop">Populer</span>':''}<div class="row"><h2>${v.n}</h2>${cur==k?'<span class="tag">Aktif</span>':''}</div>
-  <div class="price">${pr?rp(pr):'Gratis'}<small class="mut">${pr?(cycle=='m'?' /bulan':' /tahun'):''}</small></div>
-  <ul>${v.f.map(f=>'<li>'+ic('check')+f+'</li>').join('')}</ul>
-  ${k=='free'?'':`<button class="btn ${cur==k?'g':''}" data-buy="${k}">${ic('credit-card')}${cur==k?'Perpanjang':'Pilih '+v.n}</button>`}</div>`}).join('')+
- `<div class="card"><h3>${ic('receipt')} Riwayat pembayaran</h3>`+(S.tx.length?S.tx.slice().reverse().map(t=>`<div class="row" style="padding:9px 0;border-top:1px solid var(--line)"><div><b>${t.pn}</b><div class="mut">${new Date(t.at).toLocaleDateString('id-ID')} · ${t.method}</div></div><div style="text-align:right"><b>${rp(t.amount)}</b><div><span class="tag ${t.status=='lunas'?'':'w'}">${t.status}</span></div></div></div>`).join(''):empty('file-invoice','Belum ada transaksi.'))+'</div>'},
-lelang(){const p=P();if(!p.auc)return lock('Fitur lelang tersedia untuk paket Pro dan Bisnis.');
- const seg=`<div class="seg"><button data-lt="aktif" class="${lelTab=='aktif'?'on':''}">${ic('gavel')} Lelang Aktif</button><button data-lt="riwayat" class="${lelTab=='riwayat'?'on':''}">${ic('clock-rotate-left')} Riwayat</button></div>`;
- const L=AU().filter(a=>lelTab=='aktif'?aucLive(a):!aucLive(a)).sort((a,b)=>b.id-a.id);
- const top=`<div class="row"><span class="mut">${aucAct()} / ${p.auc} lelang aktif</span><button class="btn s" data-act="newauc">${ic('plus')}Buka Lelang</button></div>`;
+  return `<div class="card plan ${cur==k?'cur':''}">${k=='pro'?'<span class="pop">'+t('pl.popular')+'</span>':''}<div class="row"><h2>${pname(k)}</h2>${cur==k?'<span class="tag">'+t('ad.active')+'</span>':''}</div>
+  <div class="price">${pr?rp(pr):t('pl.free')}<small class="mut">${pr?(cycle=='m'?t('pl.permonth'):t('pl.peryear')):''}</small></div>
+  <ul>${v.f.map(f=>'<li>'+ic('check')+t(f)+'</li>').join('')}</ul>
+  ${k=='free'?'':`<button class="btn ${cur==k?'g':''}" data-buy="${k}">${ic('credit-card')}${cur==k?t('promo.renew'):t('pl.choose',pname(k))}</button>`}</div>`}).join('')+
+ `<div class="card"><h3>${ic('receipt')} ${t('pl.history')}</h3>`+(S.tx.length?S.tx.slice().reverse().map(x=>`<div class="row" style="padding:9px 0;border-top:1px solid var(--line)"><div><b>${esc(x.pn||pname(x.plan))}</b><div class="mut">${new Date(x.at).toLocaleDateString(lang)} · ${esc(x.method||'')}</div></div><div style="text-align:right"><b>${rp(x.amount)}</b><div><span class="tag ${x.status=='lunas'?'':'w'}">${x.status=='lunas'?t('pl.paid'):t('adm.wait')}</span></div></div></div>`).join(''):empty('file-invoice',t('pl.notx')))+'</div>'},
+lelang(){const p=P();if(!p.auc)return lock('lel.locked');
+ const seg=`<div class="seg"><button data-lt="aktif" class="${lelTab=='aktif'?'on':''}">${ic('gavel')} ${t('lel.live')}</button><button data-lt="riwayat" class="${lelTab=='riwayat'?'on':''}">${ic('clock-rotate-left')} ${t('lel.history')}</button></div>`;
+ const L=AU().filter(a=>lelTab=='aktif'?aucLive(a):!aucLive(a)).sort((a,b)=>b.at-a.at);
+ const top=`<div class="row"><span class="mut">${t('lel.count',aucAct(),p.auc)}</span><button class="btn s" data-act="newauc">${ic('plus')}${t('lel.new')}</button></div>`;
  const cards=L.length?L.map(a=>{const own=a.owner===uid,live=aucLive(a),nx=a.bids.length?a.cur+a.step:a.start,lb=a.bids[a.bids.length-1];
- return `<div class="card"><div class="row"><b>${esc(a.t)}</b>${own?'<span class="tag">Milikmu</span>':''}</div>${a.d?`<div class="mut" style="margin:4px 0">${esc(a.d)}</div>`:''}
- <div class="g2" style="margin:8px 0"><div><div class="mut">${a.bids.length?'Tawaran tertinggi':'Harga awal'}</div><b style="color:var(--brand);font-size:17px">${rp(a.cur)}</b></div><div><div class="mut">${live?'Sisa waktu':'Status'}</div><b class="${live?'':'mut'}" ${live?`data-end="${a.end}"`:''}>${live?left(a.end-Date.now()):'Selesai'}</b></div></div>
- <div class="mut">${ic('users')} ${a.bids.length} tawaran · kelipatan ${rp(a.step)}${lb?' · oleh '+esc(lb.by):''}</div>
- ${live?(own?`<div class="g2" style="margin-top:10px"><button class="btn g s" data-act="endauc" data-id="${a.id}">${ic('flag-checkered')}Akhiri</button></div>`:`<button class="btn" style="margin-top:10px" data-act="bid" data-id="${a.id}">${ic('hand-holding-dollar')}Bid ${rp(nx)}</button>`):`<div style="margin-top:10px">${lb?ic('trophy')+' Pemenang: <b>'+esc(lb.by)+'</b> · '+rp(a.cur):ic('circle-xmark')+' Tidak ada penawar'}</div>`}</div>`}).join(''):'<div class="card">'+empty('gavel',lelTab=='aktif'?'Belum ada lelang aktif.':'Belum ada riwayat lelang.')+'</div>';
+ return `<div class="card"><div class="row"><b>${esc(a.t)}</b>${own?'<span class="tag">'+t('lel.mine')+'</span>':''}</div>${a.d?`<div class="mut" style="margin:4px 0">${esc(a.d)}</div>`:''}
+ <div class="g2" style="margin:8px 0"><div><div class="mut">${a.bids.length?t('lel.top'):t('lel.start')}</div><b style="color:var(--brand);font-size:17px">${rp(a.cur)}</b></div><div><div class="mut">${live?t('lel.remain'):t('lel.status')}</div><b class="${live?'':'mut'}" ${live?`data-end="${a.end}"`:''}>${live?left(a.end-Date.now()):t('lel.done')}</b></div></div>
+ <div class="mut">${ic('users')} ${t('lel.bids',a.bids.length)} · ${t('lel.step',rp(a.step))}${lb?' · '+t('lel.by',esc(lb.by)):''}</div>
+ ${live?(own?`<div class="g2" style="margin-top:10px"><button class="btn g s" data-act="endauc" data-id="${a.id}">${ic('flag-checkered')}${t('lel.end')}</button></div>`:`<button class="btn" style="margin-top:10px" data-act="bid" data-id="${a.id}">${ic('hand-holding-dollar')}${t('lel.bid',rp(nx))}</button>`):`<div style="margin-top:10px">${lb?ic('trophy')+' '+t('lel.winner',esc(lb.by),rp(a.cur)):ic('circle-xmark')+' '+t('lel.nobid')}</div>`}</div>`}).join(''):'<div class="card">'+empty('gavel',lelTab=='aktif'?t('lel.empty1'):t('lel.empty2'))+'</div>';
  return seg+top+cards},
-admin(){if(!isAdmin())return lock('Khusus admin.');
- return S.pend.length?S.pend.slice().sort((a,b)=>a.at-b.at).map(p=>`<div class="card"><div class="row"><b>${esc(p.name||p.email)}</b><span class="tag w">Menunggu</span></div><div class="mut">${esc(p.email||'')}</div><div style="margin:6px 0">Paket <b>${esc(p.pn)}</b> (${p.cycle=='m'?'1 bulan':'1 tahun'}) · <b>${rp(p.amount)}</b></div><div class="mut">${ic('wallet')} ${esc(p.method)}${p.note?' · '+esc(p.note):''}</div><div class="g2" style="margin-top:10px"><button class="btn s" data-act="approve" data-id="${p.id}">${ic('check')}Setujui</button><button class="btn g s" data-act="reject" data-id="${p.id}">${ic('xmark')}Tolak</button></div></div>`).join(''):'<div class="card">'+empty('circle-check','Tidak ada pembayaran yang menunggu.')+'</div>'},
-set(){const f=S.prof;const I=(id,l,t)=>`<div class="fld"><label>${l}</label><input type="${t||'text'}" data-pf="${id}" value="${esc(f[id]||'')}"></div>`;
- return `<div class="card"><h3>${ic('fingerprint')} UID akun</h3><div class="row"><code style="word-break:break-all">${uid}</code><button class="btn g s" data-copy="${uid}">${ic('copy')}</button></div></div>
- <div class="card"><h3>${ic('building')} Profil perusahaan</h3>${I('nama','Nama PT')}${I('bidang','Bidang usaha')}${I('alamat','Alamat kantor')}${I('kontak','Nomor kontak','tel')}</div>
- <div class="card"><h3>${ic('shield-halved')} Dokumen legalitas</h3>${['NIB','NPWP','SIUP'].map(d=>`<div class="row fld"><span>${d}</span><span class="tag w">Belum diunggah</span></div>`).join('')}</div>
- <div class="card"><h3>${ic('rectangle-ad')} Tampilan iklan &amp; mitra</h3>${[['pasar','Tampilkan profil di Pasar B2B'],['wa','Hubungi Sales via WhatsApp'],['hub','Tampilkan produk utama di Hub']].map(([k,l])=>`<div class="row fld"><span>${l}</span><label class="tg"><input type="checkbox" data-tg="${k}" ${f['t_'+k]?'checked':''}><b></b></label></div>`).join('')}</div>
- <button class="btn" data-act="saveprof">${ic('floppy-disk')}Simpan Perubahan</button>`}
+admin(){if(!isAdmin())return lock('adm.locked');
+ return S.pend.length?S.pend.slice().sort((a,b)=>a.at-b.at).map(p=>`<div class="card"><div class="row"><b>${esc(p.name||p.email)}</b><span class="tag w">${t('adm.wait')}</span></div><div class="mut">${esc(p.email||'')}</div><div style="margin:6px 0">${t('adm.pkg')} <b>${esc(p.pn||pname(p.plan))}</b> (${p.cycle=='m'?t('adm.month'):t('adm.year')}) · <b>${rp(p.amount)}</b></div><div class="mut">${ic('wallet')} ${esc(p.method)}${p.note?' · '+esc(p.note):''}</div><div class="g2" style="margin-top:10px"><button class="btn s" data-act="approve" data-id="${p.id}">${ic('check')}${t('adm.approve')}</button><button class="btn g s" data-act="reject" data-id="${p.id}">${ic('xmark')}${t('adm.reject')}</button></div></div>`).join(''):'<div class="card">'+empty('circle-check',t('adm.none'))+'</div>'},
+set(){const f=S.prof;const I=(id,l,ty)=>`<div class="fld"><label>${l}</label><input type="${ty||'text'}" data-pf="${id}" value="${esc(f[id]||'')}"></div>`;
+ return `<div class="card"><h3>${ic('globe')} ${t('set.lang')}</h3><div class="mut" style="margin-bottom:10px">${t('set.lang.d')}</div>
+  <button class="btn g" data-lang-sheet="1">${ic('language')} ${LANGS[LIX()].f} ${LANGS[LIX()].n}</button></div>
+ <div class="card"><h3>${ic('fingerprint')} ${t('set.uid')}</h3><div class="row"><code>${uid}</code><button class="btn g s" data-copy="${uid}">${ic('copy')}</button></div></div>
+ <div class="card"><h3>${ic('building')} ${t('set.company')}</h3>${I('nama',t('set.name'))}${I('bidang',t('set.field'))}${I('alamat',t('set.addr'))}${I('kontak',t('set.contact'),'tel')}</div>
+ <div class="card"><h3>${ic('shield-halved')} ${t('set.legal')}</h3>${['NIB','NPWP','SIUP'].map(d=>`<div class="row fld"><span>${d}</span><span class="tag w">${t('set.notup')}</span></div>`).join('')}</div>
+ <div class="card"><h3>${ic('rectangle-ad')} ${t('set.ads')}</h3>${[['pasar','set.t1'],['wa','f.wa'],['hub','set.t3']].map(([k,l])=>`<div class="row fld"><span>${t(l)}</span><label class="tg"><input type="checkbox" data-tg="${k}" ${f['t_'+k]?'checked':''}><b></b></label></div>`).join('')}</div>
+ <button class="btn" data-act="saveprof">${ic('floppy-disk')}${t('set.save')}</button>`}
 };
-function itemCard(i,own){return `<div class="card"><div class="row"><b>${esc(i.n)}</b><span class="tag">${esc(i.c)}</span></div><div class="mut">${ic('store')} ${esc(i.ownerName||'')}</div><div class="row" style="margin-top:6px"><b style="color:var(--brand);font-size:16px">${rp(i.p)}</b><span class="mut">Stok ${i.s}</span></div>${own?`<button class="btn g s" style="margin-top:10px" data-del="item" data-id="${i.id}">${ic('trash')}Hapus</button>`:''}</div>`}
-function render(){$('#ttl').textContent=T[tab];$('#view').innerHTML=V[tab]();
- $('#nav').innerHTML=NAV.map(([k,i,l])=>`<button class="${k==tab?'on':''}" ${k=='wms'?'data-open="1"':'data-go="'+k+'"'}>${ic(i)}${l}</button>`).join('');scrollTo(0,0)}
+function itemCard(i,own){return `<div class="card"><div class="row"><b>${esc(i.n)}</b><span class="tag">${esc(CATN(i.c))}</span></div><div class="mut">${ic('store')} ${esc(i.ownerName||'')}</div><div class="row" style="margin-top:6px"><b style="color:var(--brand);font-size:16px">${rp(i.p)}</b><span class="mut">${t('stock',i.s)}</span></div>${own?`<button class="btn g s" style="margin-top:10px" data-del="item" data-id="${i.id}">${ic('trash')}${t('delete')}</button>`:''}</div>`}
+
+function render(){$('#ttl').textContent=t(T[tab]);$('#view').innerHTML=V[tab]();
+ $('#nav').innerHTML=NAV.map(([k,i,l])=>`<button class="${k==tab?'on':''}" ${k=='wms'?'data-open="1"':'data-go="'+k+'"'}>${ic(i)}${t(l)}</button>`).join('');scrollTo(0,0)}
 function go(k){tab=k;render()}
 function sheet(h){$('#sheetc').innerHTML=h;$('#sheet').classList.remove('hide')}
 function closeSheet(){$('#sheet').classList.add('hide')}
-function itemForm(){sheet(`<h2>Tambah produk</h2><div><label>Nama produk</label><input type="text" id="f1"></div><div class="g2"><div><label>Harga (Rp)</label><input type="number" id="f2" inputmode="numeric"></div><div><label>Stok</label><input type="number" id="f3" inputmode="numeric"></div></div><div><label>Kategori</label><select id="f4"><option>Ready Stock</option><option>Pre-Order</option><option>Jasa</option></select></div><button class="btn" data-act="saveitem">${ic('check')}Simpan</button><button class="btn g" data-act="close">Batal</button>`)}
-function adForm(){sheet(`<h2>Buat iklan</h2><div><label>Judul iklan</label><input type="text" id="f1"></div><div><label>Deskripsi</label><textarea id="f2" rows="3"></textarea></div><div class="g2"><div><label>Jenis</label><select id="f3"><option value="feed">Feed Pasar</option>${plan()=='bisnis'?'<option value="3d">Billboard 3D</option>':''}</select></div><div><label>Durasi (hari)</label><input type="number" id="f4" value="7" inputmode="numeric"></div></div><button class="btn" data-act="savead">${ic('check')}Tayangkan</button><button class="btn g" data-act="close">Batal</button>`)}
+
+/* ======================= FORMS ======================= */
+function itemForm(){sheet(`<h2>${t('m.add')}</h2>
+ <div><label>${t('f.pname')}</label><input type="text" id="f1"></div>
+ <div class="g2"><div><label>${t('f.price')}</label><input type="number" id="f2" inputmode="numeric"></div><div><label>${t('f.stock')}</label><input type="number" id="f3" inputmode="numeric"></div></div>
+ <div><label>${t('f.cat')}</label><select id="f4"><option value="Ready Stock">${t('f.ready')}</option><option value="Pre-Order">${t('f.po')}</option><option value="Jasa">${t('f.svc')}</option></select></div>
+ <button class="btn" data-act="saveitem">${ic('check')}${t('f.save')}</button><button class="btn g" data-act="close">${t('f.cancel')}</button>`)}
+function adForm(){sheet(`<h2>${t('ad.new')}</h2>
+ <div><label>${t('f.adtitle')}</label><input type="text" id="f1"></div>
+ <div><label>${t('f.desc')}</label><textarea id="f2" rows="3"></textarea></div>
+ <div class="g2"><div><label>${t('f.type')}</label><select id="f3"><option value="feed">${t('ad.feed')}</option>${plan()=='bisnis'?`<option value="3d">${t('ad.3d')}</option>`:''}</select></div><div><label>${t('f.days')}</label><input type="number" id="f4" value="7" inputmode="numeric"></div></div>
+ <button class="btn" data-act="savead">${ic('check')}${t('f.publish')}</button><button class="btn g" data-act="close">${t('f.cancel')}</button>`)}
 let lelTab='aktif';
 const AU=()=>S.auc||(S.auc=[]);
 const aucLive=a=>!a.done&&a.end>Date.now();
 const aucAct=()=>AU().filter(a=>a.owner===uid&&aucLive(a)).length;
 const left=ms=>{ms=Math.max(0,ms/1000|0);return [ms/3600|0,(ms%3600)/60|0,ms%60].map(n=>String(n).padStart(2,'0')).join(':')};
-function aucForm(){sheet(`<h2>Buka lelang</h2><div><label>Nama barang</label><input type="text" id="f1"></div><div><label>Deskripsi</label><textarea id="f2" rows="2"></textarea></div><div class="g2"><div><label>Harga awal (Rp)</label><input type="number" id="f3" inputmode="numeric"></div><div><label>Kelipatan bid (Rp)</label><input type="number" id="f4" inputmode="numeric"></div></div><div><label>Durasi (jam)</label><input type="number" id="f5" value="24" inputmode="numeric"></div><button class="btn" data-act="saveauc">${ic('gavel')}Mulai Lelang</button><button class="btn g" data-act="close">Batal</button>`)}
+function aucForm(){sheet(`<h2>${t('lel.new')}</h2>
+ <div><label>${t('f.itemname')}</label><input type="text" id="f1"></div>
+ <div><label>${t('f.desc')}</label><textarea id="f2" rows="2"></textarea></div>
+ <div class="g2"><div><label>${t('f.startprice')}</label><input type="number" id="f3" inputmode="numeric"></div><div><label>${t('f.bidstep')}</label><input type="number" id="f4" inputmode="numeric"></div></div>
+ <div><label>${t('f.hours')}</label><input type="number" id="f5" value="24" inputmode="numeric"></div>
+ <button class="btn" data-act="saveauc">${ic('gavel')}${t('f.startauc')}</button><button class="btn g" data-act="close">${t('f.cancel')}</button>`)}
+
+/* ======================= PEMBAYARAN ======================= */
 let uc=0;
-const PAY=[{k:'BCA',i:'building-columns',n:'0092611297',a:'a.n. Fajar Abdulloh'},{k:'DANA',i:'wallet',n:'083165548613',a:'Kirim ke nomor DANA'},{k:'OVO',i:'mobile-screen',n:'083165548613',a:'Kirim ke nomor OVO'},{k:'PayPal',i:'globe',n:'abdullohfajar110@gmail.com',a:'Akun PayPal (@FAJARABDULLOH282)'}];
-function checkout(k){const v=PLANS[k],a=cycle=='m'?v.m:v.m*10;uc=uc||(100+Math.random()*899|0);const tot=a+uc,m=PAY.find(x=>x.k==pick)||PAY[0];pick=m.k;
- sheet(`<h2>Pembayaran</h2><div class="card"><div class="row"><span>Paket ${v.n} (${cycle=='m'?'1 bulan':'1 tahun'})</span><b>${rp(a)}</b></div><div class="row mut"><span>Kode unik</span><span>${rp(uc)}</span></div><div class="row" style="margin-top:6px"><b>Total transfer</b><b style="color:var(--brand);font-size:17px">${rp(tot)}</b></div></div>
- <div class="g2">${PAY.map(p=>`<div class="opt ${pick==p.k?'on':''}" data-m="${p.k}" data-k="${k}">${ic(p.i)}<b>${p.k}</b></div>`).join('')}</div>
- <div class="card"><div class="mut">${ic(m.i)} ${m.k} · ${m.a}</div><div class="row" style="margin-top:6px"><b style="font-size:17px;word-break:break-all">${m.n}</b><button class="btn g s" data-copy="${m.n}">${ic('copy')}Salin</button></div>${m.k=='PayPal'?'<div class="mut" style="margin-top:6px">Kirim setara USD sesuai kurs hari ini.</div>':''}</div>
- <div><label>Nama pengirim / catatan</label><input type="text" id="f9" placeholder="Contoh: Budi, BCA"></div>
- <button class="btn ok" data-pay="${k}" data-total="${tot}">${ic('paper-plane')}Saya sudah bayar</button>
- <div class="mut" style="text-align:center">Paket aktif setelah pembayaran diverifikasi admin.</div><button class="btn g" data-act="close">Batal</button>`)}
+function payList(){return[
+ {k:'BCA',i:'building-columns',n:'0092611297',a:t('pay.an')},
+ {k:'DANA',i:'wallet',n:'083165548613',a:t('pay.dana')},
+ {k:'OVO',i:'mobile-screen',n:'083165548613',a:t('pay.ovo')},
+ {k:'PayPal',i:'globe',n:'abdullohfajar110@gmail.com',a:t('pay.paypal')}
+]}
+function checkout(k){const v=PLANS[k],a=cycle=='m'?v.m:v.m*10;uc=uc||(100+Math.random()*899|0);
+ const tot=a+uc,PL=payList(),m=PL.find(x=>x.k==pick)||PL[0];pick=m.k;
+ sheet(`<h2>${t('pay.title')}</h2>
+ <div class="card"><div class="row"><span>${t('pay.plan',pname(k),cycle=='m'?t('adm.month'):t('adm.year'))}</span><b>${rp(a)}</b></div>
+ <div class="row mut"><span>${t('pay.unique')}</span><span>${rp(uc)}</span></div>
+ <div class="row" style="margin-top:6px"><b>${t('pay.total')}</b><b style="color:var(--brand);font-size:17px">${rp(tot)}</b></div></div>
+ <div class="g2">${PL.map(p=>`<div class="opt ${pick==p.k?'on':''}" data-m="${p.k}" data-k="${k}">${ic(p.i)}<b>${p.k}</b></div>`).join('')}</div>
+ <div class="card"><div class="mut">${ic(m.i)} ${m.k} · ${m.a}</div><div class="row" style="margin-top:6px"><b style="font-size:17px;word-break:break-all">${m.n}</b><button class="btn g s" data-copy="${m.n}">${ic('copy')}${t('pay.copy')}</button></div>${m.k=='PayPal'?'<div class="mut" style="margin-top:6px">'+t('pay.usd')+'</div>':''}</div>
+ <div><label>${t('pay.sender')}</label><input type="text" id="f9" placeholder="${t('pay.ph')}"></div>
+ <button class="btn ok" data-pay="${k}" data-total="${tot}">${ic('paper-plane')}${t('pay.done')}</button>
+ <div class="mut" style="text-align:center">${t('pay.note')}</div>
+ <button class="btn g" data-act="close">${t('f.cancel')}</button>`)}
+
+/* ======================= HELPERS ======================= */
 function ui(){if($('#app').classList.contains('hide')||tab=='set'||!$('#sheet').classList.contains('hide'))return;const y=scrollY;render();scrollTo(0,y)}
 const ids=s=>s.docs.map(d=>({id:d.id,...d.data()}));
 const ADMIN_EMAIL='abdullohfajar110@gmail.com';let mail='';const isAdmin=()=>mail===ADMIN_EMAIL;
 function sync(u){uid=u.uid;mail=(u.email||'').toLowerCase();user=u.displayName||nm(u.email||'');const ur=db.doc('users/'+uid);
- unsub=[ur.onSnapshot(d=>{if(!d.exists)ur.set({name:user,plan:'free',exp:0,prof:{},at:Date.now()}).catch(fe);const x=d.data()||{};S.plan=x.plan||'free';S.exp=x.exp||0;S.prof=x.prof||{};ui()},fe),
+ unsub=[ur.onSnapshot(d=>{if(!d.exists)ur.set({name:user,plan:'free',exp:0,prof:{},lang,at:Date.now()}).catch(fe);const x=d.data()||{};S.plan=x.plan||'free';S.exp=x.exp||0;S.prof=x.prof||{};ui()},fe),
  db.collection('payments').where('uid','==',uid).onSnapshot(q=>{S.tx=ids(q).sort((a,b)=>a.at-b.at);ui()},fe),
  db.collection('items').orderBy('at','desc').limit(100).onSnapshot(q=>{S.market=ids(q);S.items=S.market.filter(i=>i.owner===uid);ui()},fe),
  db.collection('ads').orderBy('at','desc').limit(100).onSnapshot(q=>{S.sponsor=ids(q);S.ads=S.sponsor.filter(a=>a.owner===uid);ui()},fe),
  db.collection('auctions').orderBy('at','desc').limit(100).onSnapshot(q=>{S.auc=ids(q);ui()},fe)];
  if(isAdmin())unsub.push(db.collection('payments').where('status','==','menunggu').onSnapshot(q=>{S.pend=ids(q);ui()},fe))}
 function enter(){$('#login').classList.add('hide');$('#app').classList.remove('hide');go('home')}
-const nm=v=>(v.split('@')[0]||'Pengguna').replace(/[._-]+/g,' ').replace(/\b\w/g,c=>c.toUpperCase());
-const AE={'auth/invalid-credential':'Email atau kata sandi salah.','auth/email-already-in-use':'Email sudah terdaftar.','auth/weak-password':'Kata sandi minimal 6 karakter.','auth/invalid-email':'Format email tidak valid.','auth/network-request-failed':'Tidak ada koneksi internet.'};
+const nm=v=>(v.split('@')[0]||t('user')).replace(/[._-]+/g,' ').replace(/\b\w/g,c=>c.toUpperCase());
+const AE={'auth/invalid-credential':'ae.cred','auth/wrong-password':'ae.cred','auth/user-not-found':'ae.cred','auth/email-already-in-use':'ae.inuse','auth/weak-password':'ae.weak','auth/invalid-email':'ae.invalid','auth/network-request-failed':'ae.net'};
+
 async function authGo(reg){const e=$('#em').value.trim(),p=$('#pw').value,er=$('#err');er.textContent='';
- if(!READY)return er.textContent='Isi dulu konfigurasi Firebase (CFG) di file ini.';
- if(!e||!p)return er.textContent='Isi email dan kata sandi.';
- try{if(reg){const c=await auth.createUserWithEmailAndPassword(e,p);await c.user.updateProfile({displayName:nm(e)});await db.doc('users/'+c.user.uid).set({name:nm(e),plan:'free',exp:0,prof:{},at:Date.now()})}else await auth.signInWithEmailAndPassword(e,p)}catch(x){er.textContent=AE[x.code]||x.message}}
-$('#go').onclick=()=>authGo(false);$('#reg').onclick=()=>authGo(true);
+ if(!READY)return er.textContent=t('e.nocfg');
+ if(!e||!p)return er.textContent=t('e.fillall');
+ try{
+  if(reg){const c=await auth.createUserWithEmailAndPassword(e,p);
+    await c.user.updateProfile({displayName:nm(e)});
+    await db.doc('users/'+c.user.uid).set({name:nm(e),plan:'free',exp:0,prof:{},lang,at:Date.now()})}
+  else await auth.signInWithEmailAndPassword(e,p)
+ }catch(x){er.textContent=AE[x.code]?t(AE[x.code]):(x.message||t('e.generic'))}}
+
+/* ======================= EVENTS ======================= */
+$('#go').onclick=()=>authGo(false);
+$('#reg').onclick=()=>authGo(true);
 $('#pw').addEventListener('keydown',e=>{if(e.key==='Enter')$('#go').click()});
 $('#out').onclick=()=>auth&&auth.signOut();
-document.addEventListener('change',e=>{const t=e.target.dataset.tg;if(t)db.doc('users/'+uid).set({prof:{['t_'+t]:e.target.checked}},{merge:true}).catch(fe)});
+$('#langbtn').onclick=langSheet;
+$('#langbtn2').onclick=langSheet;
+
+document.addEventListener('change',e=>{const g=e.target.dataset.tg;
+ if(g)db.doc('users/'+uid).set({prof:{['t_'+g]:e.target.checked}},{merge:true}).catch(fe)});
+
 document.addEventListener('click',e=>{const q=s=>e.target.closest(s);let x;
- if(x=q('[data-copy]')){navigator.clipboard&&navigator.clipboard.writeText(x.dataset.copy).then(()=>toast('Tersalin'));return}
+ if(x=q('[data-copy]')){navigator.clipboard&&navigator.clipboard.writeText(x.dataset.copy).then(()=>toast(t('t.copied')));return}
+ if(x=q('[data-lang]')){setLang(x.dataset.lang);closeSheet();return}
+ if(q('[data-lang-sheet]'))return langSheet();
  if(x=q('[data-go]'))return go(x.dataset.go);
- if(q('[data-open]')){$('#wms').classList.remove('hide');document.body.style.overflow='hidden';return}
+ if(q('[data-open]')){location.href=WMS_URL;return}
  if(x=q('[data-pt]')){pasarTab=x.dataset.pt;return render()}
  if(x=q('[data-lt]')){lelTab=x.dataset.lt;return render()}
  if(x=q('[data-cy]')){cycle=x.dataset.cy;return render()}
  if(x=q('[data-buy]'))return checkout(x.dataset.buy);
  if(x=q('[data-m]')){pick=x.dataset.m;return checkout(x.dataset.k)}
  if(x=q('[data-pay]')){const k=x.dataset.pay,v=PLANS[k],base=cycle=='m'?v.m:v.m*10;
-  db.collection('payments').add({uid,name:user,email:mail,plan:k,pn:v.n,cycle,base,amount:+x.dataset.total,method:pick,note:($('#f9')||{}).value||'',status:'menunggu',at:Date.now()}).then(()=>toast('Menunggu verifikasi admin')).catch(fe);uc=0;closeSheet();return}
+  db.collection('payments').add({uid,name:user,email:mail,plan:k,pn:pname(k),cycle,base,amount:+x.dataset.total,method:pick,note:($('#f9')||{}).value||'',status:'menunggu',at:Date.now()}).then(()=>toast(t('t.pending'))).catch(fe);uc=0;closeSheet();return}
  if(x=q('[data-del]')){db.collection(x.dataset.del=='ad'?'ads':'items').doc(x.dataset.id).delete().catch(fe);return}
  if(x=q('[data-act]')){const a=x.dataset.act,v=id=>($('#'+id)||{}).value;
   if(a=='close')return closeSheet();
   if(a=='newitem')return itemForm();
   if(a=='newad')return adForm();
-  if(a=='saveitem'){if(!v('f1')||!(+v('f2')>0))return toast('Isi nama dan harga');if(S.items.length>=P().list)return toast('Batas produk tercapai, upgrade paket');
+  if(a=='saveitem'){if(!v('f1')||!(+v('f2')>0))return toast(t('t.fillnp'));if(S.items.length>=P().list)return toast(t('t.limitp'));
    db.collection('items').add({n:v('f1'),p:+v('f2'),s:+v('f3')||0,c:v('f4'),owner:uid,ownerName:user,at:Date.now()}).catch(fe);closeSheet();return}
-  if(a=='savead'){if(!v('f1'))return toast('Judul wajib diisi');if(adsOn()>=P().ads)return toast('Kuota iklan penuh, upgrade paket');
+  if(a=='savead'){if(!v('f1'))return toast(t('t.adtitle'));if(adsOn()>=P().ads)return toast(t('t.limitad'));
    db.collection('ads').add({t:v('f1'),d:v('f2')||'',k:v('f3'),end:Date.now()+(Math.max(1,+v('f4')||7))*864e5,owner:uid,ownerName:user,at:Date.now()}).catch(fe);closeSheet();return}
   if(a=='approve'||a=='reject'){const pm=S.pend.find(i=>i.id===x.dataset.id);if(!pm)return;const pr=db.doc('payments/'+pm.id);
    if(a=='reject'){pr.update({status:'ditolak'}).catch(fe);return}
    const ur=db.doc('users/'+pm.uid);
-   db.runTransaction(async t=>{const u=(await t.get(ur)).data()||{},now=Date.now(),base=(u.plan==pm.plan&&u.exp>now)?u.exp:now;
-    t.set(ur,{plan:pm.plan,exp:base+(pm.cycle=='m'?30:365)*864e5},{merge:true});t.update(pr,{status:'lunas'})}).then(()=>toast('Pembayaran disetujui')).catch(fe);return}
+   db.runTransaction(async tt=>{const u=(await tt.get(ur)).data()||{},now=Date.now(),base=(u.plan==pm.plan&&u.exp>now)?u.exp:now;
+    tt.set(ur,{plan:pm.plan,exp:base+(pm.cycle=='m'?30:365)*864e5},{merge:true});tt.update(pr,{status:'lunas'})}).then(()=>toast(t('t.approved'))).catch(fe);return}
   if(a=='newauc')return aucForm();
-  if(a=='saveauc'){const h=+v('f5')||24;if(!v('f1')||!(+v('f3')>0)||!(+v('f4')>0))return toast('Isi nama, harga awal, dan kelipatan');if(aucAct()>=P().auc)return toast('Kuota lelang penuh, upgrade paket');
+  if(a=='saveauc'){const h=+v('f5')||24;if(!v('f1')||!(+v('f3')>0)||!(+v('f4')>0))return toast(t('t.fillau'));if(aucAct()>=P().auc)return toast(t('t.limitau'));
    db.collection('auctions').add({t:v('f1'),d:v('f2')||'',start:+v('f3'),step:+v('f4'),cur:+v('f3'),bids:[],end:Date.now()+Math.max(1,h)*36e5,owner:uid,ownerName:user,done:false,at:Date.now()}).catch(fe);closeSheet();return}
   if(a=='bid'||a=='endauc'){const ref=db.doc('auctions/'+x.dataset.id);
-   db.runTransaction(async t=>{const au=(await t.get(ref)).data();
-    if(a=='endauc'){if(au.owner!==uid)throw Error('Bukan lelangmu');t.update(ref,{done:true});return}
-    if(au.done||au.end<=Date.now())throw Error('Lelang sudah berakhir');
-    if(au.owner===uid)throw Error('Tidak bisa menawar lelang sendiri');
+   db.runTransaction(async tt=>{const au=(await tt.get(ref)).data();
+    if(a=='endauc'){if(au.owner!==uid)throw Error(t('e.notyours'));tt.update(ref,{done:true});return}
+    if(au.done||au.end<=Date.now())throw Error(t('e.ended'));
+    if(au.owner===uid)throw Error(t('e.own'));
     const nx=au.bids.length?au.cur+au.step:au.start;
-    t.update(ref,{cur:nx,bids:firebase.firestore.FieldValue.arrayUnion({by:user,uid,a:nx,at:Date.now()})})}).then(()=>a=='bid'&&toast('Bid berhasil')).catch(fe);return}
-  if(a=='saveprof'){const pf={};document.querySelectorAll('[data-pf]').forEach(i=>pf[i.dataset.pf]=i.value);db.doc('users/'+uid).set({prof:pf},{merge:true}).then(()=>toast('Perubahan disimpan')).catch(fe);return}}});
+    tt.update(ref,{cur:nx,bids:firebase.firestore.FieldValue.arrayUnion({by:user,uid,a:nx,at:Date.now()})})}).then(()=>{if(a=='bid')toast(t('t.bidok'))}).catch(fe);return}
+  if(a=='saveprof'){const pf={};document.querySelectorAll('[data-pf]').forEach(i=>pf[i.dataset.pf]=i.value);
+   db.doc('users/'+uid).set({prof:pf},{merge:true}).then(()=>toast(t('t.saved'))).catch(fe);return}}});
+
 $('#sheet').addEventListener('click',e=>{if(e.target.id==='sheet')closeSheet()});
-$('#back').onclick=()=>{$('#wms').classList.add('hide');document.body.style.overflow=''};
-setInterval(()=>{document.querySelectorAll('[data-end]').forEach(e=>{const m=+e.dataset.end-Date.now();if(m>0)e.textContent=left(m);else{e.removeAttribute('data-end');e.textContent='Selesai';if(tab=='lelang'&&$('#sheet').classList.contains('hide'))render()}})},1000);
+
+setInterval(()=>{document.querySelectorAll('[data-end]').forEach(e=>{const m=+e.dataset.end-Date.now();
+ if(m>0)e.textContent=left(m);
+ else{e.removeAttribute('data-end');e.textContent=t('lel.done');if(tab=='lelang'&&$('#sheet').classList.contains('hide'))render()}})},1000);
+
+/* ======================= BOOT ======================= */
+paintStatic();
 if(READY)auth.onAuthStateChanged(u=>{unsub.forEach(f=>f());unsub=[];
- if(u){sync(u);enter()}else{S=EMPTY();uid=user='';$('#app').classList.add('hide');$('#login').classList.remove('hide');$('#pw').value=''}});
+ if(u){sync(u);enter()}
+ else{S=EMPTY();uid=user='';$('#app').classList.add('hide');$('#login').classList.remove('hide');$('#pw').value=''}});
 </script>
 </body>
 </html>
