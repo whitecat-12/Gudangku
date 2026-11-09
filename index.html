@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<meta name="theme-color" content="#0b2545">
+<meta name="theme-color" content="#0a1a30">
 <title>Bifetindo WMS — Pasar B2B Industri</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -14,14 +14,14 @@
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
 <style>
 :root{
-  --ink:#0b1b33; --ink2:#14294a; --mut:#5b7295; --mut2:#8ba0bf;
-  --line:#dbe7f5; --line2:#c5d8ee; --paper:#ffffff; --paper2:#f6faff; --field:#f1f7fe;
-  --brand:#2563eb; --brand2:#0ea5e9; --brand3:#6366f1;
-  --mint:#10b981; --sun:#f59e0b; --rose:#ef4444;
-  --sh:0 1px 2px rgba(11,27,51,.05),0 10px 30px -14px rgba(11,27,51,.18);
-  --sh2:0 2px 4px rgba(11,27,51,.06),0 24px 48px -22px rgba(11,27,51,.30);
-  --sh3:0 2px 4px rgba(11,27,51,.06),0 40px 80px -32px rgba(11,27,51,.40);
-  --r:20px; color-scheme:light;
+  --ink:#e6eef9; --ink2:#c5d8ee; --mut:#8ba0bf; --mut2:#6b8aad;
+  --line:#1e3a5f; --line2:#2a4a73; --paper:#112743; --paper2:#0e1f33; --field:#0d2038;
+  --brand:#3b82f6; --brand2:#0ea5e9; --brand3:#818cf8;
+  --mint:#34d399; --sun:#fbbf24; --rose:#f87171;
+  --sh:0 1px 2px rgba(0,0,0,.35),0 10px 30px -14px rgba(0,0,0,.55);
+  --sh2:0 2px 4px rgba(0,0,0,.4),0 24px 48px -22px rgba(0,0,0,.65);
+  --sh3:0 2px 4px rgba(0,0,0,.4),0 40px 80px -32px rgba(0,0,0,.75);
+  --r:20px; color-scheme:dark;
   --nav-h:64px;
   --nav-icon:22px;
   --nav-font:11px;
@@ -32,7 +32,7 @@ html{overflow-x:hidden;overflow-x:clip;-webkit-text-size-adjust:100%;scroll-padd
 body{
   font:15px/1.55 "Plus Jakarta Sans",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
   color:var(--ink);
-  background:#eaf2fc;
+  background:#08182e;
   overflow-x:hidden;
   overflow-x:clip;
   -webkit-font-smoothing:antialiased;
@@ -42,14 +42,14 @@ body{
 body::before{
   content:"";position:fixed;inset:0;z-index:-1;pointer-events:none;
   background-image:
-    radial-gradient(1100px 620px at 100% -10%, #cfe6ff 0%, transparent 60%),
-    radial-gradient(900px 540px at -10% 0%, #d8f3ff 0%, transparent 55%),
-    radial-gradient(800px 540px at 50% 110%, #e8e0ff 0%, transparent 55%),
-    linear-gradient(180deg,#eaf2fc 0%,#e2edfa 100%);
+    radial-gradient(1100px 620px at 100% -10%, #123456 0%, transparent 60%),
+    radial-gradient(900px 540px at -10% 0%, #0d2b4a 0%, transparent 55%),
+    radial-gradient(800px 540px at 50% 110%, #1a1035 0%, transparent 55%),
+    linear-gradient(180deg,#08182e 0%,#071427 100%);
 }
 button,input,select,textarea{font:inherit;color:inherit}
 .hide{display:none!important}
-::selection{background:#bfdbfe;color:#0b1b33}
+::selection{background:#1e3a5f;color:#e6eef9}
 h1,h2,h3{font-family:"Space Grotesk","Plus Jakarta Sans",sans-serif;letter-spacing:-.03em}
 .mono{font-family:ui-monospace,SFMono-Regular,Menlo,monospace}
 
@@ -60,11 +60,11 @@ h1,h2,h3{font-family:"Space Grotesk","Plus Jakarta Sans",sans-serif;letter-spaci
   transition:transform .18s cubic-bezier(.2,.8,.25,1), box-shadow .18s ease, filter .18s ease;
   position:relative;overflow:hidden;max-width:100%}
 .btn:after{content:"";position:absolute;inset:0;background:linear-gradient(120deg,transparent 30%,rgba(255,255,255,.18) 50%,transparent 70%);transform:translateX(-120%);transition:transform .6s ease}
-.btn:hover{filter:brightness(1.05)}
+.btn:hover{filter:brightness(1.06)}
 .btn:hover:after{transform:translateX(120%)}
 .btn:active{transform:translateY(1px) scale(.994)}
-.btn.g{background:var(--paper);color:var(--ink);border:1px solid var(--line2);box-shadow:0 1px 2px rgba(11,27,51,.05)}
-.btn.g:hover{background:#f8fbff;border-color:#a9c6e6}
+.btn.g{background:var(--paper);color:var(--ink);border:1px solid var(--line2);box-shadow:0 1px 2px rgba(0,0,0,.35)}
+.btn.g:hover{background:#173356;border-color:#3b82f6}
 .btn.s{width:auto;padding:10px 15px;font-size:13px;border-radius:12px;gap:8px}
 .btn.ok{background:linear-gradient(135deg,#047857,#10b981);box-shadow:0 8px 22px -12px rgba(16,185,129,.9)}
 .btn.danger{background:linear-gradient(135deg,#b91c1c,#ef4444);box-shadow:0 8px 22px -12px rgba(239,68,68,.9)}
@@ -81,9 +81,9 @@ label{font-size:12.5px;color:var(--mut);display:block;margin-bottom:6px;font-wei
 input[type=text],input[type=email],input[type=password],input[type=tel],input[type=number],select,textarea{
   width:100%;background:var(--field);border:1.5px solid var(--line);border-radius:14px;padding:13px 15px;outline:0;
   transition:border-color .16s,box-shadow .16s,background .16s;color:var(--ink);font-size:14.5px;max-width:100%}
-input::placeholder,textarea::placeholder{color:#9db0c8}
-input:focus,select:focus,textarea:focus{border-color:#7fb0f0;background:#fff;box-shadow:0 0 0 4px rgba(37,99,235,.12)}
-select option{color:var(--ink);background:#fff}
+input::placeholder,textarea::placeholder{color:#6b8aad}
+input:focus,select:focus,textarea:focus{border-color:#3b82f6;background:#0f2a48;box-shadow:0 0 0 4px rgba(59,130,246,.18)}
+select option{color:var(--ink);background:var(--paper)}
 .err{color:var(--rose);font-size:12.5px;min-height:18px;font-weight:600}
 
 #login{min-height:100vh;min-height:100dvh;display:flex;flex-direction:column;justify-content:center;align-items:center;
@@ -92,7 +92,7 @@ select option{color:var(--ink);background:#fff}
   position:relative;overflow:hidden;isolation:isolate}
 #login::before{content:"";position:absolute;inset:0;pointer-events:none;z-index:0;
   background:
-    radial-gradient(500px 340px at 110% 0%, rgba(14,165,233,.22), transparent 60%),
+    radial-gradient(500px 340px at 110% 0%, rgba(14,165,233,.20), transparent 60%),
     radial-gradient(440px 300px at -10% 100%, rgba(99,102,241,.18), transparent 60%);}
 #login>*{position:relative;z-index:1}
 .brand-top{display:flex;align-items:center;gap:10px;font-weight:800;font-size:17.5px;letter-spacing:-.03em;
@@ -102,34 +102,53 @@ select option{color:var(--ink);background:#fff}
   box-shadow:0 10px 22px -12px rgba(37,99,235,1),inset 0 1px 0 rgba(255,255,255,.3);}
 .brand-top small{display:block;font-size:9.5px;color:var(--mut);font-weight:700;letter-spacing:.1em;text-transform:uppercase}
 .brand-top>div{min-width:0}
-.auth-card{background:rgba(255,255,255,.9);
+.auth-card{background:linear-gradient(180deg,rgba(17,39,67,.90),rgba(13,32,56,.90));
   backdrop-filter:blur(24px) saturate(1.6);-webkit-backdrop-filter:blur(24px) saturate(1.6);
-  border:1px solid rgba(255,255,255,.95);border-radius:24px;padding:18px 16px 16px;box-shadow:var(--sh3);
+  border:1px solid rgba(59,130,246,.20);border-radius:24px;padding:18px 16px 16px;box-shadow:var(--sh3);
   display:grid;gap:10px;width:100%;animation:pop .45s cubic-bezier(.2,.8,.25,1) both}
 @keyframes pop{from{opacity:0;transform:translateY(12px) scale(.985)}to{opacity:1;transform:none}}
 .auth-head{display:flex;align-items:flex-start;justify-content:space-between;gap:8px;margin-bottom:2px;min-width:0}
 .auth-head>div{min-width:0}
-.auth-head h1{font-size:21px;margin:0;font-weight:800;line-height:1.1;letter-spacing:-.035em}
+.auth-head h1{font-size:21px;margin:0;font-weight:800;line-height:1.1;letter-spacing:-.035em;color:var(--ink)}
 .auth-head p{color:var(--mut);margin:4px 0 0;font-size:12px;line-height:1.45}
 .auth-pill{display:inline-flex;align-items:center;gap:5px;flex:none;
-  background:linear-gradient(135deg,#e0ecff,#e6f7ff);color:#1d4ed8;font-size:10px;font-weight:800;letter-spacing:.03em;
-  padding:5px 9px;border-radius:99px;border:1px solid #cfe0fb;white-space:nowrap;}
-.auth-tabs{display:flex;background:#e4edf9;border:1px solid var(--line);border-radius:14px;padding:4px;gap:3px;margin-bottom:2px}
-.auth-tabs button{flex:1;border:0;background:none;padding:11px 8px;border-radius:11px;font-weight:700;font-size:12.5px;
-  color:var(--mut);cursor:pointer;transition:background .16s,color .16s,box-shadow .16s;min-width:0;
-  white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.auth-tabs button.on{background:#fff;color:#1d4ed8;box-shadow:0 2px 8px -2px rgba(11,27,51,.18)}
-.auth-form{display:grid;gap:9px}
+  background:linear-gradient(135deg,#1e2f5c,#1a2850);color:#93c5fd;font-size:10px;font-weight:800;letter-spacing:.03em;
+  padding:5px 9px;border-radius:99px;border:1px solid #2a4a73;white-space:nowrap;}
+
+/* ============ AUTH MODE SWITCHER (slider) ============ */
+.auth-mode{position:relative;display:grid;grid-template-columns:1fr 1fr;gap:4px;min-width:0;
+  background:#0d2038;border:1px solid var(--line);border-radius:14px;padding:4px}
+.auth-slider{position:absolute;top:4px;bottom:4px;left:4px;width:calc(50% - 6px);
+  border-radius:11px;background:#1e3a5f;pointer-events:none;
+  box-shadow:0 2px 8px -2px rgba(0,0,0,.5),inset 0 1px 0 rgba(255,255,255,.06);
+  transition:transform .38s cubic-bezier(.2,.8,.25,1)}
+.auth-slider.right{transform:translateX(calc(100% + 4px))}
+.auth-tab{position:relative;z-index:1;border:0;background:none;padding:10px 8px;border-radius:11px;
+  font-weight:800;font-size:12.5px;color:var(--mut);cursor:pointer;transition:color .22s;
+  white-space:nowrap;overflow:hidden;text-overflow:ellipsis;min-width:0;
+  -webkit-tap-highlight-color:transparent}
+.auth-tab.on{color:#93c5fd}
+.auth-tab:active{transform:scale(.98)}
+
+/* ============ AUTH SLIDING PANELS ============ */
+.auth-panels{overflow:hidden;min-width:0;
+  transition:height .40s cubic-bezier(.2,.8,.25,1)}
+.auth-track{display:flex;width:200%;align-items:flex-start;
+  transition:transform .42s cubic-bezier(.2,.8,.25,1)}
+.auth-track.right{transform:translateX(-50%)}
+.auth-panel{width:50%;flex:none;display:grid;gap:10px;min-width:0;padding:0;margin:0}
+
+/* panel head — pembeda visual antar form */
+.auth-panel-head{display:flex;flex-direction:column;gap:2px;min-width:0;margin-bottom:2px}
+.auth-panel-head h2{font-size:14.5px;font-weight:800;letter-spacing:-.02em;display:flex;align-items:center;gap:7px;
+  margin:0;color:var(--ink);line-height:1.2}
+.auth-panel-head h2 i{color:#60a5fa;font-size:12px;flex:none}
+.auth-panel-head p{margin:0;font-size:11px;color:var(--mut);line-height:1.4}
+
 .auth-field label{margin-bottom:4px;font-size:11px;letter-spacing:.01em}
 .auth-field input{padding:11px 13px;font-size:14px;border-radius:12px}
-.auth-actions .btn{padding:12px 14px;font-size:14px;border-radius:13px}
-.auth-actions .btn.g{padding:11px 14px}
-.auth-form .btn{padding:12px 14px;font-size:14px;border-radius:13px}
-.auth-divider{display:flex;align-items:center;gap:10px;color:#a3b6ce;font-size:10px;font-weight:700;
-  letter-spacing:.12em;text-transform:uppercase;margin:1px 0;}
-.auth-divider:before,.auth-divider:after{content:"";flex:1;height:1px;background:linear-gradient(90deg,transparent,#d3e2f3,transparent)}
 .auth-foot{text-align:center;font-size:10.5px;color:var(--mut);line-height:1.6;max-width:400px;padding:0 4px}
-.auth-foot a{color:var(--brand);font-weight:700;text-decoration:none}
+.auth-foot a{color:#60a5fa;font-weight:700;text-decoration:none}
 .auth-foot a:hover{text-decoration:underline}
 
 #app{
@@ -142,9 +161,9 @@ header{
   position:sticky;top:0;z-index:30;
   display:flex;justify-content:space-between;align-items:center;gap:12px;
   padding:12px 16px;
-  background:rgba(234,242,252,.78);
+  background:rgba(8,24,46,.82);
   backdrop-filter:blur(20px) saturate(1.6);-webkit-backdrop-filter:blur(20px) saturate(1.6);
-  border-bottom:1px solid rgba(197,216,238,.5);
+  border-bottom:1px solid rgba(30,58,95,.6);
   min-width:0;
 }
 header .brandmark{font-size:16px;flex:1 1 auto;min-width:0}
@@ -160,9 +179,9 @@ main{padding:16px 14px;display:grid;gap:14px;align-content:start;min-width:0;wid
 main>*{min-width:0}
 
 .card{background:var(--paper);border:1px solid var(--line);border-radius:var(--r);padding:16px;box-shadow:var(--sh);min-width:0}
-h2{font-size:19px;margin:0;font-weight:800}
-h3{font-size:14.5px;margin:0 0 10px;font-weight:800;display:flex;align-items:center;gap:8px}
-h3 i{color:var(--brand);font-size:13px}
+h2{font-size:19px;margin:0;font-weight:800;color:var(--ink)}
+h3{font-size:14.5px;margin:0 0 10px;font-weight:800;display:flex;align-items:center;gap:8px;color:var(--ink)}
+h3 i{color:#60a5fa;font-size:13px}
 .mut{color:var(--mut);font-size:12.5px;line-height:1.5}
 .mut i{color:var(--mut2);margin-right:4px}
 
@@ -170,29 +189,29 @@ h3 i{color:var(--brand);font-size:13px}
 .greet{display:flex;justify-content:space-between;align-items:center;gap:12px;min-width:0}
 .greet-info{min-width:0;flex:1 1 auto}
 .greet-hi{font-size:11.5px;color:var(--mut);font-weight:600;letter-spacing:.02em;display:block;margin-bottom:2px}
-.greet h2{font-size:21px;margin:0;letter-spacing:-.04em;font-weight:800;line-height:1.15;
+.greet h2{font-size:21px;margin:0;letter-spacing:-.04em;font-weight:800;line-height:1.15;color:var(--ink);
   white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:100%}
 .icon-btn{position:relative;width:42px;height:42px;border-radius:13px;flex:none;
-  border:1px solid var(--line);background:#fff;color:var(--ink);
+  border:1px solid var(--line);background:var(--paper);color:var(--ink);
   display:grid;place-items:center;cursor:pointer;font-size:15px;
   box-shadow:var(--sh);transition:transform .16s,box-shadow .16s;}
 .icon-btn:hover{transform:translateY(-1px);box-shadow:var(--sh2)}
 .icon-btn:active{transform:scale(.96)}
 .icon-btn .dot{position:absolute;top:10px;right:10px;width:8px;height:8px;border-radius:50%;
-  background:var(--rose);border:2px solid #fff}
+  background:var(--rose);border:2px solid var(--paper)}
 
 .search-bar{display:flex;align-items:center;gap:10px;
-  background:#fff;border:1px solid var(--line);border-radius:16px;
+  background:var(--paper);border:1px solid var(--line);border-radius:16px;
   padding:6px 6px 6px 14px;box-shadow:var(--sh);
   transition:border-color .16s,box-shadow .16s;min-width:0}
-.search-bar:focus-within{border-color:#7fb0f0;box-shadow:0 0 0 4px rgba(37,99,235,.10)}
+.search-bar:focus-within{border-color:#3b82f6;box-shadow:0 0 0 4px rgba(59,130,246,.18)}
 .search-bar>i{color:var(--mut);font-size:14px;flex:none}
 .search-bar input{flex:1 1 auto;border:0!important;background:none!important;padding:10px 0!important;
   font-size:14px!important;outline:none;box-shadow:none!important;border-radius:0!important;
   color:var(--ink);min-width:0}
 .search-bar input:focus{box-shadow:none!important;background:none!important;border:0!important}
 .search-filter{width:36px;height:36px;border-radius:11px;flex:none;border:0;cursor:pointer;
-  background:linear-gradient(135deg,#e0ecff,#eff6ff);color:var(--brand);
+  background:linear-gradient(135deg,#1e3a5f,#173356);color:#60a5fa;
   display:grid;place-items:center;font-size:13px;transition:transform .16s;}
 .search-filter:active{transform:scale(.94)}
 
@@ -243,26 +262,26 @@ h3 i{color:var(--brand);font-size:13px}
 .q-item{flex:0 0 72px;width:72px;background:none;border:0;padding:0;cursor:pointer;
   display:flex;flex-direction:column;align-items:center;gap:7px;min-width:0}
 .q-ic{width:58px;height:58px;border-radius:19px;display:grid;place-items:center;font-size:21px;
-  position:relative;box-shadow:0 6px 14px -8px rgba(37,99,235,.3),inset 0 1px 0 rgba(255,255,255,.7);
+  position:relative;box-shadow:0 6px 14px -8px rgba(0,0,0,.5),inset 0 1px 0 rgba(255,255,255,.06);
   transition:transform .18s cubic-bezier(.2,.8,.25,1),box-shadow .18s;}
-.q-item:hover .q-ic{transform:translateY(-3px);box-shadow:0 12px 20px -8px rgba(37,99,235,.4),inset 0 1px 0 rgba(255,255,255,.7)}
+.q-item:hover .q-ic{transform:translateY(-3px);box-shadow:0 12px 20px -8px rgba(0,0,0,.6),inset 0 1px 0 rgba(255,255,255,.06)}
 .q-item:active .q-ic{transform:translateY(0) scale(.96)}
 .q-item small{font-size:10.5px;font-weight:700;color:var(--ink);letter-spacing:-.01em;
   text-align:center;line-height:1.2;max-width:72px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
-.q-ic.blue{background:linear-gradient(135deg,#dbeafe,#eff6ff);color:#1d4ed8}
-.q-ic.cyan{background:linear-gradient(135deg,#cffafe,#ecfeff);color:#0891b2}
-.q-ic.indigo{background:linear-gradient(135deg,#e0e7ff,#eef2ff);color:#4338ca}
-.q-ic.sky{background:linear-gradient(135deg,#e0f2fe,#f0f9ff);color:#0284c7}
-.q-ic.teal{background:linear-gradient(135deg,#ccfbf1,#f0fdfa);color:#0d9488}
-.q-ic.navy{background:linear-gradient(135deg,#dbeafe,#eef2ff);color:#1e3a8a}
+.q-ic.blue{background:linear-gradient(135deg,#1e3a5f,#173356);color:#60a5fa}
+.q-ic.cyan{background:linear-gradient(135deg,#0c3b4a,#082f3d);color:#22d3ee}
+.q-ic.indigo{background:linear-gradient(135deg,#1e2f5c,#1a2850);color:#818cf8}
+.q-ic.sky{background:linear-gradient(135deg,#0c3b4a,#082f3d);color:#38bdf8}
+.q-ic.teal{background:linear-gradient(135deg,#0a3d33,#082f2a);color:#34d399}
+.q-ic.navy{background:linear-gradient(135deg,#1e2f5c,#1a2850);color:#93c5fd}
 
 .stats-row{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px;min-width:0;width:100%}
-.mini-stat{background:#fff;border:1px solid var(--line);border-radius:14px;
+.mini-stat{background:var(--paper);border:1px solid var(--line);border-radius:14px;
   padding:11px 6px;text-align:center;box-shadow:var(--sh);
   position:relative;overflow:hidden;transition:transform .16s,box-shadow .16s;
   min-width:0}
 .mini-stat:before{content:"";position:absolute;top:0;left:0;right:0;height:2px;
-  background:linear-gradient(90deg,#2563eb,#0ea5e9,#22d3ee);opacity:.85;}
+  background:linear-gradient(90deg,#3b82f6,#0ea5e9,#22d3ee);opacity:.9;}
 .mini-stat b{display:block;font-size:17px;font-weight:800;letter-spacing:-.03em;
   line-height:1.15;color:var(--ink);
   font-family:"Space Grotesk","Plus Jakarta Sans",sans-serif;
@@ -272,24 +291,24 @@ h3 i{color:var(--brand);font-size:13px}
   white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 
 .grid2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;min-width:0;width:100%}
-.shortcut{background:#fff;border:1px solid var(--line);border-radius:16px;
+.shortcut{background:var(--paper);border:1px solid var(--line);border-radius:16px;
   padding:13px;text-align:left;cursor:pointer;box-shadow:var(--sh);
   display:flex;flex-direction:column;gap:6px;min-width:0;
   transition:transform .18s cubic-bezier(.2,.8,.25,1),box-shadow .18s,border-color .18s;
   position:relative;overflow:hidden;}
 .shortcut:before{content:"";position:absolute;inset:0;
-  background:radial-gradient(320px 160px at 100% 0%, rgba(37,99,235,.06), transparent 60%);
+  background:radial-gradient(320px 160px at 100% 0%, rgba(59,130,246,.10), transparent 60%);
   opacity:0;transition:opacity .2s;pointer-events:none}
-.shortcut:hover{transform:translateY(-2px);box-shadow:var(--sh2);border-color:#b9d3f2}
+.shortcut:hover{transform:translateY(-2px);box-shadow:var(--sh2);border-color:#3b82f6}
 .shortcut:hover:before{opacity:1}
 .shortcut:active{transform:translateY(0) scale(.99)}
 .shortcut .sc-ic{width:38px;height:38px;border-radius:12px;display:grid;place-items:center;
   font-size:15px;margin-bottom:2px;position:relative;z-index:1;flex:none;
-  box-shadow:inset 0 1px 0 rgba(255,255,255,.7);}
-.shortcut .sc-ic.blue{background:linear-gradient(135deg,#dbeafe,#eff6ff);color:#1d4ed8}
-.shortcut .sc-ic.cyan{background:linear-gradient(135deg,#cffafe,#ecfeff);color:#0891b2}
-.shortcut .sc-ic.sky{background:linear-gradient(135deg,#e0f2fe,#f0f9ff);color:#0284c7}
-.shortcut .sc-ic.indigo{background:linear-gradient(135deg,#e0e7ff,#eef2ff);color:#4338ca}
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.06);}
+.shortcut .sc-ic.blue{background:linear-gradient(135deg,#1e3a5f,#173356);color:#60a5fa}
+.shortcut .sc-ic.cyan{background:linear-gradient(135deg,#0c3b4a,#082f3d);color:#22d3ee}
+.shortcut .sc-ic.sky{background:linear-gradient(135deg,#0c3b4a,#082f3d);color:#38bdf8}
+.shortcut .sc-ic.indigo{background:linear-gradient(135deg,#1e2f5c,#1a2850);color:#818cf8}
 .shortcut b{font-size:12.5px;font-weight:800;letter-spacing:-.02em;color:var(--ink);position:relative;z-index:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .shortcut small{font-size:10.5px;color:var(--mut);line-height:1.35;position:relative;z-index:1;min-width:0}
 
@@ -298,75 +317,77 @@ h3 i{color:var(--brand);font-size:13px}
     radial-gradient(600px 340px at 0% 100%, rgba(99,102,241,.30), transparent 60%),
     linear-gradient(135deg,#0b2545 0%,#1d4ed8 55%,#0891b2 100%);
   color:#fff;border:0;border-radius:24px;padding:22px;
-  box-shadow:0 24px 48px -24px rgba(11,37,69,.75),inset 0 1px 0 rgba(255,255,255,.15);
+  box-shadow:0 24px 48px -24px rgba(0,0,0,.75),inset 0 1px 0 rgba(255,255,255,.15);
   position:relative;overflow:hidden;min-width:0}
 .hero>*{position:relative;z-index:1}
-.hero h2{font-size:22px;letter-spacing:-.04em;margin-bottom:6px}
+.hero h2{font-size:22px;letter-spacing:-.04em;margin-bottom:6px;color:#fff}
 .hero .mut{color:#bfdbfe;font-size:13px}
 .hero .mut b{color:#fff}
 
 .g2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:11px;min-width:0}
 .stat{display:grid;gap:4px;padding:16px;border-radius:18px;
-  background:linear-gradient(180deg,#ffffff,#f8fbff);border:1px solid var(--line);
+  background:linear-gradient(180deg,var(--paper),#0e2440);border:1px solid var(--line);
   box-shadow:var(--sh);position:relative;overflow:hidden;min-width:0}
-.stat:before{content:"";position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,#2563eb,#0ea5e9,#22d3ee);opacity:.85}
+.stat:before{content:"";position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,#3b82f6,#0ea5e9,#22d3ee);opacity:.9}
 .stat .mut{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--mut)}
-.stat b{display:block;font-size:26px;letter-spacing:-.04em;line-height:1.1;font-family:"Space Grotesk","Plus Jakarta Sans",sans-serif}
+.stat b{display:block;font-size:26px;letter-spacing:-.04em;line-height:1.1;font-family:"Space Grotesk","Plus Jakarta Sans",sans-serif;color:var(--ink)}
 
-.seg{display:flex;background:#e4edf9;border:1px solid var(--line);border-radius:14px;padding:4px;gap:3px;min-width:0}
+.seg{display:flex;background:#0d2038;border:1px solid var(--line);border-radius:14px;padding:4px;gap:3px;min-width:0}
 .seg button{flex:1;border:0;background:none;padding:11px 8px;border-radius:11px;font-weight:700;font-size:12.5px;
   color:var(--mut);cursor:pointer;transition:background .16s,color .16s,box-shadow .16s;min-width:0;
   white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.seg button.on{background:#fff;color:#1d4ed8;box-shadow:0 2px 8px -2px rgba(11,27,51,.18)}
+.seg button.on{background:#1e3a5f;color:#93c5fd;box-shadow:0 2px 8px -2px rgba(0,0,0,.4)}
 
 .row{display:flex;justify-content:space-between;align-items:center;gap:10px;min-width:0}
-.tag{font-size:10.5px;padding:4px 9px;border-radius:99px;background:#d1fae5;color:#047857;
+.tag{font-size:10.5px;padding:4px 9px;border-radius:99px;background:#0a3a2c;color:#6ee7b7;
   font-weight:800;white-space:nowrap;letter-spacing:.02em;flex:none}
-.tag.w{background:#fef3c7;color:#a16207}
-.tag.i{background:#dbeafe;color:#1d4ed8}
+.tag.w{background:#3b2f0c;color:#fcd34d}
+.tag.i{background:#1e2f5c;color:#93c5fd}
 
 .empty{text-align:center;padding:36px 16px;color:var(--mut)}
-.empty i{font-size:36px;opacity:.4;margin-bottom:14px;display:block;color:var(--brand)}
+.empty i{font-size:36px;opacity:.5;margin-bottom:14px;display:block;color:#60a5fa}
 .empty div{margin-bottom:14px;font-size:13.5px;font-weight:600}
 .empty .btn{width:auto;margin:auto}
 
 .tg{position:relative;width:48px;height:28px;flex:none}
 .tg input{opacity:0;position:absolute;inset:0;z-index:2;margin:0;cursor:pointer;width:100%;height:100%}
-.tg b{position:absolute;inset:0;background:#dbe6f3;border:1px solid var(--line2);border-radius:99px;transition:.22s}
-.tg b::after{content:"";position:absolute;top:3px;left:3px;width:20px;height:20px;border-radius:50%;background:#fff;
-  box-shadow:0 1px 3px rgba(0,0,0,.2);transition:.22s}
-.tg input:checked+b{background:linear-gradient(135deg,#2563eb,#0891b2);border-color:#2563eb}
-.tg input:checked+b::after{left:23px}
+.tg b{position:absolute;inset:0;background:#1e3a5f;border:1px solid var(--line2);border-radius:99px;transition:.22s}
+.tg b::after{content:"";position:absolute;top:3px;left:3px;width:20px;height:20px;border-radius:50%;background:#8ba0bf;
+  box-shadow:0 1px 3px rgba(0,0,0,.4);transition:.22s}
+.tg input:checked+b{background:linear-gradient(135deg,#2563eb,#0891b2);border-color:#3b82f6}
+.tg input:checked+b::after{left:23px;background:#fff}
 
 .fld{margin-bottom:11px}
 
 .plan{position:relative;transition:border-color .18s,box-shadow .18s,transform .18s;min-width:0}
-.plan.cur{border-color:#7fb0f0;box-shadow:0 0 0 4px rgba(37,99,235,.10),var(--sh)}
-.plan .price{font-size:28px;font-weight:800;letter-spacing:-.04em;margin:8px 0 2px;font-family:"Space Grotesk","Plus Jakarta Sans",sans-serif}
+.plan.cur{border-color:#3b82f6;box-shadow:0 0 0 4px rgba(59,130,246,.15),var(--sh)}
+.plan .price{font-size:28px;font-weight:800;letter-spacing:-.04em;margin:8px 0 2px;font-family:"Space Grotesk","Plus Jakarta Sans",sans-serif;color:var(--ink)}
 .plan .price small{font-size:12px;font-weight:600;color:var(--mut)}
-.plan ul{list-style:none;padding:0;margin:12px 0;display:grid;gap:8px;font-size:13px;color:#27405f}
+.plan ul{list-style:none;padding:0;margin:12px 0;display:grid;gap:8px;font-size:13px;color:#c5d8ee}
 .plan li{display:flex;align-items:flex-start;gap:9px;line-height:1.4;min-width:0}
 .plan li i{color:var(--mint);margin-top:3px;font-size:11px;flex:none}
 .pop{position:absolute;top:-11px;right:16px;background:linear-gradient(135deg,#f59e0b,#f97316);color:#fff;
   font-size:10.5px;font-weight:800;padding:4px 11px;border-radius:99px;
   box-shadow:0 8px 16px -6px rgba(245,158,11,.95);letter-spacing:.03em;text-transform:uppercase}
 
-.lang-btn{display:inline-flex;align-items:center;gap:6px;border:1px solid var(--line);background:#fff;
+/* ============ LANGUAGE SWITCHER ============ */
+.lang-btn{display:inline-flex;align-items:center;gap:6px;border:1px solid var(--line);background:var(--paper);
   color:var(--ink);border-radius:12px;padding:8px 11px;font-size:11.5px;font-weight:800;cursor:pointer;
   box-shadow:var(--sh);transition:transform .16s,box-shadow .16s,border-color .16s;flex:none;line-height:1}
-.lang-btn:hover{transform:translateY(-1px);box-shadow:var(--sh2);border-color:#b9d3f2}
+.lang-btn:hover{transform:translateY(-1px);box-shadow:var(--sh2);border-color:#3b82f6}
 .lang-btn:active{transform:scale(.96)}
-.lang-btn i{color:var(--brand);font-size:12px}
+.lang-btn i{color:#60a5fa;font-size:12px}
 .lang-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:9px}
 .lang-opt{display:flex;align-items:center;gap:9px;padding:12px;border:1.5px solid var(--line);
   border-radius:14px;background:var(--field);cursor:pointer;font-weight:700;font-size:12.5px;
-  transition:border-color .16s,background .16s,transform .16s;min-width:0}
-.lang-opt:hover{transform:translateY(-1px)}
-.lang-opt.on{border-color:#2563eb;background:#eaf2ff;color:#1d4ed8;box-shadow:0 0 0 3px rgba(37,99,235,.12)}
+  transition:border-color .16s,background .16s,transform .16s;min-width:0;color:var(--ink)}
+.lang-opt:hover{transform:translateY(-1px);border-color:#3b82f6}
+.lang-opt.on{border-color:#3b82f6;background:#1e2f5c;color:#93c5fd;box-shadow:0 0 0 3px rgba(59,130,246,.15)}
 .lang-opt .fl{font-size:18px;line-height:1;flex:none}
 .lang-opt b{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .lang-opt i{margin-left:auto;color:var(--mint);font-size:12px;flex:none}
 
+/* ============ NAV BOTTOM ============ */
 nav{
   position:fixed;
   left:12px;
@@ -378,18 +399,15 @@ nav{
   padding:6px;
   margin:0 auto;
   max-width:460px;
-  background:linear-gradient(180deg,rgba(255,255,255,.96) 0%,rgba(255,255,255,.86) 100%);
+  background:linear-gradient(180deg,rgba(17,39,67,.95) 0%,rgba(13,32,56,.88) 100%);
   backdrop-filter:blur(28px) saturate(1.8);
   -webkit-backdrop-filter:blur(28px) saturate(1.8);
-  border:1px solid rgba(255,255,255,.95);
+  border:1px solid rgba(59,130,246,.18);
   border-radius:26px;
   box-shadow:
-    0 18px 44px -12px rgba(11,27,51,.35),
-    0 8px 18px -6px rgba(11,27,51,.20),
-    inset 0 1px 0 rgba(255,255,255,.95),
-    inset 0 -1px 0 rgba(0,0,0,.03),
-    inset 1px 0 0 rgba(255,255,255,.55),
-    inset -1px 0 0 rgba(255,255,255,.55);
+    0 18px 44px -12px rgba(0,0,0,.7),
+    0 8px 18px -6px rgba(0,0,0,.5),
+    inset 0 1px 0 rgba(255,255,255,.06);
 }
 nav button{
   flex:1 1 0;
@@ -430,40 +448,40 @@ nav button.on{
   color:#fff;
   background:linear-gradient(135deg,#1d4ed8 0%,#2563eb 45%,#0ea5e9 100%);
   box-shadow:
-    0 8px 18px -6px rgba(37,99,235,.65),
-    0 2px 6px -1px rgba(37,99,235,.35),
-    inset 0 1px 0 rgba(255,255,255,.32);
+    0 8px 18px -6px rgba(37,99,235,.7),
+    0 2px 6px -1px rgba(37,99,235,.4),
+    inset 0 1px 0 rgba(255,255,255,.22);
 }
 nav button.on i{transform:translateY(-1px) scale(1.06)}
 
-#sheet{position:fixed;inset:0;z-index:80;background:rgba(11,27,51,.48);
+#sheet{position:fixed;inset:0;z-index:80;background:rgba(3,10,22,.65);
   backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);
   display:flex;align-items:flex-end;justify-content:center;animation:fade .22s ease both}
 @keyframes fade{from{opacity:0}to{opacity:1}}
 #sheet>div{background:var(--paper);width:100%;max-width:760px;border-radius:28px 28px 0 0;
   padding:24px 18px calc(24px + env(safe-area-inset-bottom,0px));max-height:92dvh;overflow:auto;
-  display:grid;gap:13px;box-shadow:0 -16px 48px rgba(11,27,51,.28);
+  display:grid;gap:13px;box-shadow:0 -16px 48px rgba(0,0,0,.6);border-top:1px solid rgba(59,130,246,.15);
   animation:up .32s cubic-bezier(.2,.8,.25,1) both;}
-#sheet>div:before{content:"";display:block;width:44px;height:4px;border-radius:99px;background:#d5e2f1;margin:-8px auto 4px;}
+#sheet>div:before{content:"";display:block;width:44px;height:4px;border-radius:99px;background:#1e3a5f;margin:-8px auto 4px;}
 @keyframes up{from{transform:translateY(28px);opacity:.5}to{transform:none;opacity:1}}
 
 .opt{display:flex;gap:11px;align-items:center;padding:14px 13px;border:1.5px solid var(--line);
-  border-radius:15px;cursor:pointer;font-weight:700;font-size:13px;background:var(--field);
+  border-radius:15px;cursor:pointer;font-weight:700;font-size:13px;background:var(--field);color:var(--ink);
   transition:border-color .16s,background .16s,transform .16s;}
-.opt:hover{transform:translateY(-1px)}
-.opt.on{border-color:#2563eb;background:#eaf2ff;color:#1d4ed8;box-shadow:0 0 0 3px rgba(37,99,235,.12)}
+.opt:hover{transform:translateY(-1px);border-color:#3b82f6}
+.opt.on{border-color:#3b82f6;background:#1e2f5c;color:#93c5fd;box-shadow:0 0 0 3px rgba(59,130,246,.15)}
 .opt i{font-size:16px}
 
 .toast{position:fixed;left:50%;transform:translateX(-50%);
   bottom:calc(var(--nav-h) + 46px + env(safe-area-inset-bottom,0px));
-  background:#0b2545;color:#fff;padding:12px 18px;border-radius:14px;font-weight:600;font-size:13px;
-  z-index:90;white-space:nowrap;box-shadow:0 16px 32px -10px rgba(11,27,51,.6);
+  background:linear-gradient(135deg,#2563eb,#0ea5e9);color:#fff;padding:12px 18px;border-radius:14px;font-weight:600;font-size:13px;
+  z-index:90;white-space:nowrap;box-shadow:0 16px 32px -10px rgba(0,0,0,.7);
   animation:toastIn .3s cubic-bezier(.2,.8,.25,1) both;
   max-width:calc(100vw - 32px);overflow:hidden;text-overflow:ellipsis}
 @keyframes toastIn{from{opacity:0;transform:translate(-50%,12px)}to{opacity:1;transform:translate(-50%,0)}}
 
 code{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:11.5px;background:var(--field);
-  padding:2px 7px;border-radius:6px;border:1px solid var(--line);color:var(--ink2);
+  padding:2px 7px;border-radius:6px;border:1px solid var(--line);color:#93c5fd;
   word-break:break-all;max-width:100%;display:inline-block}
 .card .row + .card{margin-top:10px}
 #view .card{animation:rise .4s cubic-bezier(.2,.8,.25,1) both}
@@ -472,6 +490,7 @@ code{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:11.5px;ba
 #view .card:nth-child(3){animation-delay:.08s}
 #view .card:nth-child(4){animation-delay:.12s}
 
+/* ============ RESPONSIVE ============ */
 @media(max-width:480px){
   header{padding:11px 14px}
   main{padding:14px 12px;gap:13px}
@@ -540,6 +559,7 @@ code{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:11.5px;ba
       <i class="fa-solid fa-globe"></i><span id="langcur">ID</span>
     </button>
   </div>
+
   <div class="auth-card">
     <div class="auth-head">
       <div>
@@ -549,48 +569,69 @@ code{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:11.5px;ba
       <span class="auth-pill"><i class="fa-solid fa-bolt"></i> B2B</span>
     </div>
 
-    <!-- Tab switcher Login / Daftar -->
-    <div class="auth-tabs" role="tablist">
-      <button class="on" data-auth="login" data-i18n="login">Masuk</button>
-      <button data-auth="register" data-i18n="reg.tab">Daftar</button>
+    <!-- MODE SLIDER -->
+    <div class="auth-mode" role="tablist">
+      <div class="auth-slider" id="authSlider"></div>
+      <button class="auth-tab on" type="button" role="tab" data-mode="login" aria-selected="true"><span data-i18n="login">Masuk</span></button>
+      <button class="auth-tab" type="button" role="tab" data-mode="register" aria-selected="false"><span data-i18n="auth.tabreg">Daftar</span></button>
     </div>
 
-    <!-- ===== FORM LOGIN ===== -->
-    <div id="form-login" class="auth-form">
-      <div class="auth-field">
-        <label for="em" data-i18n="email">Email</label>
-        <input id="em" type="email" autocomplete="username" placeholder="nama@perusahaan.com">
-      </div>
-      <div class="auth-field">
-        <label for="pw" data-i18n="password">Kata sandi</label>
-        <input id="pw" type="password" autocomplete="current-password" data-i18n-ph="ph.pass" placeholder="Minimal 6 karakter">
-      </div>
-      <div class="err" id="err"></div>
-      <button class="btn" id="go"><i class="fa-solid fa-right-to-bracket"></i><span data-i18n="login">Masuk</span></button>
-    </div>
+    <!-- SLIDING PANELS -->
+    <div class="auth-panels" id="authPanels">
+      <div class="auth-track" id="authTrack">
 
-    <!-- ===== FORM DAFTAR ===== -->
-    <div id="form-register" class="auth-form hide">
-      <div class="auth-field">
-        <label for="rname" data-i18n="reg.name">Nama / Perusahaan</label>
-        <input id="rname" type="text" autocomplete="organization" data-i18n-ph="reg.name.ph" placeholder="Nama Anda atau PT">
+        <!-- LOGIN PANEL -->
+        <form class="auth-panel" id="panel-login" role="tabpanel" novalidate autocomplete="on">
+          <div class="auth-panel-head">
+            <h2><i class="fa-solid fa-right-to-bracket"></i> <span data-i18n="login">Masuk</span></h2>
+            <p data-i18n="auth.loginhint">Masukkan email dan kata sandi akun Anda.</p>
+          </div>
+          <div class="auth-field">
+            <label for="em" data-i18n="email">Email</label>
+            <input id="em" type="email" autocomplete="username" placeholder="nama@perusahaan.com">
+          </div>
+          <div class="auth-field">
+            <label for="pw" data-i18n="password">Kata sandi</label>
+            <input id="pw" type="password" autocomplete="current-password" data-i18n-ph="ph.pass" placeholder="Minimal 6 karakter">
+          </div>
+          <div class="err" id="errLogin"></div>
+          <button class="btn" id="go" type="submit">
+            <i class="fa-solid fa-right-to-bracket"></i><span data-i18n="login">Masuk</span>
+          </button>
+        </form>
+
+        <!-- REGISTER PANEL -->
+        <form class="auth-panel" id="panel-register" role="tabpanel" novalidate autocomplete="on">
+          <div class="auth-panel-head">
+            <h2><i class="fa-solid fa-user-plus"></i> <span data-i18n="auth.tabreg">Daftar</span></h2>
+            <p data-i18n="auth.reghint">Buat akun baru dengan email dan kata sandi.</p>
+          </div>
+          <div class="auth-field">
+            <label for="rn" data-i18n="auth.name">Nama lengkap</label>
+            <input id="rn" type="text" autocomplete="name" placeholder="Nama lengkap">
+          </div>
+          <div class="auth-field">
+            <label for="rem" data-i18n="email">Email</label>
+            <input id="rem" type="email" autocomplete="username" placeholder="nama@perusahaan.com">
+          </div>
+          <div class="auth-field">
+            <label for="rpw" data-i18n="password">Kata sandi</label>
+            <input id="rpw" type="password" autocomplete="new-password" data-i18n-ph="ph.pass" placeholder="Minimal 6 karakter">
+          </div>
+          <div class="auth-field">
+            <label for="rpw2" data-i18n="auth.confirm">Ulangi kata sandi</label>
+            <input id="rpw2" type="password" autocomplete="new-password" data-i18n-ph="ph.pass" placeholder="Minimal 6 karakter">
+          </div>
+          <div class="err" id="errReg"></div>
+          <button class="btn ok" id="reg" type="submit">
+            <i class="fa-solid fa-user-plus"></i><span data-i18n="register">Daftar akun baru</span>
+          </button>
+        </form>
+
       </div>
-      <div class="auth-field">
-        <label for="rem" data-i18n="email">Email</label>
-        <input id="rem" type="email" autocomplete="username" placeholder="nama@perusahaan.com">
-      </div>
-      <div class="auth-field">
-        <label for="rpw" data-i18n="password">Kata sandi</label>
-        <input id="rpw" type="password" autocomplete="new-password" data-i18n-ph="ph.pass" placeholder="Minimal 6 karakter">
-      </div>
-      <div class="auth-field">
-        <label for="rpw2" data-i18n="reg.confirm">Konfirmasi kata sandi</label>
-        <input id="rpw2" type="password" autocomplete="new-password" data-i18n-ph="reg.confirm.ph" placeholder="Ulangi kata sandi">
-      </div>
-      <div class="err" id="rerr"></div>
-      <button class="btn ok" id="reg"><i class="fa-solid fa-user-plus"></i><span data-i18n="register">Daftar akun baru</span></button>
     </div>
   </div>
+
   <div class="auth-foot" id="legal"></div>
 </section>
 
@@ -639,14 +680,14 @@ welcome:["Selamat datang","Welcome","환영합니다","欢迎","ようこそ","B
 email:["Email","Email","이메일","邮箱","メール","E-mail","Эл. почта","E-Mail","Email"],
 password:["Kata sandi","Password","비밀번호","密码","パスワード","Mot de passe","Пароль","Passwort","Password"],
 login:["Masuk","Sign in","로그인","登录","ログイン","Connexion","Войти","Anmelden","Accedi"],
-or:["atau","or","또는","或","または","ou","или","oder","oppure"],
 register:["Daftar akun baru","Create account","새 계정 만들기","注册新账号","新規アカウント作成","Créer un compte","Создать аккаунт","Konto erstellen","Crea un account"],
-"reg.tab":["Daftar","Sign up","회원가입","注册","新規登録","S'inscrire","Регистрация","Registrieren","Registrati"],
-"reg.name":["Nama / Perusahaan","Name / Company","이름 / 회사","姓名 / 公司","名前 / 会社","Nom / Entreprise","Имя / Компания","Name / Firma","Nome / Azienda"],
-"reg.name.ph":["Nama Anda atau PT","Your name or company","이름 또는 회사명","您的姓名或公司","お名前または会社名","Votre nom ou entreprise","Ваше имя или компания","Ihr Name oder Firma","Il tuo nome o azienda"],
-"reg.confirm":["Konfirmasi kata sandi","Confirm password","비밀번호 확인","确认密码","パスワード確認","Confirmer le mot de passe","Подтвердите пароль","Passwort bestätigen","Conferma password"],
-"reg.confirm.ph":["Ulangi kata sandi","Repeat password","비밀번호 재입력","重复密码","パスワードを再入力","Répétez le mot de passe","Повторите пароль","Passwort wiederholen","Ripeti la password"],
-"reg.mismatch":["Kata sandi tidak cocok","Passwords don't match","비밀번호가 일치하지 않습니다","密码不一致","パスワードが一致しません","Les mots de passe ne correspondent pas","Пароли не совпадают","Passwörter stimmen nicht überein","Le password non corrispondono"],
+"auth.tabreg":["Daftar","Register","회원가입","注册","新規登録","S'inscrire","Регистрация","Registrieren","Registrati"],
+"auth.name":["Nama lengkap","Full name","이름","姓名","お名前","Nom complet","Полное имя","Vollständiger Name","Nome completo"],
+"auth.confirm":["Ulangi kata sandi","Confirm password","비밀번호 확인","确认密码","パスワード確認","Confirmer le mot de passe","Подтвердите пароль","Passwort bestätigen","Conferma password"],
+"auth.loginhint":["Masukkan email dan kata sandi akun Anda.","Enter your email and password.","이메일과 비밀번호를 입력하세요.","请输入您的邮箱和密码。","メールとパスワードを入力してください。","Saisissez votre e-mail et votre mot de passe.","Введите почту и пароль.","Geben Sie E-Mail und Passwort ein.","Inserisci email e password."],
+"auth.reghint":["Buat akun baru dengan email dan kata sandi.","Create a new account with email and password.","이메일과 비밀번호로 새 계정을 만드세요.","使用邮箱和密码创建新账号。","メールとパスワードで新しいアカウントを作成します。","Créez un nouveau compte avec e-mail et mot de passe.","Создайте аккаунт с почтой и паролем.","Erstellen Sie ein Konto mit E-Mail und Passwort.","Crea un nuovo account con email e password."],
+"auth.namereq":["Nama wajib diisi.","Name is required.","이름을 입력하세요.","请输入姓名。","名前を入力してください。","Le nom est obligatoire.","Укажите имя.","Name erforderlich.","Il nome è obbligatorio."],
+"auth.mismatch":["Kata sandi tidak cocok.","Passwords do not match.","비밀번호가 일치하지 않습니다.","密码不一致。","パスワードが一致しません。","Les mots de passe ne correspondent pas.","Пароли не совпадают.","Passwörter stimmen nicht überein.","Le password non corrispondono."],
 "ph.pass":["Minimal 6 karakter","At least 6 characters","6자 이상","至少6个字符","6文字以上","Au moins 6 caractères","Не менее 6 символов","Mindestens 6 Zeichen","Almeno 6 caratteri"],
 legal:["Dengan masuk, Anda menyetujui","By signing in you agree to the","로그인하면 다음에 동의하게 됩니다:","登录即表示您同意","ログインすると以下に同意したものとみなされます:","En vous connectant, vous acceptez les","Входя, вы принимаете","Mit der Anmeldung akzeptieren Sie die","Accedendo accetti i"],
 "legal.terms":["Ketentuan Layanan","Terms of Service","서비스 약관","服务条款","利用規約","Conditions d'utilisation","Условия использования","Nutzungsbedingungen","Termini di servizio"],
@@ -862,6 +903,7 @@ function paintStatic(){
   ["#langcur","#langcur2"].forEach(s=>{const e=$(s);if(e)e.textContent=lc()});
   const lg=$("#legal");
   if(lg)lg.innerHTML=t("legal")+' <a href="#">'+t("legal.terms")+'</a> '+t("legal.and")+' <a href="#">'+t("legal.privacy")+'</a>.';
+  sizeAuthPanels();
 }
 function setLang(c){
   if(!LANGS.some(l=>l.c===c))return;
@@ -874,6 +916,51 @@ function setLang(c){
 function langSheet(){
   sheet(`<h2>${ic("globe")} ${t("set.lang")}</h2><div class="mut" style="margin:-6px 0 2px">${t("set.lang.d")}</div>
   <div class="lang-grid">${LANGS.map(l=>`<div class="lang-opt ${lang==l.c?"on":""}" data-lang="${l.c}"><span class="fl">${l.f}</span><b>${l.n}</b>${lang==l.c?ic("check"):""}</div>`).join("")}</div>`);
+}
+
+/* ======================= AUTH MODE ======================= */
+let authMode="login", authSized=0;
+
+function setAuthMode(m){
+  if(m!=="login"&&m!=="register")return;
+  authMode=m;
+  document.querySelectorAll(".auth-tab").forEach(b=>{
+    const on=b.dataset.mode===m;
+    b.classList.toggle("on",on);
+    b.setAttribute("aria-selected",on?"true":"false");
+  });
+  const sl=$("#authSlider"), tr=$("#authTrack");
+  if(sl)sl.classList.toggle("right",m==="register");
+  if(tr)tr.classList.toggle("right",m==="register");
+
+  document.querySelectorAll(".auth-panel").forEach(p=>{
+    const on = p.id === (m==="register" ? "panel-register" : "panel-login");
+    p.setAttribute("aria-hidden", on ? "false" : "true");
+    p.querySelectorAll("input,button").forEach(el=>{ el.tabIndex = on ? 0 : -1; });
+  });
+
+  const e1=$("#errLogin"), e2=$("#errReg");
+  if(e1)e1.textContent="";
+  if(e2)e2.textContent="";
+  sizeAuthPanels();
+}
+
+function sizeAuthPanels(){
+  const panels=$("#authPanels");
+  if(!panels)return;
+  if($("#login").classList.contains("hide"))return;
+  const active=authMode==="register"?$("#panel-register"):$("#panel-login");
+  if(!active)return;
+  const h=active.offsetHeight;
+  if(authSized<2){
+    panels.style.transition="none";
+    panels.style.height=h+"px";
+    void panels.offsetHeight;
+    panels.style.transition="";
+    authSized++;
+  }else{
+    panels.style.height=h+"px";
+  }
 }
 
 /* ======================= KONFIG & STATE ======================= */
@@ -890,7 +977,7 @@ let S=EMPTY(),uid='',unsub=[],user='',tab='home',pasarTab='jelajah',cycle='m',pi
 const fe=e=>toast(e.code=='permission-denied'?t('e.denied'):(e.message||t('e.generic')));
 const plan=()=>(S.plan!=='free'&&S.exp>Date.now())?S.plan:'free';
 const P=()=>PLANS[plan()];
-const sponsorCard=a=>`<div class="card" style="border-color:#fcd34d;background:linear-gradient(180deg,#fffbeb,#fffdf7)"><div class="row"><b>${esc(a.t)}</b><span class="tag w">${t('tag.sponsor')}</span></div><div class="mut" style="margin-top:4px">${esc(a.d||'')}</div><div class="mut">${ic('store')} ${esc(a.ownerName||'')}</div></div>`;
+const sponsorCard=a=>`<div class="card" style="border-color:#a16207;background:linear-gradient(180deg,#2a220a,#1a1504)"><div class="row"><b>${esc(a.t)}</b><span class="tag w">${t('tag.sponsor')}</span></div><div class="mut" style="margin-top:4px">${esc(a.d||'')}</div><div class="mut">${ic('store')} ${esc(a.ownerName||'')}</div></div>`;
 const adsOn=()=>S.ads.filter(a=>a.end>Date.now()).length;
 function toast(m){const e=document.createElement('div');e.className='toast';e.textContent=m;document.body.appendChild(e);setTimeout(()=>e.remove(),2200)}
 const empty=(i,m,b)=>'<div class="empty">'+ic(i)+'<div>'+m+'</div>'+(b||'')+'</div>';
@@ -987,7 +1074,7 @@ lelang(){const p=P();if(!p.auc)return lock('lel.locked');
  const top=`<div class="row"><span class="mut">${t('lel.count',aucAct(),p.auc)}</span><button class="btn s" data-act="newauc">${ic('plus')}${t('lel.new')}</button></div>`;
  const cards=L.length?L.map(a=>{const own=a.owner===uid,live=aucLive(a),nx=a.bids.length?a.cur+a.step:a.start,lb=a.bids[a.bids.length-1];
  return `<div class="card"><div class="row"><b>${esc(a.t)}</b>${own?'<span class="tag">'+t('lel.mine')+'</span>':''}</div>${a.d?`<div class="mut" style="margin:4px 0">${esc(a.d)}</div>`:''}
- <div class="g2" style="margin:8px 0"><div><div class="mut">${a.bids.length?t('lel.top'):t('lel.start')}</div><b style="color:var(--brand);font-size:17px">${rp(a.cur)}</b></div><div><div class="mut">${live?t('lel.remain'):t('lel.status')}</div><b class="${live?'':'mut'}" ${live?`data-end="${a.end}"`:''}>${live?left(a.end-Date.now()):t('lel.done')}</b></div></div>
+ <div class="g2" style="margin:8px 0"><div><div class="mut">${a.bids.length?t('lel.top'):t('lel.start')}</div><b style="color:#60a5fa;font-size:17px">${rp(a.cur)}</b></div><div><div class="mut">${live?t('lel.remain'):t('lel.status')}</div><b class="${live?'':'mut'}" ${live?`data-end="${a.end}"`:''}>${live?left(a.end-Date.now()):t('lel.done')}</b></div></div>
  <div class="mut">${ic('users')} ${t('lel.bids',a.bids.length)} · ${t('lel.step',rp(a.step))}${lb?' · '+t('lel.by',esc(lb.by)):''}</div>
  ${live?(own?`<div class="g2" style="margin-top:10px"><button class="btn g s" data-act="endauc" data-id="${a.id}">${ic('flag-checkered')}${t('lel.end')}</button></div>`:`<button class="btn" style="margin-top:10px" data-act="bid" data-id="${a.id}">${ic('hand-holding-dollar')}${t('lel.bid',rp(nx))}</button>`):`<div style="margin-top:10px">${lb?ic('trophy')+' '+t('lel.winner',esc(lb.by),rp(a.cur)):ic('circle-xmark')+' '+t('lel.nobid')}</div>`}</div>`}).join(''):'<div class="card">'+empty('gavel',lelTab=='aktif'?t('lel.empty1'):t('lel.empty2'))+'</div>';
  return seg+top+cards},
@@ -1002,7 +1089,7 @@ set(){const f=S.prof;const I=(id,l,ty)=>`<div class="fld"><label>${l}</label><in
  <div class="card"><h3>${ic('rectangle-ad')} ${t('set.ads')}</h3>${[['pasar','set.t1'],['wa','f.wa'],['hub','set.t3']].map(([k,l])=>`<div class="row fld"><span>${t(l)}</span><label class="tg"><input type="checkbox" data-tg="${k}" ${f['t_'+k]?'checked':''}><b></b></label></div>`).join('')}</div>
  <button class="btn" data-act="saveprof">${ic('floppy-disk')}${t('set.save')}</button>`}
 };
-function itemCard(i,own){return `<div class="card"><div class="row"><b>${esc(i.n)}</b><span class="tag">${esc(CATN(i.c))}</span></div><div class="mut">${ic('store')} ${esc(i.ownerName||'')}</div><div class="row" style="margin-top:6px"><b style="color:var(--brand);font-size:16px">${rp(i.p)}</b><span class="mut">${t('stock',i.s)}</span></div>${own?`<button class="btn g s" style="margin-top:10px" data-del="item" data-id="${i.id}">${ic('trash')}${t('delete')}</button>`:''}</div>`}
+function itemCard(i,own){return `<div class="card"><div class="row"><b>${esc(i.n)}</b><span class="tag">${esc(CATN(i.c))}</span></div><div class="mut">${ic('store')} ${esc(i.ownerName||'')}</div><div class="row" style="margin-top:6px"><b style="color:#60a5fa;font-size:16px">${rp(i.p)}</b><span class="mut">${t('stock',i.s)}</span></div>${own?`<button class="btn g s" style="margin-top:10px" data-del="item" data-id="${i.id}">${ic('trash')}${t('delete')}</button>`:''}</div>`}
 
 function render(){$('#ttl').textContent=t(T[tab]);$('#view').innerHTML=V[tab]();
  $('#nav').innerHTML=NAV.map(([k,i,l])=>`<button class="${k==tab?'on':''}" ${k=='wms'?'data-open="1"':'data-go="'+k+'"'}>${ic(i)}${t(l)}</button>`).join('');scrollTo(0,0)}
@@ -1046,7 +1133,7 @@ function checkout(k){const v=PLANS[k],a=cycle=='m'?v.m:v.m*10;uc=uc||(100+Math.r
  sheet(`<h2>${t('pay.title')}</h2>
  <div class="card"><div class="row"><span>${t('pay.plan',pname(k),cycle=='m'?t('adm.month'):t('adm.year'))}</span><b>${rp(a)}</b></div>
  <div class="row mut"><span>${t('pay.unique')}</span><span>${rp(uc)}</span></div>
- <div class="row" style="margin-top:6px"><b>${t('pay.total')}</b><b style="color:var(--brand);font-size:17px">${rp(tot)}</b></div></div>
+ <div class="row" style="margin-top:6px"><b>${t('pay.total')}</b><b style="color:#60a5fa;font-size:17px">${rp(tot)}</b></div></div>
  <div class="g2">${PL.map(p=>`<div class="opt ${pick==p.k?'on':''}" data-m="${p.k}" data-k="${k}">${ic(p.i)}<b>${p.k}</b></div>`).join('')}</div>
  <div class="card"><div class="mut">${ic(m.i)} ${m.k} · ${m.a}</div><div class="row" style="margin-top:6px"><b style="font-size:17px;word-break:break-all">${m.n}</b><button class="btn g s" data-copy="${m.n}">${ic('copy')}${t('pay.copy')}</button></div>${m.k=='PayPal'?'<div class="mut" style="margin-top:6px">'+t('pay.usd')+'</div>':''}</div>
  <div><label>${t('pay.sender')}</label><input type="text" id="f9" placeholder="${t('pay.ph')}"></div>
@@ -1069,40 +1156,38 @@ function enter(){$('#login').classList.add('hide');$('#app').classList.remove('h
 const nm=v=>(v.split('@')[0]||t('user')).replace(/[._-]+/g,' ').replace(/\b\w/g,c=>c.toUpperCase());
 const AE={'auth/invalid-credential':'ae.cred','auth/wrong-password':'ae.cred','auth/user-not-found':'ae.cred','auth/email-already-in-use':'ae.inuse','auth/weak-password':'ae.weak','auth/invalid-email':'ae.invalid','auth/network-request-failed':'ae.net'};
 
-async function authGo(reg){
-  const erEl = reg ? $('#rerr') : $('#err');
-  erEl.textContent='';
-  if(!READY)return erEl.textContent=t('e.nocfg');
+async function authGo(mode){
+  mode=mode||authMode;
+  const er=mode==='register'?$('#errReg'):$('#errLogin');
+  if(!er)return;
+  er.textContent='';
+  if(!READY)return er.textContent=t('e.nocfg');
 
-  if(reg){
-    const name = $('#rname').value.trim();
-    const e = $('#rem').value.trim();
-    const p = $('#rpw').value;
-    const p2 = $('#rpw2').value;
-    if(!e||!p)return erEl.textContent=t('e.fillall');
-    if(p.length<6)return erEl.textContent=t('ae.weak');
-    if(p!==p2)return erEl.textContent=t('reg.mismatch');
+  if(mode==='register'){
+    const name=$('#rn').value.trim();
+    const email=$('#rem').value.trim();
+    const p1=$('#rpw').value, p2=$('#rpw2').value;
+    if(!name)return er.textContent=t('auth.namereq');
+    if(!email||!p1)return er.textContent=t('e.fillall');
+    if(p1!==p2)return er.textContent=t('auth.mismatch');
     try{
-      const c = await auth.createUserWithEmailAndPassword(e,p);
-      const dn = name || nm(e);
-      await c.user.updateProfile({displayName: dn});
-      await db.doc('users/'+c.user.uid).set({name: dn, plan:'free', exp:0, prof:{}, lang, at:Date.now()});
-    }catch(x){erEl.textContent=AE[x.code]?t(AE[x.code]):(x.message||t('e.generic'))}
-  } else {
-    const e = $('#em').value.trim();
-    const p = $('#pw').value;
-    if(!e||!p)return erEl.textContent=t('e.fillall');
+      const c=await auth.createUserWithEmailAndPassword(email,p1);
+      await c.user.updateProfile({displayName:name});
+      await db.doc('users/'+c.user.uid).set({name,plan:'free',exp:0,prof:{},lang,at:Date.now()});
+    }catch(x){er.textContent=AE[x.code]?t(AE[x.code]):(x.message||t('e.generic'))}
+  }else{
+    const email=$('#em').value.trim(), p=$('#pw').value;
+    if(!email||!p)return er.textContent=t('e.fillall');
     try{
-      await auth.signInWithEmailAndPassword(e,p);
-    }catch(x){erEl.textContent=AE[x.code]?t(AE[x.code]):(x.message||t('e.generic'))}
+      await auth.signInWithEmailAndPassword(email,p);
+    }catch(x){er.textContent=AE[x.code]?t(AE[x.code]):(x.message||t('e.generic'))}
   }
 }
 
 /* ======================= EVENTS ======================= */
-$('#go').onclick=()=>authGo(false);
-$('#reg').onclick=()=>authGo(true);
-$('#pw').addEventListener('keydown',e=>{if(e.key==='Enter')$('#go').click()});
-$('#rpw2').addEventListener('keydown',e=>{if(e.key==='Enter')$('#reg').click()});
+$('#panel-login').addEventListener('submit',e=>{e.preventDefault();authGo('login')});
+$('#panel-register').addEventListener('submit',e=>{e.preventDefault();authGo('register')});
+document.querySelectorAll('.auth-tab').forEach(b=>{b.onclick=()=>setAuthMode(b.dataset.mode)});
 $('#out').onclick=()=>auth&&auth.signOut();
 $('#langbtn').onclick=langSheet;
 $('#langbtn2').onclick=langSheet;
@@ -1114,14 +1199,6 @@ document.addEventListener('click',e=>{const q=s=>e.target.closest(s);let x;
  if(x=q('[data-copy]')){navigator.clipboard&&navigator.clipboard.writeText(x.dataset.copy).then(()=>toast(t('t.copied')));return}
  if(x=q('[data-lang]')){setLang(x.dataset.lang);closeSheet();return}
  if(q('[data-lang-sheet]'))return langSheet();
- if(x=q('[data-auth]')){
-  document.querySelectorAll('[data-auth]').forEach(b=>b.classList.toggle('on',b.dataset.auth===x.dataset.auth));
-  $('#form-login').classList.toggle('hide',x.dataset.auth!=='login');
-  $('#form-register').classList.toggle('hide',x.dataset.auth!=='register');
-  $('#err').textContent='';
-  $('#rerr').textContent='';
-  return;
- }
  if(x=q('[data-go]'))return go(x.dataset.go);
  if(q('[data-open]')){location.href=WMS_URL;return}
  if(x=q('[data-pt]')){pasarTab=x.dataset.pt;return render()}
@@ -1160,15 +1237,22 @@ document.addEventListener('click',e=>{const q=s=>e.target.closest(s);let x;
 
 $('#sheet').addEventListener('click',e=>{if(e.target.id==='sheet')closeSheet()});
 
+window.addEventListener('resize',()=>{if(!$('#login').classList.contains('hide'))sizeAuthPanels()});
+
 setInterval(()=>{document.querySelectorAll('[data-end]').forEach(e=>{const m=+e.dataset.end-Date.now();
  if(m>0)e.textContent=left(m);
  else{e.removeAttribute('data-end');e.textContent=t('lel.done');if(tab=='lelang'&&$('#sheet').classList.contains('hide'))render()}})},1000);
 
 /* ======================= BOOT ======================= */
 paintStatic();
+setAuthMode('login');
+if(document.fonts&&document.fonts.ready)document.fonts.ready.then(sizeAuthPanels);
+
 if(READY)auth.onAuthStateChanged(u=>{unsub.forEach(f=>f());unsub=[];
  if(u){sync(u);enter()}
- else{S=EMPTY();uid=user='';$('#app').classList.add('hide');$('#login').classList.remove('hide');$('#pw').value='';$('#rpw').value='';$('#rpw2').value=''}});
+ else{S=EMPTY();uid=user='';$('#app').classList.add('hide');$('#login').classList.remove('hide');
+  $('#pw').value='';$('#rpw').value='';$('#rpw2').value='';$('#em').value='';$('#rem').value='';$('#rn').value='';
+  setAuthMode('login')}});
 </script>
 </body>
 </html>
