@@ -86,6 +86,10 @@ input:focus,select:focus,textarea:focus{border-color:#3b82f6;background:#0f2a48;
 select option{color:var(--ink);background:var(--paper)}
 .err{color:var(--rose);font-size:12.5px;min-height:18px;font-weight:600}
 
+/* ============ PASSWORD MASK (type=text + masking, cegah keyboard "Secure") ============ */
+.pw-mask{-webkit-text-security:disc;text-security:disc;font-family:inherit;letter-spacing:.02em}
+.pw-mask::placeholder{letter-spacing:normal}
+
 #login{min-height:100vh;min-height:100dvh;display:flex;flex-direction:column;justify-content:center;align-items:center;
   padding:14px 16px calc(14px + env(safe-area-inset-bottom,0px));
   width:100%;max-width:430px;margin:0 auto;gap:10px;
@@ -588,11 +592,11 @@ code{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:11.5px;ba
           </div>
           <div class="auth-field">
             <label for="em" data-i18n="email">Email</label>
-            <input id="em" type="email" autocomplete="username" placeholder="nama@perusahaan.com">
+            <input id="em" type="email" autocomplete="username" autocorrect="off" autocapitalize="none" spellcheck="false" inputmode="email" placeholder="nama@perusahaan.com">
           </div>
           <div class="auth-field">
             <label for="pw" data-i18n="password">Kata sandi</label>
-            <input id="pw" type="password" autocomplete="current-password" data-i18n-ph="ph.pass" placeholder="Minimal 6 karakter">
+            <input id="pw" type="text" class="pw-mask" autocomplete="current-password" autocorrect="off" autocapitalize="none" spellcheck="false" inputmode="text" data-i18n-ph="ph.pass" placeholder="Minimal 6 karakter">
           </div>
           <div class="err" id="errLogin"></div>
           <button class="btn" id="go" type="submit">
@@ -608,19 +612,19 @@ code{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:11.5px;ba
           </div>
           <div class="auth-field">
             <label for="rn" data-i18n="auth.name">Nama lengkap</label>
-            <input id="rn" type="text" autocomplete="name" placeholder="Nama lengkap">
+            <input id="rn" type="text" autocomplete="name" autocorrect="off" autocapitalize="words" spellcheck="false" placeholder="Nama lengkap">
           </div>
           <div class="auth-field">
             <label for="rem" data-i18n="email">Email</label>
-            <input id="rem" type="email" autocomplete="username" placeholder="nama@perusahaan.com">
+            <input id="rem" type="email" autocomplete="username" autocorrect="off" autocapitalize="none" spellcheck="false" inputmode="email" placeholder="nama@perusahaan.com">
           </div>
           <div class="auth-field">
             <label for="rpw" data-i18n="password">Kata sandi</label>
-            <input id="rpw" type="password" autocomplete="new-password" data-i18n-ph="ph.pass" placeholder="Minimal 6 karakter">
+            <input id="rpw" type="text" class="pw-mask" autocomplete="new-password" autocorrect="off" autocapitalize="none" spellcheck="false" inputmode="text" data-i18n-ph="ph.pass" placeholder="Minimal 6 karakter">
           </div>
           <div class="auth-field">
             <label for="rpw2" data-i18n="auth.confirm">Ulangi kata sandi</label>
-            <input id="rpw2" type="password" autocomplete="new-password" data-i18n-ph="ph.pass" placeholder="Minimal 6 karakter">
+            <input id="rpw2" type="text" class="pw-mask" autocomplete="new-password" autocorrect="off" autocapitalize="none" spellcheck="false" inputmode="text" data-i18n-ph="ph.pass" placeholder="Minimal 6 karakter">
           </div>
           <div class="err" id="errReg"></div>
           <button class="btn ok" id="reg" type="submit">
@@ -1005,7 +1009,7 @@ home(){
 
     <div class="search-bar">
       <i class="fa-solid fa-magnifying-glass"></i>
-      <input type="text" placeholder="${t('search.ph')}" aria-label="${t('search.ph')}">
+      <input type="text" placeholder="${t('search.ph')}" aria-label="${t('search.ph')}" autocorrect="off" autocapitalize="none" spellcheck="false">
       <button class="search-filter" aria-label="${t('filter')}">${ic('sliders')}</button>
     </div>
 
@@ -1080,7 +1084,7 @@ lelang(){const p=P();if(!p.auc)return lock('lel.locked');
  return seg+top+cards},
 admin(){if(!isAdmin())return lock('adm.locked');
  return S.pend.length?S.pend.slice().sort((a,b)=>a.at-b.at).map(p=>`<div class="card"><div class="row"><b>${esc(p.name||p.email)}</b><span class="tag w">${t('adm.wait')}</span></div><div class="mut">${esc(p.email||'')}</div><div style="margin:6px 0">${t('adm.pkg')} <b>${esc(p.pn||pname(p.plan))}</b> (${p.cycle=='m'?t('adm.month'):t('adm.year')}) · <b>${rp(p.amount)}</b></div><div class="mut">${ic('wallet')} ${esc(p.method)}${p.note?' · '+esc(p.note):''}</div><div class="g2" style="margin-top:10px"><button class="btn s" data-act="approve" data-id="${p.id}">${ic('check')}${t('adm.approve')}</button><button class="btn g s" data-act="reject" data-id="${p.id}">${ic('xmark')}${t('adm.reject')}</button></div></div>`).join(''):'<div class="card">'+empty('circle-check',t('adm.none'))+'</div>'},
-set(){const f=S.prof;const I=(id,l,ty)=>`<div class="fld"><label>${l}</label><input type="${ty||'text'}" data-pf="${id}" value="${esc(f[id]||'')}"></div>`;
+set(){const f=S.prof;const I=(id,l,ty)=>`<div class="fld"><label>${l}</label><input type="${ty||'text'}" data-pf="${id}" value="${esc(f[id]||'')}" autocorrect="off" autocapitalize="words" spellcheck="false"></div>`;
  return `<div class="card"><h3>${ic('globe')} ${t('set.lang')}</h3><div class="mut" style="margin-bottom:10px">${t('set.lang.d')}</div>
   <button class="btn g" data-lang-sheet="1">${ic('language')} ${LANGS[LIX()].f} ${LANGS[LIX()].n}</button></div>
  <div class="card"><h3>${ic('fingerprint')} ${t('set.uid')}</h3><div class="row"><code>${uid}</code><button class="btn g s" data-copy="${uid}">${ic('copy')}</button></div></div>
@@ -1099,13 +1103,13 @@ function closeSheet(){$('#sheet').classList.add('hide')}
 
 /* ======================= FORMS ======================= */
 function itemForm(){sheet(`<h2>${t('m.add')}</h2>
- <div><label>${t('f.pname')}</label><input type="text" id="f1"></div>
+ <div><label>${t('f.pname')}</label><input type="text" id="f1" autocorrect="off" autocapitalize="words" spellcheck="false"></div>
  <div class="g2"><div><label>${t('f.price')}</label><input type="number" id="f2" inputmode="numeric"></div><div><label>${t('f.stock')}</label><input type="number" id="f3" inputmode="numeric"></div></div>
  <div><label>${t('f.cat')}</label><select id="f4"><option value="Ready Stock">${t('f.ready')}</option><option value="Pre-Order">${t('f.po')}</option><option value="Jasa">${t('f.svc')}</option></select></div>
  <button class="btn" data-act="saveitem">${ic('check')}${t('f.save')}</button><button class="btn g" data-act="close">${t('f.cancel')}</button>`)}
 function adForm(){sheet(`<h2>${t('ad.new')}</h2>
- <div><label>${t('f.adtitle')}</label><input type="text" id="f1"></div>
- <div><label>${t('f.desc')}</label><textarea id="f2" rows="3"></textarea></div>
+ <div><label>${t('f.adtitle')}</label><input type="text" id="f1" autocorrect="off" autocapitalize="sentences" spellcheck="false"></div>
+ <div><label>${t('f.desc')}</label><textarea id="f2" rows="3" autocorrect="off" autocapitalize="sentences" spellcheck="false"></textarea></div>
  <div class="g2"><div><label>${t('f.type')}</label><select id="f3"><option value="feed">${t('ad.feed')}</option>${plan()=='bisnis'?`<option value="3d">${t('ad.3d')}</option>`:''}</select></div><div><label>${t('f.days')}</label><input type="number" id="f4" value="7" inputmode="numeric"></div></div>
  <button class="btn" data-act="savead">${ic('check')}${t('f.publish')}</button><button class="btn g" data-act="close">${t('f.cancel')}</button>`)}
 let lelTab='aktif';
@@ -1114,8 +1118,8 @@ const aucLive=a=>!a.done&&a.end>Date.now();
 const aucAct=()=>AU().filter(a=>a.owner===uid&&aucLive(a)).length;
 const left=ms=>{ms=Math.max(0,ms/1000|0);return [ms/3600|0,(ms%3600)/60|0,ms%60].map(n=>String(n).padStart(2,'0')).join(':')};
 function aucForm(){sheet(`<h2>${t('lel.new')}</h2>
- <div><label>${t('f.itemname')}</label><input type="text" id="f1"></div>
- <div><label>${t('f.desc')}</label><textarea id="f2" rows="2"></textarea></div>
+ <div><label>${t('f.itemname')}</label><input type="text" id="f1" autocorrect="off" autocapitalize="words" spellcheck="false"></div>
+ <div><label>${t('f.desc')}</label><textarea id="f2" rows="2" autocorrect="off" autocapitalize="sentences" spellcheck="false"></textarea></div>
  <div class="g2"><div><label>${t('f.startprice')}</label><input type="number" id="f3" inputmode="numeric"></div><div><label>${t('f.bidstep')}</label><input type="number" id="f4" inputmode="numeric"></div></div>
  <div><label>${t('f.hours')}</label><input type="number" id="f5" value="24" inputmode="numeric"></div>
  <button class="btn" data-act="saveauc">${ic('gavel')}${t('f.startauc')}</button><button class="btn g" data-act="close">${t('f.cancel')}</button>`)}
@@ -1136,7 +1140,7 @@ function checkout(k){const v=PLANS[k],a=cycle=='m'?v.m:v.m*10;uc=uc||(100+Math.r
  <div class="row" style="margin-top:6px"><b>${t('pay.total')}</b><b style="color:#60a5fa;font-size:17px">${rp(tot)}</b></div></div>
  <div class="g2">${PL.map(p=>`<div class="opt ${pick==p.k?'on':''}" data-m="${p.k}" data-k="${k}">${ic(p.i)}<b>${p.k}</b></div>`).join('')}</div>
  <div class="card"><div class="mut">${ic(m.i)} ${m.k} · ${m.a}</div><div class="row" style="margin-top:6px"><b style="font-size:17px;word-break:break-all">${m.n}</b><button class="btn g s" data-copy="${m.n}">${ic('copy')}${t('pay.copy')}</button></div>${m.k=='PayPal'?'<div class="mut" style="margin-top:6px">'+t('pay.usd')+'</div>':''}</div>
- <div><label>${t('pay.sender')}</label><input type="text" id="f9" placeholder="${t('pay.ph')}"></div>
+ <div><label>${t('pay.sender')}</label><input type="text" id="f9" placeholder="${t('pay.ph')}" autocorrect="off" autocapitalize="sentences" spellcheck="false"></div>
  <button class="btn ok" data-pay="${k}" data-total="${tot}">${ic('paper-plane')}${t('pay.done')}</button>
  <div class="mut" style="text-align:center">${t('pay.note')}</div>
  <button class="btn g" data-act="close">${t('f.cancel')}</button>`)}
