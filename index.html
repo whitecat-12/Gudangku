@@ -9,6 +9,8 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/js/all.min.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
@@ -87,7 +89,6 @@ input:focus,select:focus,textarea:focus{border-color:#3b82f6;background:#0f2a48;
 select option{color:var(--ink);background:var(--paper)}
 .err{color:var(--rose);font-size:12.5px;min-height:18px;font-weight:600}
 
-/* ============ PASSWORD MASK (type=text + masking, cegah keyboard "Secure") ============ */
 .pw-mask{-webkit-text-security:disc;text-security:disc;font-family:inherit;letter-spacing:.02em}
 .pw-mask::placeholder{letter-spacing:normal}
 
@@ -120,7 +121,6 @@ select option{color:var(--ink);background:var(--paper)}
   background:linear-gradient(135deg,#1e2f5c,#1a2850);color:#93c5fd;font-size:10px;font-weight:800;letter-spacing:.03em;
   padding:5px 9px;border-radius:99px;border:1px solid #2a4a73;white-space:nowrap;}
 
-/* ============ AUTH MODE SWITCHER (slider) ============ */
 .auth-mode{position:relative;display:grid;grid-template-columns:1fr 1fr;gap:4px;min-width:0;
   background:#0d2038;border:1px solid var(--line);border-radius:14px;padding:4px}
 .auth-slider{position:absolute;top:4px;bottom:4px;left:4px;width:calc(50% - 6px);
@@ -135,7 +135,6 @@ select option{color:var(--ink);background:var(--paper)}
 .auth-tab.on{color:#93c5fd}
 .auth-tab:active{transform:scale(.98)}
 
-/* ============ AUTH SLIDING PANELS ============ */
 .auth-panels{overflow:hidden;min-width:0;
   transition:height .40s cubic-bezier(.2,.8,.25,1)}
 .auth-track{display:flex;width:200%;align-items:flex-start;
@@ -143,7 +142,6 @@ select option{color:var(--ink);background:var(--paper)}
 .auth-track.right{transform:translateX(-50%)}
 .auth-panel{width:50%;flex:none;display:grid;gap:10px;min-width:0;padding:0;margin:0}
 
-/* panel head — pembeda visual antar form */
 .auth-panel-head{display:flex;flex-direction:column;gap:2px;min-width:0;margin-bottom:2px}
 .auth-panel-head h2{font-size:14.5px;font-weight:800;letter-spacing:-.02em;display:flex;align-items:center;gap:7px;
   margin:0;color:var(--ink);line-height:1.2}
@@ -375,7 +373,6 @@ h3 i{color:#60a5fa;font-size:13px}
   font-size:10.5px;font-weight:800;padding:4px 11px;border-radius:99px;
   box-shadow:0 8px 16px -6px rgba(245,158,11,.95);letter-spacing:.03em;text-transform:uppercase}
 
-/* ============ LANGUAGE SWITCHER ============ */
 .lang-btn{display:inline-flex;align-items:center;gap:6px;border:1px solid var(--line);background:var(--paper);
   color:var(--ink);border-radius:12px;padding:8px 11px;font-size:11.5px;font-weight:800;cursor:pointer;
   box-shadow:var(--sh);transition:transform .16s,box-shadow .16s,border-color .16s;flex:none;line-height:1}
@@ -392,7 +389,6 @@ h3 i{color:#60a5fa;font-size:13px}
 .lang-opt b{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .lang-opt i{margin-left:auto;color:var(--mint);font-size:12px;flex:none}
 
-/* ============ NAV BOTTOM ============ */
 nav{
   position:fixed;
   left:12px;
@@ -495,7 +491,28 @@ code{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:11.5px;ba
 #view .card:nth-child(3){animation-delay:.08s}
 #view .card:nth-child(4){animation-delay:.12s}
 
-/* ============ RESPONSIVE ============ */
+/* ============ PETA GUDANG ============ */
+.hmap,.pickmap{position:relative;z-index:0;isolation:isolate;width:100%;border-radius:18px;border:1px solid var(--line);overflow:hidden;background:#0d2038}
+.hmap{height:340px;box-shadow:0 18px 40px -22px rgba(0,0,0,.8),0 0 0 1px rgba(59,130,246,.12)}.pickmap{height:240px}
+.leaflet-tile-pane{filter:invert(1) hue-rotate(195deg) brightness(.92) contrast(.9) saturate(.75)}
+.whpin{background:none;border:0}
+.whpin .pp{display:grid;place-items:center;width:32px;height:32px;border-radius:50% 50% 50% 0;transform:rotate(-45deg);background:linear-gradient(135deg,#1d4ed8,#0ea5e9);border:2px solid #fff;box-shadow:0 6px 14px -4px rgba(0,0,0,.6)}
+.whpin .pp b{transform:rotate(45deg);color:#fff;font:800 13px "Plus Jakarta Sans",sans-serif}
+.leaflet-container{font-family:"Plus Jakarta Sans",system-ui,sans-serif}
+.leaflet-popup-content-wrapper,.leaflet-popup-tip{background:#112743;color:#e6eef9;border:1px solid #2a4a73;box-shadow:0 16px 36px -12px rgba(0,0,0,.8)}
+.leaflet-popup-content-wrapper{border-radius:16px}
+.leaflet-popup-content{margin:12px 14px;font-size:13px;line-height:1.5;color:#c5d8ee}
+.leaflet-popup-content b{font-size:14.5px;color:#fff}
+.leaflet-popup-content a{color:#60a5fa;font-weight:700;text-decoration:none}
+.leaflet-popup-close-button{color:#8ba0bf!important}
+.leaflet-bar a,.leaflet-bar a:hover{background:#112743;color:#e6eef9;border-color:#2a4a73}
+.leaflet-control-attribution{background:rgba(8,24,46,.75)!important;color:#8ba0bf!important;font-size:10px}
+.leaflet-control-attribution a{color:#93c5fd!important}
+.whpin.hq .pp{background:linear-gradient(135deg,#f59e0b,#f97316)}
+.whpin.hq .pp svg{transform:rotate(45deg)}
+.whcard .row b{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.whnum{display:inline-grid;place-items:center;width:24px;height:24px;border-radius:8px;background:linear-gradient(135deg,#1d4ed8,#0ea5e9);color:#fff;font-weight:800;font-size:12px;margin-right:8px;flex:none}
+
 @media(max-width:480px){
   header{padding:11px 14px}
   main{padding:14px 12px;gap:13px}
@@ -574,18 +591,15 @@ code{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:11.5px;ba
       <span class="auth-pill"><i class="fa-solid fa-bolt"></i> B2B</span>
     </div>
 
-    <!-- MODE SLIDER -->
     <div class="auth-mode" role="tablist">
       <div class="auth-slider" id="authSlider"></div>
       <button class="auth-tab on" type="button" role="tab" data-mode="login" aria-selected="true"><span data-i18n="login">Masuk</span></button>
       <button class="auth-tab" type="button" role="tab" data-mode="register" aria-selected="false"><span data-i18n="auth.tabreg">Daftar</span></button>
     </div>
 
-    <!-- SLIDING PANELS -->
     <div class="auth-panels" id="authPanels">
       <div class="auth-track" id="authTrack">
 
-        <!-- LOGIN PANEL -->
         <form class="auth-panel" id="panel-login" role="tabpanel" novalidate autocomplete="on">
           <div class="auth-panel-head">
             <h2><i class="fa-solid fa-right-to-bracket"></i> <span data-i18n="login">Masuk</span></h2>
@@ -605,7 +619,6 @@ code{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:11.5px;ba
           </button>
         </form>
 
-        <!-- REGISTER PANEL -->
         <form class="auth-panel" id="panel-register" role="tabpanel" novalidate autocomplete="on">
           <div class="auth-panel-head">
             <h2><i class="fa-solid fa-user-plus"></i> <span data-i18n="auth.tabreg">Daftar</span></h2>
@@ -976,17 +989,13 @@ const PLANS={
 const pname=k=>k==="free"?t("pl.free"):k==="pro"?t("pl.n.pro"):t("pl.n.bisnis");
 const CFG={apiKey:'AIzaSyBQtmIXHNwkcOXw5C9xlCEz3GoU5ajRu2Q',authDomain:'gudangku-34279.firebaseapp.com',projectId:'gudangku-34279',storageBucket:'gudangku-34279.firebasestorage.app',messagingSenderId:'292899782383',appId:'1:292899782383:web:5117db5a1376262de5251a',measurementId:'G-6017600DDT'};
 const READY=!CFG.apiKey.startsWith('ISI');if(READY)firebase.initializeApp(CFG);
-/* ---------- CLOUDINARY (upload foto iklan, produk, denah) ----------
-   Isi 2 nilai ini. Preset harus bertipe UNSIGNED (lihat panduan). Selama masih "ISI_...",
-   foto otomatis disimpan sebagai gambar terkompres di Firestore (mode cadangan). */
+/* ---------- CLOUDINARY (upload foto iklan, produk, denah) ---------- */
 const CLD={cloud:'g5jyi1ld',preset:'bifetindo',folder:'bifetindo'};
 const cldOn=()=>!/^ISI/.test(CLD.cloud)&&!/^ISI/.test(CLD.preset);
-/* gambar sah: URL Cloudinary milik akun ini, atau data URL (mode cadangan) */
 const imgOk=u=>typeof u==='string'&&(/^data:image\/(jpeg|png|webp);base64,/.test(u)||(cldOn()&&u.indexOf('https://res.cloudinary.com/'+CLD.cloud+'/')===0)||(!cldOn()&&/^https:\/\/res\.cloudinary\.com\//.test(u)));
-/* sisipkan transformasi (format & kualitas otomatis, lebar maks) pada URL Cloudinary */
 const cldImg=(u,w)=>/^https:\/\/res\.cloudinary\.com\/.+\/image\/upload\//.test(u)?u.replace('/image/upload/','/image/upload/f_auto,q_auto,w_'+(w||800)+',c_limit/'):u;
 const auth=READY?firebase.auth():null,db=READY?firebase.firestore():null;
-const EMPTY=()=>({plan:'free',exp:0,items:[],market:[],ads:[],sponsor:[],auc:[],tx:[],pend:[],users:[],prof:{}});
+const EMPTY=()=>({plan:'free',exp:0,items:[],market:[],ads:[],sponsor:[],auc:[],tx:[],pend:[],users:[],wh:[],prof:{}});
 let S=EMPTY(),uid='',unsub=[],user='',tab='home',pasarTab='jelajah',cycle='m',pick='QRIS';
 const fe=e=>toast(e.code=='permission-denied'?t('e.denied'):(e.message||t('e.generic')));
 const plan=()=>(S.plan!=='free'&&S.exp>Date.now())?S.plan:'free';
@@ -1048,11 +1057,13 @@ home(){
   </div>
 
   <div class="stats-row">
-    <div class="mini-stat"><b>0</b><small>${t('st.racks')}</small></div>
+    <div class="mini-stat"><b>${S.wh.reduce((n,w)=>n+w.racks,0)}</b><small>${t('st.racks')}</small></div>
     <div class="mini-stat"><b>${S.items.length}</b><small>${t('st.products')}</small></div>
     <div class="mini-stat"><b>${adsOn()}</b><small>${t('st.ads')}</small></div>
     <div class="mini-stat"><b>${S.tx.length}</b><small>${t('st.trx')}</small></div>
   </div>
+
+  ${whSection()}
 
   <div>
     <h3 class="section-title">${t('shortcuts')}</h3>
@@ -1097,15 +1108,112 @@ admin(){if(!isAdmin())return lock('adm.locked');
  const seg=`<div class="seg"><button data-at="bayar" class="${admTab=='bayar'?'on':''}">${ic('receipt')} ${t('adm.tab.pay')}${S.pend.length?' ('+S.pend.length+')':''}</button><button data-at="user" class="${admTab=='user'?'on':''}">${ic('users')} ${t('adm.tab.usr')}</button></div>`;
  return seg+(admTab=='bayar'?admPay():admUsersView())+`<div class="mut" style="text-align:center">${ic('shield-halved')} ${t('adm.note')}</div>`},
 set(){const f=S.prof;const I=(id,l,ty)=>`<div class="fld"><label>${l}</label><input type="${ty||'text'}" data-pf="${id}" value="${esc(f[id]||'')}" autocorrect="off" autocapitalize="words" spellcheck="false"></div>`;
- return locCard()+`<div class="card"><h3>${ic('globe')} ${t('set.lang')}</h3><div class="mut" style="margin-bottom:10px">${t('set.lang.d')}</div>
+ return `<div class="card"><h3>${ic('globe')} ${t('set.lang')}</h3><div class="mut" style="margin-bottom:10px">${t('set.lang.d')}</div>
   <button class="btn g" data-lang-sheet="1">${ic('language')} ${LANGS[LIX()].f} ${LANGS[LIX()].n}</button></div>
  <div class="card"><h3>${ic('fingerprint')} ${t('set.uid')}</h3><div class="row"><code>${uid}</code><button class="btn g s" data-copy="${uid}">${ic('copy')}</button></div></div>
  <div class="card"><h3>${ic('building')} ${t('set.company')}</h3>${I('nama',t('set.name'))}${I('bidang',t('set.field'))}${I('alamat',t('set.addr'))}${I('kontak',t('set.contact'),'tel')}</div>
+ <div class="card" id="locwrap">${locHTML()}</div>
  <div class="card"><h3>${ic('shield-halved')} ${t('set.legal')}</h3>${['NIB','NPWP','SIUP'].map(d=>`<div class="row fld"><span>${d}</span><span class="tag w">${t('set.notup')}</span></div>`).join('')}</div>
  <div class="card"><h3>${ic('rectangle-ad')} ${t('set.ads')}</h3>${[['pasar','set.t1'],['wa','f.wa'],['hub','set.t3']].map(([k,l])=>`<div class="row fld"><span>${t(l)}</span><label class="tg"><input type="checkbox" data-tg="${k}" ${f['t_'+k]?'checked':''}><b></b></label></div>`).join('')}</div>
  <button class="btn" data-act="saveprof">${ic('floppy-disk')}${t('set.save')}</button>`}
 };
 function itemCard(i,own){return `<div class="card">${imgOk(i.img)?`<img src="${esc(cldImg(i.img,700))}" alt="" loading="lazy" style="width:100%;max-height:180px;object-fit:cover;border-radius:12px;margin-bottom:10px">`:''}<div class="row"><b>${esc(i.n)}</b><span class="tag">${esc(CATN(i.c))}</span></div><div class="mut">${ic('store')} ${esc(i.ownerName||'')}</div><div class="row" style="margin-top:6px"><b style="color:#60a5fa;font-size:16px">${rp(i.p)}</b><span class="mut">${t('stock',i.s)}</span></div>${own?`<button class="btn g s" style="margin-top:10px" data-del="item" data-id="${i.id}">${ic('trash')}${t('delete')}</button>`:''}</div>`}
+
+/* ======================= PETA GUDANG ======================= */
+let HM=null,HMEl=null,HMK={},HMSIG='',PM=null,PMK=null,WHID='';
+const whHas=w=>w.loc&&hasXY(w.loc);
+const gm=(la,ln)=>'https://www.google.com/maps?q='+la+','+ln;
+const hqOK=()=>!!(S.prof&&S.prof.hq&&hasXY(S.prof.hq));
+const hqSVG='<svg viewBox="0 0 24 24" width="16" height="16" fill="#fff"><path d="M3 21V7l9-4 9 4v14h-6v-6H9v6z"/></svg>';
+
+/* Beranda: hanya peta (bersih). Pengaturan titik ada di Profil. */
+function whSection(){
+ const n=S.wh.filter(whHas).length+(hqOK()?1:0);
+ return `<div><h3 class="section-title"><span>${t('wh.title')}</span><button class="btn g s" data-act="whall">${ic('expand')}${t('wh.all')}</button></h3>
+ <div id="hmap-ph"></div>
+ ${n?'':`<button class="btn g s" style="margin-top:10px" data-go="set">${ic('map-pin')}${t('wh.hint')}</button>`}</div>`}
+
+function whCard(w,i){const L0=w.loc||{},has=whHas(w),own=w.role==='owner';
+ return `<div class="card whcard" style="background:var(--field)"><div class="row"><b><span class="whnum">${i+1}</span>${esc(w.name)}</b><span class="tag ${own?'':'i'}">${own?t('wh.owner'):t('wh.staff')}</span></div>
+ <div class="mut" style="margin-top:6px">${ic('boxes-stacked')} ${t('wh.items',w.items,w.racks)}</div>
+ <div class="mut" style="margin-top:4px;word-break:break-word">${ic('location-dot')} ${L0.addr?esc(L0.addr):(has?(+L0.lat).toFixed(5)+', '+(+L0.lng).toFixed(5):t('wh.noloc'))}</div>
+ ${imgOk(L0.img)?`<a href="${esc(L0.img)}" target="_blank" rel="noopener"><img src="${esc(cldImg(L0.img,600))}" alt="${t('wh.plan')}" loading="lazy" style="width:100%;max-height:130px;object-fit:cover;border-radius:12px;margin-top:8px"></a>`:''}
+ <div class="g2" style="margin-top:10px">
+  ${has?`<a class="btn g s" style="text-decoration:none" target="_blank" rel="noopener" href="${gm(+L0.lat,+L0.lng)}">${ic('map-location-dot')}Maps</a>`:'<span></span>'}
+  ${own?`<button class="btn s" data-act="whedit" data-id="${esc(w.id)}">${ic('pen')}${has?t('wh.editloc'):t('wh.setloc')}</button>`:'<span></span>'}
+ </div></div>`}
+
+/* Kartu "Peta Gudang" di halaman Profil */
+function locHTML(){
+ const f=S.prof||{};
+ return `<h3>${ic('map-location-dot')} ${t('wh.title')}</h3>
+ <div class="mut" style="margin-bottom:10px">${ic('building')} ${t('hq.office')}: ${hqOK()?(f.hq.manual?t('hq.manual'):t('hq.auto'))+' · '+(+f.hq.lat).toFixed(5)+', '+(+f.hq.lng).toFixed(5):t('hq.nopt')}</div>
+ ${(f.alamat&&!hqOK()&&GEOFAIL===f.alamat)?`<div class="mut" style="margin-bottom:10px">${ic('triangle-exclamation')} ${t('hq.notfound')}</div>`:''}
+ <button class="btn g s" type="button" data-act="hqedit">${ic('map-pin')}${t('hq.pin')}</button>
+ <div class="mut" style="margin:16px 0 8px">${t('wh.count',S.wh.length,S.wh.filter(whHas).length)}</div>
+ <div style="display:grid;gap:10px">${S.wh.length?S.wh.map(whCard).join(''):empty('warehouse',t('wh.none'),'<button class="btn" data-open="1">'+ic('warehouse')+t('wh.open3d')+'</button>')}</div>`}
+
+const pinIcon=n=>L.divIcon({className:'whpin',html:'<span class="pp"><b>'+n+'</b></span>',iconSize:[32,32],iconAnchor:[16,32],popupAnchor:[0,-30]});
+const hqIcon=()=>L.divIcon({className:'whpin hq',html:'<span class="pp">'+hqSVG+'</span>',iconSize:[32,32],iconAnchor:[16,32],popupAnchor:[0,-30]});
+const addTiles=m=>L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png',{maxZoom:19,attribution:'&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>'}).addTo(m);
+function hqPopup(){const f=S.prof||{},h=f.hq;return '<b>'+esc(f.nama||t('hq.noname'))+'</b><br>'+(f.bidang?esc(f.bidang)+'<br>':'')+(f.alamat?esc(f.alamat)+'<br>':'')+(f.kontak?'<a href="tel:'+esc(String(f.kontak).replace(/[^+\d]/g,''))+'">'+esc(f.kontak)+'</a><br>':'')+'<a href="'+gm(+h.lat,+h.lng)+'" target="_blank" rel="noopener">'+t('pm.loc.open')+'</a>'}
+/* titik kantor otomatis dari alamat profil (Nominatim), sekali per alamat */
+let GEOBUSY=false,GEOFOR='',GEOFAIL='';
+function geoHQ(){const a=((S.prof||{}).alamat||'').trim(),h=(S.prof||{}).hq||{};
+ if(!a||GEOBUSY||GEOFOR===a||(hasXY(h)&&(h.manual||h.for===a)))return;
+ GEOBUSY=true;GEOFOR=a;
+ fetch('https://nominatim.openstreetmap.org/search?format=json&limit=1&q='+encodeURIComponent(a)).then(r=>r.json()).then(j=>{
+  if(j&&j[0]){const hq={lat:+(+j[0].lat).toFixed(6),lng:+(+j[0].lon).toFixed(6),for:a,manual:false};
+   S.prof=Object.assign({},S.prof,{hq});ui();db.doc('users/'+uid).set({prof:{hq}},{merge:true}).catch(()=>{})}
+  else{GEOFAIL=a;ui()}}).catch(()=>{}).finally(()=>{GEOBUSY=false})}
+function homeMap(){
+ const ph=$('#hmap-ph');if(!ph)return;
+ if(typeof L==='undefined'){ph.innerHTML='<div class="card mut">'+ic('triangle-exclamation')+' '+t('wh.nomap')+'</div>';return}
+ if(!HMEl){HMEl=document.createElement('div');HMEl.className='hmap';
+  HM=L.map(HMEl,{scrollWheelZoom:false}).setView([-2.5,118],4);
+  addTiles(HM)}
+ ph.appendChild(HMEl);setTimeout(()=>HM.invalidateSize(),60);
+ Object.values(HMK).forEach(m=>m.remove());HMK={};
+ const pts=[];
+ if(hqOK()){const h=S.prof.hq;pts.push([+h.lat,+h.lng]);HMK.hq=L.marker([+h.lat,+h.lng],{icon:hqIcon(),zIndexOffset:500}).addTo(HM).bindPopup(hqPopup())}
+ geoHQ();
+ S.wh.forEach((w,i)=>{if(!whHas(w))return;const la=+w.loc.lat,ln=+w.loc.lng;pts.push([la,ln]);
+  HMK[w.id]=L.marker([la,ln],{icon:pinIcon(i+1)}).addTo(HM).bindPopup('<b>'+esc(w.name)+'</b><br>'+(w.loc.addr?esc(w.loc.addr)+'<br>':'')+t('wh.items',w.items,w.racks)+'<br><a href="'+gm(la,ln)+'" target="_blank" rel="noopener">'+t('pm.loc.open')+'</a> · <a href="'+WMS_URL+'">'+t('wh.open3d')+'</a>')});
+ const sig=pts.map(p=>p.join(',')).join('|');
+ if(sig!==HMSIG){HMSIG=sig;fitAll(pts)}}
+function fitAll(pts){pts=pts||Object.values(HMK).map(m=>[m.getLatLng().lat,m.getLatLng().lng]);if(!HM||!pts.length)return;
+ if(pts.length==1)HM.setView(pts[0],15);else HM.fitBounds(pts,{padding:[34,34],maxZoom:16})}
+/* ---- form lokasi per gudang ---- */
+function pinSet(la,ln,fly){if(!PM)return;if(!PMK){PMK=L.marker([la,ln],{icon:pinIcon('•'),draggable:true}).addTo(PM);PMK.on('dragend',()=>{const q=PMK.getLatLng();$('#llat').value=q.lat.toFixed(6);$('#llng').value=q.lng.toFixed(6)})}else PMK.setLatLng([la,ln]);if(fly)PM.setView([la,ln],Math.max(PM.getZoom(),15))}
+function pinFromInputs(){const la=(($('#llat')||{}).value||'').replace(',','.'),ln=(($('#llng')||{}).value||'').replace(',','.');if(hasXY({lat:la,lng:ln}))pinSet(+la,+ln,true)}
+function whSheet(id){const w=S.wh.find(x=>x.id===id);if(!w)return;if(w.role!=='owner')return toast(t('wh.onlyowner'));
+ const L0=w.loc||{};LOCIMG=imgOk(L0.img)?L0.img:'';WHID=id;
+ sheet(`<h2>${ic('location-dot')} ${esc(w.name)}</h2>
+ <div class="fld"><label>${t('pm.loc.addr')}</label><input type="text" id="laddr" value="${esc(L0.addr||'')}" autocapitalize="sentences" autocorrect="off" spellcheck="false"></div>
+ <div class="fld"><label>${t('pm.loc.url')}</label><input type="text" id="lurl" value="${esc(L0.url||'')}" inputmode="url" autocapitalize="none" autocorrect="off" spellcheck="false" placeholder="https://maps.google.com/..."></div>
+ <div class="g2"><div class="fld"><label>Latitude</label><input type="text" id="llat" inputmode="decimal" value="${esc(L0.lat==null?'':L0.lat)}" placeholder="-7.2575"></div><div class="fld"><label>Longitude</label><input type="text" id="llng" inputmode="decimal" value="${esc(L0.lng==null?'':L0.lng)}" placeholder="112.7521"></div></div>
+ <div class="g2"><button class="btn g s" type="button" data-act="whgps">${ic('crosshairs')}${t('pm.loc.gps')}</button><button class="btn g s" type="button" data-act="whfind">${ic('magnifying-glass-location')}${t('wh.search')}</button></div>
+ <div class="pickmap" id="pickmap"></div><div class="mut">${t('wh.pick')}</div>
+ <div class="fld"><label>${t('pm.loc.plan')}</label><input type="file" id="limg" accept="image/*"><div id="lprev" style="margin-top:8px">${LOCIMG?`<img src="${esc(cldImg(LOCIMG,700))}" alt="" style="width:100%;border-radius:12px;border:1px solid var(--line)">`:''}</div>
+  <button class="btn g s" type="button" data-act="locimgx" style="margin-top:8px">${ic('trash')}${t('pm.loc.rmplan')}</button></div>
+ <button class="btn" type="button" data-act="whsave">${ic('floppy-disk')}${t('pm.loc.save')}</button><button class="btn g" data-act="close">${t('f.cancel')}</button>`);
+ pickInit(L0)}
+function pickInit(L0){
+ if(typeof L==='undefined'){$('#pickmap').innerHTML='<div class="mut" style="padding:14px">'+ic('triangle-exclamation')+' '+t('wh.nomap')+'</div>';return}
+ const has=hasXY(L0);
+ PM=L.map('pickmap').setView(has?[+L0.lat,+L0.lng]:[-2.5,118],has?15:4);
+ addTiles(PM);
+ if(has)pinSet(+L0.lat,+L0.lng,false);
+ PM.on('click',e=>{$('#llat').value=e.latlng.lat.toFixed(6);$('#llng').value=e.latlng.lng.toFixed(6);pinSet(e.latlng.lat,e.latlng.lng,false)});
+ setTimeout(()=>PM&&PM.invalidateSize(),380)}
+function hqSheet(){const f=S.prof||{},h=f.hq||{};WHID='';
+ sheet(`<h2>${ic('building')} ${t('hq.pin')}</h2>
+ <div class="fld"><label>${t('set.addr')}</label><input type="text" id="laddr" value="${esc(f.alamat||'')}" autocapitalize="sentences" autocorrect="off" spellcheck="false"></div>
+ <div class="g2"><div class="fld"><label>Latitude</label><input type="text" id="llat" inputmode="decimal" value="${esc(h.lat==null?'':h.lat)}" placeholder="-7.2575"></div><div class="fld"><label>Longitude</label><input type="text" id="llng" inputmode="decimal" value="${esc(h.lng==null?'':h.lng)}" placeholder="112.7521"></div></div>
+ <div class="g2"><button class="btn g s" type="button" data-act="whgps">${ic('crosshairs')}${t('pm.loc.gps')}</button><button class="btn g s" type="button" data-act="whfind">${ic('magnifying-glass-location')}${t('wh.search')}</button></div>
+ <div class="pickmap" id="pickmap"></div><div class="mut">${t('wh.pick')}</div>
+ <button class="btn" type="button" data-act="hqsave">${ic('floppy-disk')}${t('pm.loc.save')}</button><button class="btn g" data-act="close">${t('f.cancel')}</button>`);
+ pickInit(h)}
 let admTab='bayar',AQ='';
 let pend=null;function ok(id,msg){if(pend==id){pend=null;return true}pend=id;toast(msg);setTimeout(()=>{if(pend==id)pend=null},4000);return false}
 function admPay(){return S.pend.length?S.pend.slice().sort((a,b)=>a.at-b.at).map(p=>`<div class="card"><div class="row"><b>${esc(p.name||p.email)}</b><span class="tag w">${t('adm.wait')}</span></div><div class="mut">${esc(p.email||'')}</div><div style="margin:6px 0">${t('adm.pkg')} <b>${esc(p.pn||pname(p.plan))}</b> (${p.cycle=='m'?t('adm.month'):t('adm.year')}) · <b>${rp(p.amount)}</b></div><div class="mut">${ic('wallet')} ${esc(p.method)}${p.note?' · '+esc(p.note):''}</div><div class="g2" style="margin-top:10px"><button class="btn s" data-act="approve" data-id="${p.id}">${ic('check')}${t('adm.approve')}</button><button class="btn g s" data-act="reject" data-id="${p.id}">${ic('xmark')}${t('adm.reject')}</button></div></div>`).join(''):'<div class="card">'+empty('circle-check',t('adm.none'))+'</div>'}
@@ -1124,10 +1232,11 @@ function admUsersView(){
  return `<div class="search-bar"><i class="fa-solid fa-magnifying-glass"></i><input type="text" id="aq" value="${esc(AQ)}" placeholder="${t('adm.search')}" autocorrect="off" autocapitalize="none" spellcheck="false"></div><div class="mut" id="acount">${t('adm.ucount',S.users.length)}</div><div id="alist" style="display:grid;gap:12px">${admUsersList()}</div>`}
 
 function render(){$('#ttl').textContent=t(T[tab]);$('#view').innerHTML=V[tab]();
- $('#nav').innerHTML=NAV.map(([k,i,l])=>`<button class="${k==tab?'on':''}" ${k=='wms'?'data-open="1"':'data-go="'+k+'"'}>${ic(i)}${t(l)}</button>`).join('');scrollTo(0,0)}
+ $('#nav').innerHTML=NAV.map(([k,i,l])=>`<button class="${k==tab?'on':''}" ${k=='wms'?'data-open="1"':'data-go="'+k+'"'}>${ic(i)}${t(l)}</button>`).join('');scrollTo(0,0);if(tab=='home')homeMap()}
 function go(k){tab=k;render()}
-function sheet(h){$('#sheetc').innerHTML=h;$('#sheet').classList.remove('hide')}
-function closeSheet(){$('#sheet').classList.add('hide')}
+function pmKill(){if(PM){try{PM.remove()}catch(e){}PM=null;PMK=null}}
+function sheet(h){pmKill();$('#sheetc').innerHTML=h;$('#sheet').classList.remove('hide')}
+function closeSheet(){pmKill();$('#sheet').classList.add('hide')}
 
 /* ======================= PREMIUM: TEKS BARU ======================= */
 const addT=(k,id,en)=>{D[k]=[id,en,en,en,en,en,en,en,en]};
@@ -1158,8 +1267,39 @@ addT('adm.revoked','Paket dicabut','Plan revoked');
 addT('adm.confrev','Cabut paket pengguna ini? Ketuk Cabut lagi untuk konfirmasi.','Revoke this user\'s plan? Tap Revoke again to confirm.');
 addT('adm.nousers','Tidak ada pengguna yang cocok','No matching users');
 addT('adm.ucount','{0} pengguna','{0} users');
-addT('adm.note','Admin hanya bisa ditambah lewat Firebase Console: koleksi admins, ID dokumen = UID pengguna.','Admins can only be added in the Firebase Console: collection admins, document ID = user UID.');
+addT('adm.note','Admin hanya bisa diatur lewat Firebase Console: ubah field role = admin di dokumen users pengguna.','Admins can only be set in the Firebase Console: set field role = admin on the user\'s users document.');
 addT('adm.exp','s.d. {0}','until {0}');
+addT('wh.title','Peta Gudang','Warehouse Map');
+addT('wh.count','{0} gudang · {1} sudah ada lokasi','{0} warehouses · {1} located');
+addT('wh.none','Belum ada gudang. Buat gudang di 3D WMS, lalu atur lokasinya di sini.','No warehouses yet. Create one in 3D WMS, then set its location here.');
+addT('wh.open3d','Buka 3D WMS','Open 3D WMS');
+addT('wh.noloc','Lokasi belum diatur','Location not set');
+addT('wh.setloc','Atur lokasi','Set location');
+addT('wh.editloc','Ubah lokasi','Edit location');
+addT('wh.owner','Pemilik','Owner');
+addT('wh.staff','Karyawan','Staff');
+addT('wh.focus','Lihat di peta','Show on map');
+addT('wh.items','{0} barang · {1} rak','{0} items · {1} racks');
+addT('wh.search','Cari alamat','Find address');
+addT('wh.pick','Ketuk peta atau geser pin untuk menentukan titik gudang.','Tap the map or drag the pin to set the warehouse point.');
+addT('wh.saved','Lokasi gudang disimpan','Warehouse location saved');
+addT('wh.nomap','Peta tidak bisa dimuat. Cek koneksi internet.','Map could not load. Check your internet connection.');
+addT('wh.notfound','Alamat tidak ditemukan. Coba lebih spesifik atau ketuk peta.','Address not found. Be more specific or tap the map.');
+addT('wh.onlyowner','Hanya pemilik gudang yang bisa mengubah lokasi','Only the warehouse owner can change the location');
+addT('wh.all','Lihat semua','Show all');
+addT('wh.plan','Denah','Floor plan');
+addT('wh.hint','Atur lokasi kantor & gudang di Profil','Set office & warehouse locations in Profile');
+addT('hq.edit','Ubah profil','Edit profile');
+addT('hq.empty','Lengkapi profil perusahaan (nama, alamat, kontak) agar tampil di peta.','Complete your company profile (name, address, contact) to show it on the map.');
+addT('hq.finding','Mencari titik alamat di peta…','Locating the address on the map…');
+addT('hq.notfound','Alamat kantor belum ketemu di peta. Atur titiknya manual.','Office address not found on the map. Set the point manually.');
+addT('hq.pin','Atur titik kantor di peta','Set office point on map');
+addT('hq.noname','Perusahaan Anda','Your company');
+addT('hq.saved','Titik kantor disimpan','Office point saved');
+addT('hq.auto','Titik otomatis dari alamat','Point set automatically from address');
+addT('hq.manual','Titik diatur manual','Point set manually');
+addT('hq.nopt','Titik kantor belum ada','No office point yet');
+addT('hq.office','Kantor','Office');
 addT('pm.loc','Lokasi & denah gudang','Warehouse location & map');
 addT('pm.loc.d','Isi alamat, koordinat, atau unggah gambar denah gudang Anda.','Enter the address, coordinates, or upload your warehouse floor-plan image.');
 addT('pm.loc.name','Nama lokasi / gudang','Location / warehouse name');
@@ -1189,8 +1329,6 @@ function shrink(file,max,q,lim){return new Promise((res,rej)=>{
     im.src=r.result};
   r.readAsDataURL(file)})}
 const safeImg=imgOk;
-/* Upload ke Cloudinary (unsigned). Foto dikecilkan dulu di browser agar cepat & hemat kuota.
-   Jika Cloudinary belum diisi, kembalikan data URL terkompres (mode cadangan). */
 let UPL=0;
 const dataToBlob=d=>{const p=d.split(','),m=/data:(.*?);/.exec(p[0])[1],b=atob(p[1]),a=new Uint8Array(b.length);for(let i=0;i<b.length;i++)a[i]=b.charCodeAt(i);return new Blob([a],{type:m})};
 async function uploadImg(file,max,lim,sub){
@@ -1235,30 +1373,9 @@ function aucForm(){sheet(`<h2>${t('lel.new')}</h2>
  <div><label>${t('f.hours')}</label><input type="number" id="f5" value="24" inputmode="numeric"></div>
  <button class="btn" data-act="saveauc">${ic('gavel')}${t('f.startauc')}</button><button class="btn g" data-act="close">${t('f.cancel')}</button>`)}
 
-/* ======================= PREMIUM: LOKASI GUDANG ======================= */
+/* ======================= LOKASI: UTIL ======================= */
 let LOCIMG='';
 const hasXY=L=>L&&L.lat!==''&&L.lng!==''&&L.lat!=null&&L.lng!=null&&isFinite(+L.lat)&&isFinite(+L.lng)&&Math.abs(+L.lat)<=90&&Math.abs(+L.lng)<=180;
-function locPreview(L){
-  let h='';
-  if(hasXY(L)){const la=+L.lat,ln=+L.lng;
-    h+=`<iframe title="map" loading="lazy" style="width:100%;height:210px;border:0;border-radius:14px;margin-top:10px" src="https://www.openstreetmap.org/export/embed.html?bbox=${ln-.006}%2C${la-.004}%2C${ln+.006}%2C${la+.004}&layer=mapnik&marker=${la}%2C${ln}"></iframe>
-    <a class="btn g s" style="margin-top:8px;text-decoration:none" target="_blank" rel="noopener" href="https://www.google.com/maps?q=${la},${ln}">${ic('map-location-dot')}${t('pm.loc.open')}</a>`;
-  }else h+=`<div class="mut" style="margin-top:8px">${ic('circle-info')}${t('pm.loc.nopin')}</div>`;
-  return h}
-function locCard(){const L=(S.prof&&S.prof.loc)||{};LOCIMG=safeImg(L.img)?L.img:'';
-  const I=(id,l,v,extra)=>`<div class="fld"><label>${l}</label><input type="text" id="${id}" value="${esc(v||'')}" ${extra||''} autocorrect="off" spellcheck="false"></div>`;
-  return `<div class="card"><h3>${ic('location-dot')} ${t('pm.loc')}</h3><div class="mut" style="margin-bottom:10px">${t('pm.loc.d')}</div>
-  ${I('lname',t('pm.loc.name'),L.name,'autocapitalize="words"')}
-  ${I('laddr',t('pm.loc.addr'),L.addr,'autocapitalize="sentences"')}
-  ${I('lurl',t('pm.loc.url'),L.url,'inputmode="url" autocapitalize="none" placeholder="https://maps.google.com/..."')}
-  <div class="g2"><div class="fld"><label>Latitude</label><input type="text" id="llat" inputmode="decimal" value="${esc(L.lat==null?'':L.lat)}" placeholder="-7.2575"></div>
-  <div class="fld"><label>Longitude</label><input type="text" id="llng" inputmode="decimal" value="${esc(L.lng==null?'':L.lng)}" placeholder="112.7521"></div></div>
-  <button class="btn g s" type="button" data-act="locgps">${ic('crosshairs')}${t('pm.loc.gps')}</button>
-  <div id="locmap">${locPreview(L)}</div>
-  <div class="fld" style="margin-top:14px"><label>${t('pm.loc.plan')}</label><input type="file" id="limg" accept="image/*">
-   <div id="lprev" style="margin-top:8px">${LOCIMG?`<img src="${esc(cldImg(LOCIMG,700))}" alt="" style="width:100%;border-radius:12px;border:1px solid var(--line)">`:''}</div>
-   <button class="btn g s" type="button" data-act="locimgx" style="margin-top:8px">${ic('trash')}${t('pm.loc.rmplan')}</button></div>
-  <button class="btn" type="button" data-act="saveloc">${ic('floppy-disk')}${t('pm.loc.save')}</button></div>`}
 function parseMapUrl(u){
   const m=u.match(/@(-?\d+\.?\d*),(-?\d+\.?\d*)/)||u.match(/[?&](?:q|ll|query|center)=(-?\d+\.?\d*)(?:,|%2C)(-?\d+\.?\d*)/i)||u.match(/!3d(-?\d+\.?\d*)!4d(-?\d+\.?\d*)/);
   return m?[m[1],m[2]]:null}
@@ -1285,26 +1402,31 @@ function checkout(k){const v=PLANS[k],a=cycle=='m'?v.m:v.m*10;uc=uc||(100+Math.r
  <button class="btn g" data-act="close">${t('f.cancel')}</button>`)}
 
 /* ======================= HELPERS ======================= */
-function ui(){if($('#app').classList.contains('hide')||tab=='set'||!$('#sheet').classList.contains('hide'))return;
+/* refresh tampilan: di Profil hanya kartu lokasi yang di-update (isian profil tidak terhapus) */
+function ui(){if($('#app').classList.contains('hide')||!$('#sheet').classList.contains('hide'))return;
+ if(tab=='set'){const w=$('#locwrap');if(w)w.innerHTML=locHTML();return}
  if(tab=='admin'&&admTab=='user'&&document.activeElement&&document.activeElement.closest&&document.activeElement.closest('#view')&&/INPUT|SELECT/.test(document.activeElement.tagName))return;
  const y=scrollY;render();scrollTo(0,y)}
 const ids=s=>s.docs.map(d=>({id:d.id,...d.data()}));
 /* Admin ditentukan HANYA lewat Firebase: dokumen admins/{uid} (dibuat manual di Console) */
-let mail='',ADM=false,admOff=null;const isAdmin=()=>ADM;
+let mail='',ADM=false,admOff=null,ROLEADM=false,DOCADM=false;const isAdmin=()=>ADM;
+function calcAdm(){const n=!!(ROLEADM||DOCADM);if(n===ADM)return;ADM=n;if(admOff){admOff();admOff=null}
+ if(ADM){const a=db.collection('payments').where('status','==','menunggu').onSnapshot(q=>{S.pend=ids(q);ui()},()=>{});
+  const b=db.collection('users').limit(500).onSnapshot(q=>{S.users=ids(q).sort((x,y)=>(y.at||0)-(x.at||0));ui()},()=>{});
+  admOff=()=>{a();b()}}
+ else{S.pend=[];S.users=[]}
+ if(!$('#app').classList.contains('hide')&&tab!='set'&&$('#sheet').classList.contains('hide'))render()}
 function sync(u){uid=u.uid;mail=(u.email||'').toLowerCase();user=u.displayName||nm(u.email||'');const ur=db.doc('users/'+uid);
- unsub=[ur.onSnapshot(d=>{if(!d.exists)ur.set({name:user,email:mail,plan:'free',exp:0,prof:{},lang,at:Date.now()}).catch(fe);const x=d.data()||{};if(d.exists&&mail&&x.email!==mail)ur.set({email:mail},{merge:true}).catch(()=>{});S.plan=x.plan||'free';S.exp=x.exp||0;S.prof=x.prof||{};ui()},fe),
+ unsub=[ur.onSnapshot(d=>{if(!d.exists)ur.set({name:user,email:mail,plan:'free',exp:0,prof:{},lang,at:Date.now()}).catch(fe);const x=d.data()||{};if(d.exists&&mail&&x.email!==mail)ur.set({email:mail},{merge:true}).catch(()=>{});ROLEADM=(x.role==='admin');calcAdm();S.plan=x.plan||'free';S.exp=x.exp||0;S.prof=x.prof||{};ui()},fe),
  db.collection('payments').where('uid','==',uid).onSnapshot(q=>{S.tx=ids(q).sort((a,b)=>a.at-b.at);ui()},fe),
  db.collection('items').orderBy('at','desc').limit(100).onSnapshot(q=>{S.market=ids(q);S.items=S.market.filter(i=>i.owner===uid);ui()},fe),
  db.collection('ads').orderBy('at','desc').limit(100).onSnapshot(q=>{S.sponsor=ids(q);S.ads=S.sponsor.filter(a=>a.owner===uid);ui()},fe),
- db.collection('auctions').orderBy('at','desc').limit(100).onSnapshot(q=>{S.auc=ids(q);ui()},fe)];
- unsub.push(db.doc('admins/'+uid).onSnapshot(d=>{
-  ADM=d.exists;if(admOff){admOff();admOff=null}
-  if(ADM){const a=db.collection('payments').where('status','==','menunggu').onSnapshot(q=>{S.pend=ids(q);ui()},()=>{});
-   const b=db.collection('users').limit(500).onSnapshot(q=>{S.users=ids(q).sort((x,y)=>(y.at||0)-(x.at||0));ui()},()=>{});
-   admOff=()=>{a();b()}}
-  else{S.pend=[];S.users=[]}
-  if(!$('#app').classList.contains('hide')&&tab!='set'&&$('#sheet').classList.contains('hide'))render()},()=>{ADM=false}));
- unsub.push(()=>{if(admOff){admOff();admOff=null}ADM=false})}
+ db.collection('auctions').orderBy('at','desc').limit(100).onSnapshot(q=>{S.auc=ids(q);ui()},fe),
+ db.collection('gudang_warehouses').where('memberUids','array-contains',uid).onSnapshot(q=>{
+  S.wh=q.docs.map(d=>{const r=d.data();let c={};try{c=JSON.parse(r.cfgStr||'{}')}catch(e){}
+   return{id:d.id,name:r.name||'Gudang',role:((r.members||{})[uid]||{}).role||'karyawan',loc:r.loc||null,racks:+c.racks||0,items:Object.keys(r.items||{}).length,at:r.createdAt&&r.createdAt.toMillis?r.createdAt.toMillis():0}}).sort((a,b)=>a.at-b.at);ui()},()=>{})];
+ unsub.push(db.doc('admins/'+uid).onSnapshot(d=>{DOCADM=d.exists;calcAdm()},()=>{DOCADM=false;calcAdm()}));
+ unsub.push(()=>{if(admOff){admOff();admOff=null}ADM=false;ROLEADM=false;DOCADM=false})}
 function enter(){$('#login').classList.add('hide');$('#app').classList.remove('hide');go('home')}
 const nm=v=>(v.split('@')[0]||t('user')).replace(/[._-]+/g,' ').replace(/\b\w/g,c=>c.toUpperCase());
 const AE={'auth/invalid-credential':'ae.cred','auth/wrong-password':'ae.cred','auth/user-not-found':'ae.cred','auth/email-already-in-use':'ae.inuse','auth/weak-password':'ae.weak','auth/invalid-email':'ae.invalid','auth/network-request-failed':'ae.net'};
@@ -1349,7 +1471,6 @@ document.addEventListener('change',e=>{const g=e.target.dataset.tg;
  if(g)db.doc('users/'+uid).set({prof:{['t_'+g]:e.target.checked}},{merge:true}).catch(fe)});
 
 document.addEventListener('input',e=>{if(e.target.id==='aq'){AQ=e.target.value;const l=$('#alist');if(l)l.innerHTML=admUsersList()}});
-/* upload gambar iklan / denah + parsing link maps */
 document.addEventListener('change',async e=>{const el=e.target;
   if(el.id==='fimg'||el.id==='limg'||el.id==='pimg'){
     const f=el.files&&el.files[0];if(!f)return;
@@ -1358,13 +1479,14 @@ document.addEventListener('change',async e=>{const el=e.target;
     if(box)box.innerHTML=`<div class="mut">${ic('spinner')} ${t('cl.upl')}</div>`;
     UPL++;
     try{
-      const out=await uploadImg(f,kind=='loc'?1600:1200,kind=='loc'?600000:380000,kind=='ad'?'iklan':kind=='item'?'produk':'denah');
+      const out=await uploadImg(f,kind=='loc'?1600:1200,kind=='loc'?150000:380000,kind=='ad'?'iklan':kind=='item'?'produk':'denah');
       const sty=kind=='loc'?'width:100%;border-radius:12px;border:1px solid var(--line)':'width:100%;max-height:200px;object-fit:cover;border-radius:12px';
       if(kind=='ad')ADIMG=out;else if(kind=='item')PIMG=out;else LOCIMG=out;
       if(box)box.innerHTML=`<img src="${esc(cldImg(out,700))}" alt="" style="${sty}">`;
     }catch(x){el.value='';if(box)box.innerHTML='';toast(t(cldOn()?'cl.fail':'pm.imgfail'))}
     finally{UPL--}}
-  if(el.id==='lurl'){const p=parseMapUrl(el.value);if(p){$('#llat').value=p[0];$('#llng').value=p[1]}}
+  if(el.id==='lurl'){const p=parseMapUrl(el.value);if(p){$('#llat').value=p[0];$('#llng').value=p[1]}pinFromInputs()}
+  if(el.id==='llat'||el.id==='llng')pinFromInputs();
   if(el.id==='f3'){const h=$('#f3h');if(h)h.style.display=el.value==='feed'?'none':''}
 });
 
@@ -1397,19 +1519,26 @@ document.addEventListener('click',e=>{const q=s=>e.target.closest(s);let x;
    if(adsOn()>=P().ads)return toast(t('t.limitad'));
    const days=Math.min(365,Math.max(1,+v('f4')||7));
    db.collection('ads').add({t:ttl,d:(v('f2')||'').trim(),k,end:Date.now()+days*864e5,owner:uid,ownerName:user,at:Date.now(),img:ADIMG||'',link:safeUrl(v('f6'))}).then(()=>toast(t('t.saved'))).catch(fe);closeSheet();return}
-  if(a=='locgps'){
-   if(!navigator.geolocation)return toast(t('pm.loc.nogps'));
-   navigator.geolocation.getCurrentPosition(p=>{$('#llat').value=p.coords.latitude.toFixed(6);$('#llng').value=p.coords.longitude.toFixed(6)},()=>toast(t('pm.loc.nogps')),{enableHighAccuracy:true,timeout:10000});return}
   if(a=='locimgx'){LOCIMG='';const p=$('#lprev'),f=$('#limg');if(p)p.innerHTML='';if(f)f.value='';return}
-  if(a=='saveloc'){
-   if(UPL)return toast(t('cl.wait'));
-   const lat=(v('llat')||'').trim().replace(',','.'),lng=(v('llng')||'').trim().replace(',','.');
-   const L={name:(v('lname')||'').trim(),addr:(v('laddr')||'').trim(),url:safeUrl(v('lurl')),lat,lng,img:LOCIMG||'',at:Date.now()};
-   if((lat||lng)&&!hasXY(L))return toast(t('pm.loc.badcoord'));
-   db.doc('users/'+uid).set({prof:{loc:L}},{merge:true}).then(()=>{
-    S.prof=Object.assign({},S.prof,{loc:L});
-    const m=$('#locmap');if(m)m.innerHTML=locPreview(L);
-    toast(t('t.saved'))}).catch(fe);return}
+  if(a=='whall'){fitAll();if(HMEl)HMEl.scrollIntoView({behavior:'smooth',block:'center'});return}
+  if(a=='whedit')return whSheet(x.dataset.id);
+  if(a=='hqedit')return hqSheet();
+  if(a=='hqsave'){const la=(v('llat')||'').trim().replace(',','.'),ln=(v('llng')||'').trim().replace(',','.'),ad=(v('laddr')||'').trim();
+   if(!hasXY({lat:la,lng:ln}))return toast(t('pm.loc.badcoord'));
+   const hq={lat:+la,lng:+ln,manual:true,for:ad||((S.prof||{}).alamat||'')},pf={hq};if(ad)pf.alamat=ad;
+   db.doc('users/'+uid).set({prof:pf},{merge:true}).then(()=>{S.prof=Object.assign({},S.prof,pf);GEOFAIL='';toast(t('hq.saved'));closeSheet();ui()}).catch(fe);return}
+  if(a=='whgps'){if(!navigator.geolocation)return toast(t('pm.loc.nogps'));
+   navigator.geolocation.getCurrentPosition(p=>{$('#llat').value=p.coords.latitude.toFixed(6);$('#llng').value=p.coords.longitude.toFixed(6);pinFromInputs()},()=>toast(t('pm.loc.nogps')),{enableHighAccuracy:true,timeout:10000});return}
+  if(a=='whfind'){const q=(v('laddr')||'').trim();if(!q)return;x.disabled=true;
+   fetch('https://nominatim.openstreetmap.org/search?format=json&limit=1&q='+encodeURIComponent(q)).then(r=>r.json()).then(j=>{
+    if(!j||!j[0])return toast(t('wh.notfound'));
+    $('#llat').value=(+j[0].lat).toFixed(6);$('#llng').value=(+j[0].lon).toFixed(6);pinFromInputs()}).catch(()=>toast(t('wh.notfound'))).finally(()=>{x.disabled=false});return}
+  if(a=='whsave'){if(UPL)return toast(t('cl.wait'));const w=S.wh.find(z=>z.id===WHID);if(!w)return;
+   const la=(v('llat')||'').trim().replace(',','.'),ln=(v('llng')||'').trim().replace(',','.');
+   const L1={addr:(v('laddr')||'').trim(),url:safeUrl(v('lurl')),lat:la,lng:ln,img:LOCIMG||'',at:Date.now()};
+   if((la||ln)&&!hasXY(L1))return toast(t('pm.loc.badcoord'));
+   if(hasXY(L1)){L1.lat=+la;L1.lng=+ln}
+   db.doc('gudang_warehouses/'+WHID).update({loc:L1,updatedAt:firebase.firestore.FieldValue.serverTimestamp()}).then(()=>{toast(t('wh.saved'));closeSheet();ui()}).catch(fe);return}
   if(a=='admgrant'||a=='admrevoke'){if(!isAdmin())return;const card=x.closest('.admu'),tu=card.dataset.u,ur2=db.doc('users/'+tu),g=c=>card.querySelector(c).value;
    if(a=='admrevoke'){if(!ok('rv'+tu,t('adm.confrev')))return;
     ur2.set({plan:'free',exp:0},{merge:true}).then(()=>{toast(t('adm.revoked'));db.collection('admin_logs').add({admin:uid,target:tu,type:'revoke',at:Date.now()}).catch(()=>{})}).catch(fe);return}
