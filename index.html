@@ -87,6 +87,7 @@ input[type=file]{width:100%;background:var(--field);border:1.5px dashed var(--li
 input::placeholder,textarea::placeholder{color:#6b8aad}
 input:focus,select:focus,textarea:focus{border-color:#3b82f6;background:#0f2a48;box-shadow:0 0 0 4px rgba(59,130,246,.18)}
 select option{color:var(--ink);background:var(--paper)}
+select:disabled{opacity:.55}
 .err{color:var(--rose);font-size:12.5px;min-height:18px;font-weight:600}
 
 .pw-mask{-webkit-text-security:disc;text-security:disc;font-family:inherit;letter-spacing:.02em}
@@ -1313,6 +1314,16 @@ addT('pm.loc.open','Buka di Google Maps','Open in Google Maps');
 addT('pm.loc.badcoord','Koordinat tidak valid','Invalid coordinates');
 addT('pm.loc.nogps','GPS tidak tersedia','GPS not available');
 addT('pm.loc.nopin','Belum ada koordinat. Isi lintang & bujur untuk melihat peta.','No coordinates yet. Fill latitude & longitude to see the map.');
+/* --- BARU: produk pasar -> gudang 3D --- */
+addT('wh.auto','Produk juga masuk ke {0} ({1})','Product also added to {0} ({1})');
+addT('wh.autofull','Produk tersimpan di pasar, tapi tidak ada slot kosong di gudang/rak yang dipilih','Saved to market, but no free slot in the chosen warehouse/rack');
+addT('wh.floc','Letak di gudang 3D','Location in 3D warehouse');
+addT('wh.fauto','Otomatis (gudang & rak pertama yang kosong)','Automatic (first free warehouse & rack)');
+addT('wh.fnew','+ Buat gudang baru','+ Create new warehouse');
+addT('wh.rauto','Rak otomatis','Automatic rack');
+addT('wh.fname','Nama gudang baru','New warehouse name');
+addT('wh.fracks','Jumlah rak (1-30)','Number of racks (1-30)');
+addT('pm.wt','Berat per kotak (kg)','Weight per box (kg)');
 PLANS.pro.f.push('pm.popup');PLANS.bisnis.f.push('pm.popup');
 
 /* ======================= PREMIUM: UTIL GAMBAR ======================= */
@@ -1346,12 +1357,61 @@ const safeUrl=u=>{u=(u||'').trim();if(!u)return'';if(!/^https?:\/\//i.test(u))u=
 
 /* ======================= FORMS ======================= */
 let PIMG='';
+/* pilihan gudang & rak untuk produk pasar -> gudang 3D */
+const whOpts=()=>'<option value="auto">'+t('wh.fauto')+'</option>'+S.wh.map(w=>`<option value="${esc(w.id)}">${esc(w.name)} · ${w.racks} ${esc(t('st.racks'))}</option>`).join('')+'<option value="new">'+t('wh.fnew')+'</option>';
+const rackOpts=id=>{const w=S.wh.find(x=>x.id===id);let h='<option value="-1">'+t('wh.rauto')+'</option>';if(w)for(let k=0;k<w.racks;k++)h+=`<option value="${k}">${esc(t('st.racks'))} A${k+1}</option>`;return h};
+function fwSync(){const f=$('#fw');if(!f)return;const v=f.value;$('#fnw').classList.toggle('hide',v!=='new');$('#fr').innerHTML=rackOpts(v);$('#fr').disabled=(v==='auto'||v==='new')}
 function itemForm(){PIMG='';sheet(`<h2>${t('m.add')}</h2>
  <div><label>${t('f.pname')}</label><input type="text" id="f1" autocorrect="off" autocapitalize="words" spellcheck="false"></div>
  <div class="g2"><div><label>${t('f.price')}</label><input type="number" id="f2" inputmode="numeric"></div><div><label>${t('f.stock')}</label><input type="number" id="f3" inputmode="numeric"></div></div>
- <div><label>${t('f.cat')}</label><select id="f4"><option value="Ready Stock">${t('f.ready')}</option><option value="Pre-Order">${t('f.po')}</option><option value="Jasa">${t('f.svc')}</option></select></div>
+ <div class="g2"><div><label>${t('f.cat')}</label><select id="f4"><option value="Ready Stock">${t('f.ready')}</option><option value="Pre-Order">${t('f.po')}</option><option value="Jasa">${t('f.svc')}</option></select></div><div><label>${t('pm.wt')}</label><input type="number" id="fb" value="1" min="0.1" step="0.1" inputmode="decimal"></div></div>
+ <div id="fwbox" class="card" style="background:var(--field);display:grid;gap:10px">
+  <h3 style="margin:0">${ic('warehouse')} ${t('wh.floc')}</h3>
+  <div class="g2"><div><label>${t('nav.wms')}</label><select id="fw">${whOpts()}</select></div><div><label>${t('st.racks')}</label><select id="fr">${rackOpts('auto')}</select></div></div>
+  <div id="fnw" class="g2 hide"><div><label>${t('wh.fname')}</label><input type="text" id="fnn" maxlength="40" placeholder="Gudang Pusat" autocapitalize="words" spellcheck="false"></div><div><label>${t('wh.fracks')}</label><input type="number" id="fnr" value="2" min="1" max="30" inputmode="numeric"></div></div>
+ </div>
  <div><label>${t('pm.pimg')}</label><input type="file" id="pimg" accept="image/*"><div id="pprev" style="margin-top:8px"></div></div>
- <button class="btn" data-act="saveitem">${ic('check')}${t('f.save')}</button><button class="btn g" data-act="close">${t('f.cancel')}</button>`)}
+ <button class="btn" data-act="saveitem">${ic('check')}${t('f.save')}</button><button class="btn g" data-act="close">${t('f.cancel')}</button>`);
+ if(!S.wh.length){$('#fw').value='new'}fwSync()}
+
+/* produk pasar -> otomatis jadi kotak di gudang 3D (gudang & rak bisa dipilih / dibuat baru) */
+async function toWH(docId,it,o){
+ if(it.c==='Jasa')return;
+ o=o||{wid:'auto',rack:-1,berat:1,nn:'',nr:2};
+ const FV=firebase.firestore.FieldValue;let cand;
+ if(o.wid==='new'){
+  try{const u=auth.currentUser,ref=db.collection('gudang_warehouses').doc(),nm2=(o.nn||('Gudang '+(S.wh.length+1))).slice(0,40);
+   await ref.set({name:nm2,ownerUid:u.uid,memberUids:[u.uid],members:{[u.uid]:{role:'owner',name:u.displayName||u.email,email:u.email}},
+    cfgStr:JSON.stringify({racks:o.nr,cap:6,bays:6,lv:4,fl:1,aw:30,ad:20}),items:{},createdAt:FV.serverTimestamp(),updatedAt:FV.serverTimestamp()});
+   cand=[{id:ref.id,name:nm2}]}catch(e){return fe(e)}}
+ else if(o.wid==='auto')cand=S.wh.slice().sort((a,b)=>((b.role==='owner')-(a.role==='owner'))||a.at-b.at);
+ else cand=S.wh.filter(w=>w.id===o.wid);
+ for(const w of cand){
+  try{
+   const ref=db.doc('gudang_warehouses/'+w.id);
+   const res=await db.runTransaction(async tt=>{
+    const d=(await tt.get(ref)).data()||{};let c={};try{c=JSON.parse(d.cfgStr||'{}')}catch(e){}
+    const racks=+c.racks||0,fl=c.fl||1,NB=c.bays||6,NL=c.lv||4,cap=c.cap||6,TR=racks*fl;
+    if(!TR||(o.rack>=0&&o.rack>=racks))return null;
+    const cnt={};
+    Object.values(d.items||{}).forEach(s=>{try{const i=JSON.parse(s),k=i.r+'_'+i.l+'_'+i.b;cnt[k]=(cnt[k]||0)+1}catch(e){}});
+    let loc=null;
+    for(let r=0;r<TR&&!loc;r++){if(o.rack>=0&&r%racks!==o.rack)continue;
+     for(let l=0;l<NL&&!loc;l++)for(let b=0;b<NB;b++)if((cnt[r+'_'+l+'_'+b]||0)<cap){loc={r,l,b};break}}
+    if(!loc)return null;
+    const id=Date.now()*1000+Math.floor(Math.random()*1000);
+    const row={id,nama:String(it.n).slice(0,24),jenis:String(it.c).slice(0,16),berat:o.berat||1,sku:'',
+     desk:('Dari Pasar B2B · '+rp(it.p)+' · stok '+it.s).slice(0,140),r:loc.r,l:loc.l,b:loc.b};
+    tt.update(ref,{['items.i'+id]:JSON.stringify(row),updatedAt:FV.serverTimestamp()});
+    const code=(fl>1?'L'+(Math.floor(loc.r%TR/racks)+1)+'-':'')+'A'+(loc.r%racks+1)+'-T'+(loc.l+1)+'-S'+(loc.b+1);
+    return{id,code}});
+   if(res){
+    await db.collection('items').doc(docId).update({whId:w.id,whItem:res.id}).catch(()=>{});
+    toast(t('wh.auto',w.name,res.code));return}
+  }catch(e){}
+ }
+ toast(t('wh.autofull'))}
+
 let ADIMG='';
 function adForm(){ADIMG='';sheet(`<h2>${t('ad.new')}</h2>
  <div><label>${t('f.adtitle')}</label><input type="text" id="f1" maxlength="60" autocorrect="off" autocapitalize="sentences" spellcheck="false"></div>
@@ -1489,6 +1549,10 @@ document.addEventListener('change',async e=>{const el=e.target;
   if(el.id==='llat'||el.id==='llng')pinFromInputs();
   if(el.id==='f3'){const h=$('#f3h');if(h)h.style.display=el.value==='feed'?'none':''}
 });
+/* BARU: pilihan gudang/rak di form produk */
+document.addEventListener('change',e=>{
+ if(e.target.id==='fw')fwSync();
+ if(e.target.id==='f4'){const b=$('#fwbox');if(b)b.classList.toggle('hide',e.target.value==='Jasa')}});
 
 document.addEventListener('click',e=>{const q=s=>e.target.closest(s);let x;
  if(x=q('[data-copy]')){navigator.clipboard&&navigator.clipboard.writeText(x.dataset.copy).then(()=>toast(t('t.copied')));return}
@@ -1504,13 +1568,19 @@ document.addEventListener('click',e=>{const q=s=>e.target.closest(s);let x;
  if(x=q('[data-m]')){pick=x.dataset.m;return checkout(x.dataset.k)}
  if(x=q('[data-pay]')){const k=x.dataset.pay,v=PLANS[k],base=cycle=='m'?v.m:v.m*10;
   db.collection('payments').add({uid,name:user,email:mail,plan:k,pn:pname(k),cycle,base,amount:+x.dataset.total,method:pick,note:($('#f9')||{}).value||'',status:'menunggu',at:Date.now()}).then(()=>toast(t('t.pending'))).catch(fe);uc=0;closeSheet();return}
- if(x=q('[data-del]')){db.collection(x.dataset.del=='ad'?'ads':'items').doc(x.dataset.id).delete().catch(fe);return}
+ if(x=q('[data-del]')){
+  /* BARU: hapus produk pasar -> kotaknya di gudang 3D ikut dihapus */
+  if(x.dataset.del=='item'){const it=S.items.find(i=>i.id===x.dataset.id);
+   if(it&&it.whId&&it.whItem)db.doc('gudang_warehouses/'+it.whId).update({['items.i'+it.whItem]:firebase.firestore.FieldValue.delete(),updatedAt:firebase.firestore.FieldValue.serverTimestamp()}).catch(()=>{})}
+  db.collection(x.dataset.del=='ad'?'ads':'items').doc(x.dataset.id).delete().catch(fe);return}
  if(x=q('[data-act]')){const a=x.dataset.act,v=id=>($('#'+id)||{}).value;
   if(a=='close')return closeSheet();
   if(a=='newitem')return itemForm();
   if(a=='newad')return adForm();
   if(a=='saveitem'){if(UPL)return toast(t('cl.wait'));if(!v('f1')||!(+v('f2')>0))return toast(t('t.fillnp'));if(S.items.length>=P().list)return toast(t('t.limitp'));
-   db.collection('items').add({n:v('f1'),p:+v('f2'),s:+v('f3')||0,c:v('f4'),owner:uid,ownerName:user,at:Date.now(),img:PIMG||''}).catch(fe);closeSheet();return}
+   const nit={n:v('f1'),p:+v('f2'),s:+v('f3')||0,c:v('f4'),owner:uid,ownerName:user,at:Date.now(),img:PIMG||''};
+   const opt={wid:v('fw')||'auto',rack:+(v('fr')||-1),berat:+v('fb')>0?+v('fb'):1,nn:(v('fnn')||'').trim(),nr:Math.min(30,Math.max(1,Math.round(+v('fnr')||2)))};
+   db.collection('items').add(nit).then(ref=>toWH(ref.id,nit,opt)).catch(fe);closeSheet();return}
   if(a=='savead'){
    if(UPL)return toast(t('cl.wait'));
    const ttl=(v('f1')||'').trim(),k=v('f3');
