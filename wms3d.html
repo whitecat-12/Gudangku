@@ -651,6 +651,7 @@ Au.onAuthStateChanged(auth,u=>{me=u;if(unsub){unsub();unsub=null}for(const k in 
  au.classList.add('show');view('');err('Memuat gudang…');let first=true;
  unsub=onSnapshot(query(collection(db,WC),where('memberUids','array-contains',u.uid)),{includeMetadataChanges:true},snap=>{
   sync();const prev=WH[cur]&&WH[cur].id;let ch=false,st=false;
+  const kn=new Set(),oldW=new Set();WH.forEach(w=>{if(w.id)oldW.add(w.id);w.items.forEach(i=>kn.add(i.id))});
   snap.docChanges({includeMetadataChanges:true}).forEach(c=>{const d=c.doc;
    if(c.type=='removed'){const i=WH.findIndex(w=>w.id==d.id);if(i>=0){WH.splice(i,1);delete LAST[d.id];ch=st=true}return}
    if(c.type=='modified'&&d.metadata.hasPendingWrites)return;
@@ -663,8 +664,14 @@ Au.onAuthStateChanged(auth,u=>{me=u;if(unsub){unsub();unsub=null}for(const k in 
    ch=true});
   if(!ch&&!first)return;
   WH=WH.filter(w=>w.id);const real=WH.length>0;if(!real)WH=[blank()];WH.sort((a,b)=>a.t-b.t);
+  const nw=[];
+  WH.forEach((w,wi)=>{if(!w.id||(!first&&!oldW.has(w.id)))return;
+   w.items.forEach(i=>{
+    const baru=first?(Date.now()-i.id/1000<120000):!kn.has(i.id);
+    if(baru&&nw.length<3&&fkOK()){nw.push([i.id,wi]);HIDE.add(i.id)}})});
   let ix=WH.findIndex(w=>w.id&&w.id==CL.want),go=false;if(ix>=0){CL.want=null;go=true}else ix=WH.findIndex(w=>w.id==prev);cur=Math.max(0,ix);
   rerender(st||first);
+  nw.forEach(([id,wi])=>FK.q.push({t:'in',id,w:wi}));
   if(selId!=null&&!WH.some(w=>w.items.some(i=>i.id==selId)))select(null);
   if(first&&real)home();else if(go)focusWH(cur);
   if(real){au.classList.remove('show');if(pj){const c=pj;pj=null;history.replaceState(null,'',location.href.split(/[?#]/)[0]);join(c)}}else{au.classList.add('show');view('st')}
