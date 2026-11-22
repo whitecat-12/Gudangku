@@ -1,6 +1,7 @@
 <!DOCTYPE html><html lang="id"><head><meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Sistem Gudang 3D</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer">
 <style>
 :root{--bg:rgba(13,27,51,.82);--in:rgba(255,255,255,.07);--bd:rgba(255,255,255,.14);--tx:#eaf2ff;--mut:#9fb2d0;--ac:#2f7df6;--ok:#22c55e;--wr:#f5a524;--er:#ef4444;color-scheme:dark}
 @media(prefers-color-scheme:light){:root:not([data-theme=dark]){--bg:rgba(255,255,255,.88);--in:rgba(10,30,70,.06);--bd:rgba(10,30,70,.15);--tx:#0e2040;--mut:#51668a;color-scheme:light}}
@@ -107,10 +108,12 @@ body.fps #nv,body.fps #stat,body.fps #bar button:not(#fp){display:none!important
 #adchip[hidden]{display:none}
 body.ui-off #adchip,body.fps #adchip{display:none!important}
 #bar #vs,#bar #va{font-size:15px}#bar #vs.on,#bar #va.on{background:var(--ac);color:#fff}
+#bar button{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;line-height:1}#bar button i{font-size:15px}#bar button span{font-size:9px;font-weight:600;line-height:1}
+#fab i{font-size:22px}#tg i{font-size:16px}.logo i{font-size:18px}#stat .ic i{font-size:20px}.sp button i,.ab button i{font-size:13px}#hd i{font-size:15px}
 </style></head><body>
 <canvas id="c"></canvas>
 <aside id="side" class="glass">
- <div class="brand"><div class="logo">▤</div><div><b>Sistem Gudang</b><small>TETA SAINS</small></div><button id="tg" title="Tutup">✕</button></div>
+ <div class="brand"><div class="logo"><i class="fa-solid fa-warehouse"></i></div><div><b>Sistem Gudang</b><small>TETA SAINS</small></div><button id="tg" title="Tutup"><i class="fa-solid fa-xmark"></i></button></div>
  <nav id="nav"><button data-p="in" class="on">Penerimaan</button><button data-p="st">Stok Barang</button><button data-p="pg">Pengaturan</button></nav>
  <section class="pn" id="p-in"><form id="f">
   <label>Nama barang<input id="nm" required maxlength="24" placeholder="mis. Laptop Asus"></label>
@@ -126,10 +129,10 @@ body.ui-off #adchip,body.fps #adchip{display:none!important}
  <section class="pn" id="p-pg" hidden>
   <div id="tm" style="margin-bottom:12px"></div>
   <p class="mut">Gudang baru otomatis berjejer di sebelah kanan gudang sebelumnya. Pengaturan di bawah berlaku untuk gudang yang aktif.</p>
-  <label>Jumlah rak (maks. 30)</label><div class="ab" style="margin-bottom:10px"><button type="button" id="rm">−</button><input id="nr" type="number" min="0" max="30" style="flex:2;margin:0;text-align:center"><button type="button" id="ad">+</button></div>
-<div class="sp"><span>Sekat ke kanan (maks. 12)</span><button type="button" data-k="bays" data-d="-1">−</button><b id="vb2"></b><button type="button" data-k="bays" data-d="1">+</button></div>
-<div class="sp"><span>Tingkat tiap rak (maks. 8)</span><button type="button" data-k="lv" data-d="-1">−</button><b id="vl2"></b><button type="button" data-k="lv" data-d="1">+</button></div>
-<div class="sp"><span>Lantai gudang ke atas (maks. 4)</span><button type="button" data-k="fl" data-d="-1">−</button><b id="vg2"></b><button type="button" data-k="fl" data-d="1">+</button></div>
+  <label>Jumlah rak (maks. 30)</label><div class="ab" style="margin-bottom:10px"><button type="button" id="rm"><i class="fa-solid fa-minus"></i></button><input id="nr" type="number" min="0" max="30" style="flex:2;margin:0;text-align:center"><button type="button" id="ad"><i class="fa-solid fa-plus"></i></button></div>
+<div class="sp"><span>Sekat ke kanan (maks. 12)</span><button type="button" data-k="bays" data-d="-1"><i class="fa-solid fa-minus"></i></button><b id="vb2"></b><button type="button" data-k="bays" data-d="1"><i class="fa-solid fa-plus"></i></button></div>
+<div class="sp"><span>Tingkat tiap rak (maks. 8)</span><button type="button" data-k="lv" data-d="-1"><i class="fa-solid fa-minus"></i></button><b id="vl2"></b><button type="button" data-k="lv" data-d="1"><i class="fa-solid fa-plus"></i></button></div>
+<div class="sp"><span>Lantai gudang ke atas (maks. 4)</span><button type="button" data-k="fl" data-d="-1"><i class="fa-solid fa-minus"></i></button><b id="vg2"></b><button type="button" data-k="fl" data-d="1"><i class="fa-solid fa-plus"></i></button></div>
 <div class="sp"><select id="dr" style="margin:0"></select><button type="button" id="drb" style="width:auto;padding:0 14px;background:var(--er);color:#fff">Hapus rak</button></div>
 <div class="sp"><select id="df" style="margin:0"></select><button type="button" id="dfb" style="width:auto;padding:0 14px;background:var(--er);color:#fff">Hapus lantai</button></div>
   <div class="g2"><label>Lebar gudang (m)<input id="aw" type="number" step="any" inputmode="decimal"></label><label>Kedalaman gudang (m)<input id="ah" type="number" step="any" inputmode="decimal"></label></div>
@@ -140,19 +143,19 @@ body.ui-off #adchip,body.fps #adchip{display:none!important}
   <div class="ab"><button id="demo">Isi contoh</button><button id="clr">Kosongkan</button></div>
   <div class="ab" style="margin-top:8px"><button id="dw" style="background:var(--er);color:#fff">Hapus gudang ini</button></div></section>
 </aside>
-<div id="stat" class="glass"><div class="t"><div class="ic">📦</div><div><small id="sn">Total Barang</small><b id="s0">0</b></div></div>
+<div id="stat" class="glass"><div class="t"><div class="ic"><i class="fa-solid fa-box"></i></div><div><small id="sn">Total Barang</small><b id="s0">0</b></div></div>
  <div class="st"><u style="background:var(--ok)"></u><span>Slot tersedia</span><b id="s1"></b></div>
  <div class="st"><u style="background:var(--wr)"></u><span>Kolom hampir penuh</span><b id="s2"></b></div>
  <div class="st"><u style="background:var(--er)"></u><span>Kolom penuh</span><b id="s3"></b></div>
  <div class="st"><small>Total berat <b id="s4"></b> kg</small></div></div>
 <div id="mmw" class="glass"><small>Peta Gudang</small><canvas id="mm" width="220" height="140"></canvas></div>
-<div id="bar" class="glass"><button id="v3" class="on">3D</button><button id="fp" title="Mode FPS ala Minecraft (tekan F)">FPS</button><button id="vt">⬒</button><button id="vf">⛶</button><button id="vm">✥</button><button id="vs" title="Tembok">🧱</button><button id="va" title="Atap">🏠</button><button id="vr">+Rak</button><button id="vk">+Kanan</button><button id="vl">+Lantai</button><button id="vw">+Gudang</button></div>
-<button id="fab" aria-label="Tambah barang">+</button>
+<div id="bar" class="glass"><button id="v3" class="on" title="Tampilan 3D"><i class="fa-solid fa-cube"></i><span>3D</span></button><button id="fp" title="Mode FPS ala Minecraft (tekan F)"><i class="fa-solid fa-person-walking"></i><span>FPS</span></button><button id="vt" title="Tampak atas"><i class="fa-solid fa-map"></i></button><button id="vf" title="Layar penuh"><i class="fa-solid fa-expand"></i></button><button id="vm" title="Mode geser"><i class="fa-solid fa-up-down-left-right"></i></button><button id="vs" title="Tembok"><i class="fa-solid fa-table-cells-large"></i></button><button id="va" title="Atap"><i class="fa-solid fa-house-chimney"></i></button><button id="vr" title="Tambah rak"><i class="fa-solid fa-table-columns"></i><span>+Rak</span></button><button id="vk" title="Tambah sekat ke kanan"><i class="fa-solid fa-arrow-right"></i><span>+Kanan</span></button><button id="vl" title="Tambah lantai"><i class="fa-solid fa-layer-group"></i><span>+Lantai</span></button><button id="vw" title="Tambah gudang"><i class="fa-solid fa-warehouse"></i><span>+Gudang</span></button></div>
+<button id="fab" aria-label="Tambah barang"><i class="fa-solid fa-plus"></i></button>
 <div id="dt" class="glass" hidden><div><b id="d0"></b><small id="d1"></small><small id="d2" hidden></small></div><button id="mvb">Pindah</button><button class="x" id="dx">Keluarkan</button></div>
 <div id="rp" class="glass" hidden><div><b id="r0"></b><small id="r1"></small></div><button class="x" id="rdel" type="button">Hapus rak</button></div>
 <div id="mvp" class="glass" hidden><label>Gudang tujuan<select id="mw"></select></label><div class="g3"><label>Rak<select id="mr"></select></label><label>Tingkat<select id="ml"></select></label><label>Sekat<select id="mb"></select></label></div><button class="pr" id="mgo" type="button">Pindahkan dengan forklift</button></div>
-<button id="hd" title="Sembunyikan/tampilkan tombol">◐</button><div id="wh"></div><div id="tip" hidden></div><div id="ts" hidden></div>
-<div id="fpc"></div><div id="fph" class="glass"></div><button id="fpx" class="glass" type="button">✕ Keluar FPS</button>
+<button id="hd" title="Sembunyikan/tampilkan tombol"><i class="fa-solid fa-circle-half-stroke"></i></button><div id="wh"></div><div id="tip" hidden></div><div id="ts" hidden></div>
+<div id="fpc"></div><div id="fph" class="glass"></div><button id="fpx" class="glass" type="button"><i class="fa-solid fa-xmark"></i> Keluar FPS</button>
 <div id="fpj"><i></i></div>
 <div id="auth"><div class="bx glass">
  <div id="a-in" hidden><h2>Masuk</h2><label>Email<input id="lg-e" type="email" autocomplete="email"></label><label>Kata sandi<input id="lg-p" type="password" autocomplete="current-password"></label><button class="pr" id="lg-go" type="button">Masuk</button><button class="lk" id="lg-2r" type="button">Belum punya akun? Daftar</button></div>
@@ -210,7 +213,7 @@ const floorTex=tex(256,256,(x,w,h)=>{x.fillStyle='#b1b9c1';x.fillRect(0,0,w,h);f
 floorTex.wrapS=floorTex.wrapT=THREE.RepeatWrapping;
 
 
-function build(){clearRack();layout();SH={walls:[],roofs:[],poles:[]};ROOMS=[];GR.children.forEach(o=>o.dispose&&o.dispose());GR.clear();
+function build(){clearRack();layout();SH={walls:[],roofs:[],poles:[]};ROOMS=[];FANS=[];GR.children.forEach(o=>o.dispose&&o.dispose());GR.clear();
  const P=[],B=[],K=[],Br=[],Y=[];
  for(let w=0;w<WH.length;w++){ctx(w);buildOne(w,P,B,K,Br,Y)}
  ctx(cur);
@@ -275,24 +278,75 @@ function roomMove(e){const g=ground(e);if(!g)return;const d=rdrag,r=RM[d.k],b=d.
  d.ok=roomFree(d);ghost.position.set(d.nx,.6,d.nz);ghost.material.color.set(d.ok?0x20c3a0:0xef4444)}
 function roomUp(e){const d=rdrag;rdrag=null;ghost.visible=false;if(e.type=='pointerup'&&moved>2){if(d.ok){(cfg.rooms=cfg.rooms||{})[d.k]=[d.nx-d.def[0],d.nz-d.def[1]];build();renderBoxes();save()}else toast('Bertabrakan dengan rak/ruangan lain')}}
 /* tembok & atap gudang (bisa disembunyikan) */
-let SH={walls:[],roofs:[],poles:[]},ROOMS=[],SHW=true,SHR=true;try{SHW=localStorage.getItem('wh3d_walls')!=='0';SHR=localStorage.getItem('wh3d_roof')!=='0'}catch(e){}
-const mWall=mat(0xdde3e8,.85,0),mBand=mat(0x1d4f91,.6,.2),mLint=mat(0x2f3b4a,.7,.4),mGab=new THREE.MeshStandardMaterial({color:0xdde3e8,roughness:.85,side:THREE.DoubleSide}),mWin=new THREE.MeshStandardMaterial({color:0xa8d0f5,roughness:.2,metalness:.1,emissive:0x203040}),
+let SH={walls:[],roofs:[],poles:[]},ROOMS=[],FANS=[],SHW=true,SHR=true;try{SHW=localStorage.getItem('wh3d_walls')!=='0';SHR=localStorage.getItem('wh3d_roof')!=='0'}catch(e){}
+const wallTex=tex(256,256,(x,w,h)=>{x.fillStyle='#e4e9ee';x.fillRect(0,0,w,h);for(let i=0;i<1400;i++){x.fillStyle=`rgba(${Math.random()<.5?'255,255,255':'110,125,140'},${Math.random()*.05})`;x.fillRect(Math.random()*w,Math.random()*h,2,2)}x.fillStyle='#bcc6d0';x.fillRect(0,h-6,w,4);x.fillStyle='rgba(255,255,255,.75)';x.fillRect(0,h-2,w,2);x.fillStyle='rgba(188,198,208,.75)';x.fillRect(w-3,0,3,h)});
+wallTex.wrapS=wallTex.wrapT=THREE.RepeatWrapping;wallTex.anisotropy=8;
+const mWallT=new THREE.MeshStandardMaterial({map:wallTex,roughness:.85,metalness:0}),mBand=mat(0x2b6cc4,.6,.1),mPlinth=mat(0xa3adb8,.9,0),mPil=mat(0xeef1f4,.85,0),mCorn=mat(0xf4f6f8,.8,0),mFrame=mat(0xf7f9fb,.6,.1),mSill=mat(0xcdd5dc,.85,0),mRidge=mat(0x9aa5b1,.6,.3),mLampB=mat(0xf4f6f8,.6,.1),mLampG=new THREE.MeshStandardMaterial({color:0xfff4cc,emissive:0xffe9a0,emissiveIntensity:.9}),
+mGab=new THREE.MeshStandardMaterial({color:0xe4e9ee,roughness:.85,side:THREE.DoubleSide}),mWin=new THREE.MeshStandardMaterial({color:0x9ecbec,roughness:.15,metalness:.05,emissive:0x35566f}),mGlassW=new THREE.MeshStandardMaterial({color:0xcfeaf8,transparent:true,opacity:.34,roughness:.05,metalness:.2,emissive:0x24506f,emissiveIntensity:.35,depthWrite:false,side:THREE.DoubleSide}),mHandle=mat(0x8e9aa6,.4,.7),mSteel=mat(0x9aa5b1,.5,.6),mBlade=new THREE.MeshStandardMaterial({color:0xe7ecf0,roughness:.45,metalness:.3,side:THREE.DoubleSide}),mTurb=new THREE.MeshStandardMaterial({color:0xd8dee4,roughness:.3,metalness:.7,side:THREE.DoubleSide}),
 mRoof=new THREE.MeshStandardMaterial({map:tex(64,64,(x,w,h)=>{x.fillStyle='#aab3bc';x.fillRect(0,0,w,h);for(let i=0;i<4;i++){x.fillStyle='rgba(0,0,0,.2)';x.fillRect(i*16,0,3,h);x.fillStyle='rgba(255,255,255,.35)';x.fillRect(i*16+3,0,4,h)}}),roughness:.55,metalness:.4,side:THREE.DoubleSide});
 mRoof.map.wrapS=mRoof.map.wrapT=THREE.RepeatWrapping;
-function buildShell(b,fl){const t=.3,Hw=fl*FH(),GH=3.4,lx=b.x1-b.x0,lz=b.z1-b.z0,cx=(b.x0+b.x1)/2,cz=(b.z0+b.z1)/2,gA=b.x0-cx,gB=b.x0+2.4-cx;
+const fGeo={ring:new THREE.TorusGeometry(.56,.035,8,28),r2:new THREE.TorusGeometry(.25,.012,6,20),r3:new THREE.TorusGeometry(.42,.012,6,24),bell:new THREE.CylinderGeometry(.55,.55,.24,24,1,true),hub:new THREE.CylinderGeometry(.1,.1,.16,14),cone:new THREE.ConeGeometry(.1,.14,14)};
+function mkFan(g,x,y,t){const f=new THREE.Group();f.position.set(x,y,0);
+ for(const[bx,by,sx,sy]of[[0,.61,1.3,.08],[0,-.61,1.3,.08],[-.61,0,.08,1.14],[.61,0,.08,1.14]]){const m=new THREE.Mesh(U,mSteel);m.scale.set(sx,sy,t+.1);m.position.set(bx,by,0);f.add(m)}
+ const bell=new THREE.Mesh(fGeo.bell,mBand);bell.rotation.x=Math.PI/2;f.add(bell);
+ for(const s of[1,-1]){const r=new THREE.Mesh(fGeo.ring,mBand);r.position.z=s*(t/2+.01);f.add(r)}
+ for(const gm of[fGeo.r2,fGeo.r3]){const q=new THREE.Mesh(gm,mSteel);q.position.z=t/2+.06;f.add(q)}
+ for(let k=0;k<4;k++){const q=new THREE.Mesh(U,mSteel);q.scale.set(1.08,.014,.014);q.position.z=t/2+.06;q.rotation.z=k*Math.PI/4;f.add(q)}
+ const rot=new THREE.Group();for(let k=0;k<5;k++){const pv=new THREE.Group();pv.rotation.z=k*Math.PI*2/5;const bl=new THREE.Mesh(U,mBlade);bl.scale.set(.42,.17,.012);bl.position.x=.3;bl.rotation.x=.55;pv.add(bl);rot.add(pv)}
+ const hub=new THREE.Mesh(fGeo.hub,mYel);hub.rotation.x=Math.PI/2;rot.add(hub);const cn=new THREE.Mesh(fGeo.cone,mYel);cn.rotation.x=Math.PI/2;cn.position.z=.1;rot.add(cn);f.add(rot);g.add(f);FANS.push({m:rot,ax:'z',sp:-6,p:g})}
+function fanTick(dt){for(const f of FANS)if(f.p.visible)f.m.rotation[f.ax]+=f.sp*dt}
+function buildShell(b,fl){const t=.3,Hw=fl*FH(),GH=3.4,lx=b.x1-b.x0,lz=b.z1-b.z0,cx=(b.x0+b.x1)/2,cz=(b.z0+b.z1)/2,gA=b.x0-cx,gB=b.x0+2.4-cx,TL=1.5,FHt=FH();
  for(const[nx,nz]of[[0,1],[0,-1],[1,0],[-1,0]]){const L=nz?lx+2*t:lz,px=nz?cx:(nx>0?b.x1+t/2:b.x0-t/2),pz=nz?(nz>0?b.z1+t/2:b.z0-t/2):cz;
   const g=new THREE.Group();g.position.set(px,0,pz);g.rotation.y=nz>0?0:nz<0?Math.PI:nx>0?Math.PI/2:-Math.PI/2;
-  const seg=(a,c,y0,y1,m)=>{const o=new THREE.Mesh(U,m);o.scale.set(c-a,y1-y0,t);o.position.set((a+c)/2,(y0+y1)/2,0);g.add(o)};
-  if(nz>0){seg(-L/2,gA,0,Hw,mWall);seg(gB,L/2,0,Hw,mWall);seg(gA,gB,GH,Hw,mLint);const p=plate('PINTU FORKLIFT',2.3,.45,'#1f9d6b','#fff','bold 60px sans-serif');p.position.set((gA+gB)/2,GH+.5,t/2+.05);g.add(p)}else seg(-L/2,L/2,0,Hw,mWall);
+  /* dinding berpanel: UV mengikuti ukuran dunia supaya alur panel tidak melar */
+  const seg=(a,c,y0,y1,m)=>{const w=c-a,h=y1-y0,xc=(a+c)/2,yc=(y0+y1)/2,ge=new THREE.BoxGeometry(w,h,t),P=ge.attributes.position,V=ge.attributes.uv;
+   for(let i=0;i<P.count;i++){const f=i>>2,x=P.getX(i)+xc,y=P.getY(i)+yc,z=P.getZ(i);let u,v;if(f<2){u=z;v=y}else if(f<4){u=x;v=z}else{u=x;v=y}V.setXY(i,u/TL,v/TL)}
+   const o=new THREE.Mesh(ge,m);o.position.set(xc,yc,0);g.add(o)};
+  const det=(m,A)=>{if(!A.length)return;const im=new THREE.InstancedMesh(U,m,A.length);A.forEach((a,i)=>{dm.position.set(a[0],a[1],a[2]);dm.rotation.set(a[6]||0,0,0);dm.scale.set(a[3],a[4],a[5]);dm.updateMatrix();im.setMatrixAt(i,dm.matrix)});im.frustumCulled=false;g.add(im)};
+  const door=nz>0,HL=[];
+  if(door)HL.push([gA,gB,0,GH]);
+  const ovDoor=(x,hw,yb)=>door&&x+hw>gA-.3&&x-hw<gB+.3&&yb<GH+1.3;
+  const n=Math.max(1,Math.floor(L/5));
+  const Fr=[],Mu=[],Hn=[],Gl=[],Sl=[],Lh=[],Lg=[],Pi=[],Pn=[],Be=[],Sv=[],FN=[];
+  const wTop=(fl-1)*FHt+FHt*.62+.65,yF=Hw-1.55,fanOK=yF-.65>wTop+.2;
+  for(let f=0;f<fl;f++)for(let i=0;i<n;i++){const x=-L/2+(i+.5)*L/n,yc=f*FHt+FHt*.62;
+   if(!ovDoor(x,1.3,yc-.65)){
+    HL.push([x-1.1,x+1.1,yc-.65,yc+.65]);
+    /* bingkai aluminium */
+    Fr.push([x,yc+.59,0,2.2,.12,t+.04],[x,yc-.59,0,2.2,.12,t+.04],[x-1.04,yc,0,.12,1.06,t+.04],[x+1.04,yc,0,.12,1.06,t+.04]);
+    Mu.push([x,yc-.155,0,.07,.75,t+.02],[x,yc+.25,0,1.96,.06,t+.02]);
+    Gl.push([x,yc-.155,0,1.96,.75,.03]);
+    for(let k=0;k<3;k++)Sv.push([x,yc+.3+k*.1,0,1.94,.015,.17,.6]);
+    for(const s of[1,-1])Hn.push([x+.12,yc-.12,s*(t/2+.04),.035,.16,.05]);
+    Sl.push([x,yc-.7,t/2+.1,2.6,.08,.26],[x,yc-.69,-(t/2+.08),2.4,.06,.2],[x,yc+.72,t/2+.07,2.45,.08,.16])}
+   /* blower / kipas exhaust di atas jendela (selang-seling) */
+   if(fanOK&&i%2==0&&!ovDoor(x,.9,yF-.65)){HL.push([x-.65,x+.65,yF-.65,yF+.65]);mkFan(g,x,yF,t)}}
+  /* dinding utuh, dipotong lubang pintu / jendela / kipas */
+  const xs=[-L/2,L/2];HL.forEach(h=>xs.push(h[0],h[1]));const X=[...new Set(xs.map(v=>+v.toFixed(4)))].filter(v=>v>=-L/2-1e-6&&v<=L/2+1e-6).sort((p,q)=>p-q);
+  for(let i=0;i<X.length-1;i++){const a=X[i],c=X[i+1];if(c-a<.01)continue;const m=(a+c)/2,iv=HL.filter(h=>h[0]<m&&h[1]>m).map(h=>[h[2],h[3]]).sort((p,q)=>p[0]-q[0]);let y=0;for(const[v0,v1]of iv){if(v0>y+.005)seg(a,c,y,v0,mWallT);y=Math.max(y,v1)}if(Hw>y+.005)seg(a,c,y,Hw,mWallT)}
+  if(door){const p=plate('PINTU FORKLIFT',2.3,.45,'#1f9d6b','#fff','bold 60px sans-serif');p.position.set((gA+gB)/2,GH+.7,t/2+.06);g.add(p)}
   const bb=new THREE.Mesh(U,mBand);bb.scale.set(L,.5,t+.05);bb.position.y=Hw-.5;g.add(bb);
-  const n=Math.max(1,Math.floor(L/5)),im=new THREE.InstancedMesh(U,mWin,n*fl*2);let k=0;
-  for(let f=0;f<fl;f++)for(let i=0;i<n;i++){const x=-L/2+(i+.5)*L/n;for(const s of[1,-1]){dm.position.set(x,f*FH()+FH()*.62,s*(t/2+.03));dm.rotation.set(0,0,0);dm.scale.set(2.2,.9,.08);dm.updateMatrix();im.setMatrixAt(k++,dm.matrix)}}
-  im.count=k;im.frustumCulled=false;g.add(im);GR.add(g);SH.walls.push({g,h:Hw,k:1,p:{x:px,z:pz},n:{x:nx,z:nz}})}
+  /* plinth beton di kaki dinding (pintu dilewati) */
+  if(door)Pn.push([(-L/2+gA)/2,.3,0,gA+L/2,.6,t+.12],[(gB+L/2)/2,.3,0,L/2-gB,.6,t+.12]);else Pn.push([0,.3,0,L,.6,t+.12]);
+  /* kolom pilaster; sudut hanya di dinding depan/belakang */
+  for(let i=nz?0:1;i<=(nz?n:n-1);i++){const x=-L/2+i*L/n;if(door&&x>gA-.2&&x<gB+.2)continue;Pi.push([x,Hw/2,0,.45,Hw,t+.2]);
+   if(i>0&&i<n)for(let f=0;f<fl;f++){Lh.push([x,f*FHt+3.4,t/2+.22,.3,.18,.24]);Lg.push([x,f*FHt+3.28,t/2+.22,.22,.05,.18])}}
+  for(let f=1;f<fl;f++)Be.push([0,f*FHt,0,L,.25,t+.08]);
+  det(mPlinth,Pn);det(mPil,Pi);det(mPil,Be);det(mFrame,Fr);det(mFrame,Mu);det(mFrame,Sv);det(mHandle,Hn);det(mSill,Sl);det(mLampB,Lh);det(mLampG,Lg);det(mGlassW,Gl);
+  det(mCorn,[[0,Hw-.16,0,L+.3,.2,t+.3]]);
+  if(door){det(mYel,[[gA-.12,GH/2,0,.24,GH,t+.14],[gB+.12,GH/2,0,.24,GH,t+.14],[gA-.75,.55,t/2+.9,.22,1.1,.22],[gB+.75,.55,t/2+.9,.22,1.1,.22],[(gA+gB)/2,.02,t/2+.6,gB-gA,.04,.5]]);det(mBand,[[(gA+gB)/2,GH+.15,0,gB-gA+.5,.3,t+.1]])}
+  GR.add(g);SH.walls.push({g,h:Hw,k:1,p:{x:px,z:pz},n:{x:nx,z:nz}})}
  const o=.6,rise=clamp(lz*.09,1.5,4),x0=b.x0-t-o,x1=b.x1+t+o,sl=rise/(lz/2+t),yR=Hw+rise,yE=Hw-o*sl,za=b.z0-t-o,zb=b.z1+t+o,UU=(x1-x0)/1.2,rg=new THREE.Group();
  const ge=new THREE.BufferGeometry();ge.setAttribute('position',new THREE.Float32BufferAttribute([x0,yR,cz,x1,yR,cz,x1,yE,zb,x0,yE,zb,x0,yR,cz,x1,yR,cz,x1,yE,za,x0,yE,za],3));
  ge.setAttribute('uv',new THREE.Float32BufferAttribute([0,0,UU,0,UU,1,0,1,0,0,UU,0,UU,1,0,1],2));ge.setIndex([0,1,2,0,2,3,4,5,6,4,6,7]);ge.computeVertexNormals();rg.add(new THREE.Mesh(ge,mRoof));
- const rb=new THREE.Mesh(U,mLint);rb.scale.set(x1-x0,.14,.4);rb.position.set(cx,yR+.05,cz);rg.add(rb);
+ const rb=new THREE.Mesh(U,mRidge);rb.scale.set(x1-x0,.14,.4);rb.position.set(cx,yR+.05,cz);rg.add(rb);
  for(const xx of[b.x0-t/2,b.x1+t/2]){const gt=new THREE.BufferGeometry();gt.setAttribute('position',new THREE.Float32BufferAttribute([xx,Hw,b.z0-t,xx,Hw,b.z1+t,xx,yR,cz],3));gt.computeVertexNormals();rg.add(new THREE.Mesh(gt,mGab))}
+ const nT=Math.max(2,Math.floor((x1-x0)/7)),gFin=new THREE.BoxGeometry(.025,.55,.26),gFl=new THREE.CylinderGeometry(.36,.36,.05,20),gNk=new THREE.CylinderGeometry(.2,.24,.36,16),gDs=new THREE.CylinderGeometry(.4,.4,.03,20),gCp=new THREE.ConeGeometry(.4,.26,20);
+ for(let i=0;i<nT;i++){const tb=new THREE.Group();tb.position.set(x0+(i+.5)*(x1-x0)/nT,yR+.12,cz);
+  const fl=new THREE.Mesh(gFl,mTurb);fl.position.y=.025;tb.add(fl);const nk=new THREE.Mesh(gNk,mTurb);nk.position.y=.23;tb.add(nk);
+  const hd=new THREE.Group();hd.position.y=.41;const d1=new THREE.Mesh(gDs,mTurb);hd.add(d1);const d2=new THREE.Mesh(gDs,mTurb);d2.position.y=.62;hd.add(d2);const cp=new THREE.Mesh(gCp,mTurb);cp.position.y=.75;hd.add(cp);
+  const fi=new THREE.InstancedMesh(gFin,mTurb,18);for(let k=0;k<18;k++){const an=k/18*Math.PI*2;dm.position.set(Math.cos(an)*.3,.31,Math.sin(an)*.3);dm.rotation.set(0,-an+.9,0);dm.scale.set(1,1,1);dm.updateMatrix();fi.setMatrixAt(k,dm.matrix)}fi.frustumCulled=false;hd.add(fi);
+  tb.add(hd);rg.add(tb);FANS.push({m:hd,ax:'y',sp:2.4,p:rg})}
  GR.add(rg);SH.roofs.push(rg)}
 function applyShell(){SH.walls.forEach(w=>{w.g.visible=SHW;w.g.scale.y=1});SH.roofs.forEach(r=>r.visible=SHR);SH.poles.forEach(q=>q.visible=!SHW);
  const bw=$('#vs'),br=$('#va');if(bw){bw.classList.toggle('on',SHW);bw.title=SHW?'Sembunyikan tembok':'Tampilkan tembok'}if(br){br.classList.toggle('on',SHR);br.title=SHR?'Sembunyikan atap':'Tampilkan atap'}}
@@ -375,7 +429,7 @@ function stats(){$('#sn').textContent='Total Barang'+(WH.length>1?' · '+WH[cur]
  $('#s0').textContent=items.length.toLocaleString('id-ID');$('#s1').textContent=(TR()*NB*NL*cfg.cap-items.length).toLocaleString('id-ID');$('#s2').textContent=near;$('#s3').textContent=full;
  $('#s4').textContent=items.reduce((a,i)=>a+i.berat,0).toLocaleString('id-ID',{maximumFractionDigits:1})}
 function renderList(){const q=$('#q').value.toLowerCase();
- $('#ls').innerHTML=items.filter(i=>(i.nama+' '+i.jenis+' '+(i.sku||'')+' '+(i.desk||'')).toLowerCase().includes(q)).slice(-200).reverse().map(i=>`<div class="row${i.id==selId?' on':''}" data-id="${i.id}"><b>${esc(i.nama)}</b><span>${i.sku?esc(i.sku)+' · ':''}${esc(i.jenis)} · ${i.berat} kg</span>${i.desk?`<span class="ds" title="${esc(i.desk)}">${esc(i.desk)}</span>`:''}<i>${code(i)}</i><button data-del="${i.id}" title="Keluarkan">✕</button></div>`).join('')||'<p class="mut">Belum ada barang.</p>'}
+ $('#ls').innerHTML=items.filter(i=>(i.nama+' '+i.jenis+' '+(i.sku||'')+' '+(i.desk||'')).toLowerCase().includes(q)).slice(-200).reverse().map(i=>`<div class="row${i.id==selId?' on':''}" data-id="${i.id}"><b>${esc(i.nama)}</b><span>${i.sku?esc(i.sku)+' · ':''}${esc(i.jenis)} · ${i.berat} kg</span>${i.desk?`<span class="ds" title="${esc(i.desk)}">${esc(i.desk)}</span>`:''}<i>${code(i)}</i><button data-del="${i.id}" title="Keluarkan"><em class="fa-solid fa-xmark"></em></button></div>`).join('')||'<p class="mut">Belum ada barang.</p>'}
 const esc=s=>s.replace(/[&<>"]/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[m]));
 function remove(id){fkOut(id);items=items.filter(i=>i.id!=id);if(selId==id){selId=null;$('#dt').hidden=true;cellHl.visible=false}commit()}
 const opts=(n,p)=>Array.from({length:n},(_,i)=>`<option value="${i}">${p}${i+1}`).join('');
@@ -645,7 +699,7 @@ addEventListener('keyup',e=>{const a=FPK[e.code];if(a)delete fp.k[a]});
 addEventListener('blur',()=>{fp.k={}});
 $('#fp').onclick=()=>fp.on?fpOff():fpOn();$('#fpx').onclick=fpOff;
 let lastT=0;
-(function loop(){requestAnimationFrame(loop);const now=performance.now(),dt=Math.min(.05,(now-(lastT||now))/1000);lastT=now;fkTick();if(fp.on)fpTick(dt);else upCam();walls();R.render(S,cam);mini()})();
+(function loop(){requestAnimationFrame(loop);const now=performance.now(),dt=Math.min(.05,(now-(lastT||now))/1000);lastT=now;fkTick();if(fp.on)fpTick(dt);else upCam();walls();fanTick(dt);R.render(S,cam);mini()})();
 $('#hd').onclick=()=>{const o=document.body.classList.toggle('ui-off');if(o)$('#side').classList.remove('open');try{localStorage.setItem('wh3d_ui',o?'1':'')}catch(e){}};
 let panMode=false;
 addEventListener('keydown',e=>{if(fp.on||/INPUT|SELECT|TEXTAREA/.test(e.target.tagName))return;const k=e.key,p=go.r*.05;
@@ -759,11 +813,11 @@ const mark=id=>{seen.add(id);try{sessionStorage.setItem('ad3d_seen',JSON.stringi
 function show(i){
   if(!ADS.length)return;idx=(i+ADS.length)%ADS.length;const a=ADS[idx],link=okUrl(a.link);mark(a.id);
   root.innerHTML=`<div class="bx" role="dialog" aria-modal="true">
-    <button class="x" type="button" data-a="x" aria-label="Tutup">✕</button>
+    <button class="x" type="button" data-a="x" aria-label="Tutup"><i class="fa-solid fa-xmark"></i></button>
     ${okImg(a.img)?`<img src="${e(cimg(a.img))}" alt="">`:''}
     <div class="b"><small>Iklan · ${e(a.ownerName||'')}</small><h3>${e(a.t)}</h3>${a.d?`<p>${e(a.d)}</p>`:''}
     ${link?`<a class="go" href="${e(link)}" target="_blank" rel="noopener noreferrer">Kunjungi</a>`:''}</div>
-    ${ADS.length>1?`<div class="nv"><button type="button" data-a="p">‹</button><span>${idx+1} / ${ADS.length}</span><button type="button" data-a="n">›</button></div>`:''}</div>`;
+    ${ADS.length>1?`<div class="nv"><button type="button" data-a="p"><i class="fa-solid fa-chevron-left"></i></button><span>${idx+1} / ${ADS.length}</span><button type="button" data-a="n"><i class="fa-solid fa-chevron-right"></i></button></div>`:''}</div>`;
   root.hidden=false}
 const hide=()=>{root.hidden=true};
 root.addEventListener('click',ev=>{
@@ -795,7 +849,7 @@ async function boot(){
     unsub=F.onSnapshot(F.query(F.collection(db,'ads'),F.orderBy('at','desc'),F.limit(100)),snap=>{
       const now=Date.now();
       ADS=snap.docs.map(d=>({id:d.id,...d.data()})).filter(a=>a.t&&a.k!=='feed'&&a.end>now);
-      chip.textContent='📢 Iklan ('+ADS.length+')';chip.hidden=!ADS.length;
+      chip.innerHTML='<i class="fa-solid fa-bullhorn"></i> Iklan ('+ADS.length+')';chip.hidden=!ADS.length;
       if(idx>=ADS.length)idx=0;
       tryShow()},()=>{})});
 }
