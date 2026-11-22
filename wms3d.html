@@ -304,7 +304,7 @@ function buildShell(b,fl){const t=.3,Hw=fl*FH(),GH=3.4,lx=b.x1-b.x0,lz=b.z1-b.z0
    const o=new THREE.Mesh(ge,m);o.position.set(xc,yc,0);g.add(o)};
   const det=(m,A)=>{if(!A.length)return;const im=new THREE.InstancedMesh(U,m,A.length);A.forEach((a,i)=>{dm.position.set(a[0],a[1],a[2]);dm.rotation.set(a[6]||0,0,0);dm.scale.set(a[3],a[4],a[5]);dm.updateMatrix();im.setMatrixAt(i,dm.matrix)});im.frustumCulled=false;g.add(im)};
   const door=nz>0,HL=[];
-  if(door)HL.push([gA,gB,0,GH]);
+  if(door)HL.push([gA-.24,gB+.24,0,GH+.3]);
   const ovDoor=(x,hw,yb)=>door&&x+hw>gA-.3&&x-hw<gB+.3&&yb<GH+1.3;
   const n=Math.max(1,Math.floor(L/5));
   const Fr=[],Mu=[],Hn=[],Gl=[],Sl=[],Lh=[],Lg=[],Pi=[],Pn=[],Be=[],Sv=[],FN=[];
@@ -327,14 +327,14 @@ function buildShell(b,fl){const t=.3,Hw=fl*FH(),GH=3.4,lx=b.x1-b.x0,lz=b.z1-b.z0
   if(door){const p=plate('PINTU FORKLIFT',2.3,.45,'#1f9d6b','#fff','bold 60px sans-serif');p.position.set((gA+gB)/2,GH+.7,t/2+.06);g.add(p)}
   const bb=new THREE.Mesh(U,mBand);bb.scale.set(L,.5,t+.05);bb.position.y=Hw-.5;g.add(bb);
   /* plinth beton di kaki dinding (pintu dilewati) */
-  if(door)Pn.push([(-L/2+gA)/2,.3,0,gA+L/2,.6,t+.12],[(gB+L/2)/2,.3,0,L/2-gB,.6,t+.12]);else Pn.push([0,.3,0,L,.6,t+.12]);
+  if(door)Pn.push([(-L/2+gA-.24)/2,.3,0,gA-.24+L/2,.6,t+.12],[(gB+.24+L/2)/2,.3,0,L/2-gB-.24,.6,t+.12]);else Pn.push([0,.3,0,L,.6,t+.12]);
   /* kolom pilaster; sudut hanya di dinding depan/belakang */
   for(let i=nz?0:1;i<=(nz?n:n-1);i++){const x=-L/2+i*L/n;if(door&&x>gA-.2&&x<gB+.2)continue;Pi.push([x,Hw/2,0,.45,Hw,t+.2]);
    if(i>0&&i<n)for(let f=0;f<fl;f++){Lh.push([x,f*FHt+3.4,t/2+.22,.3,.18,.24]);Lg.push([x,f*FHt+3.28,t/2+.22,.22,.05,.18])}}
   for(let f=1;f<fl;f++)Be.push([0,f*FHt,0,L,.25,t+.08]);
   det(mPlinth,Pn);det(mPil,Pi);det(mPil,Be);det(mFrame,Fr);det(mFrame,Mu);det(mFrame,Sv);det(mHandle,Hn);det(mSill,Sl);det(mLampB,Lh);det(mLampG,Lg);det(mGlassW,Gl);
   det(mCorn,[[0,Hw-.16,0,L+.3,.2,t+.3]]);
-  if(door){det(mYel,[[gA-.12,GH/2,0,.24,GH,t+.14],[gB+.12,GH/2,0,.24,GH,t+.14],[gA-.75,.55,t/2+.9,.22,1.1,.22],[gB+.75,.55,t/2+.9,.22,1.1,.22],[(gA+gB)/2,.02,t/2+.6,gB-gA,.04,.5]]);det(mBand,[[(gA+gB)/2,GH+.15,0,gB-gA+.5,.3,t+.1]])}
+  if(door){det(mYel,[[gA-.12,(GH+.3)/2,0,.24,GH+.3,t+.14],[gB+.12,(GH+.3)/2,0,.24,GH+.3,t+.14],[gA-.75,.55,t/2+.9,.22,1.1,.22],[gB+.75,.55,t/2+.9,.22,1.1,.22],[(gA+gB)/2,.03,t/2+.6,gB-gA,.02,.5]]);det(mBand,[[(gA+gB)/2,GH+.15,0,gB-gA,.3,t+.1]])}
   GR.add(g);SH.walls.push({g,h:Hw,k:1,p:{x:px,z:pz},n:{x:nx,z:nz}})}
  const o=.6,rise=clamp(lz*.09,1.5,4),x0=b.x0-t-o,x1=b.x1+t+o,sl=rise/(lz/2+t),yR=Hw+rise,yE=Hw-o*sl,za=b.z0-t-o,zb=b.z1+t+o,UU=(x1-x0)/1.2,rg=new THREE.Group();
  const ge=new THREE.BufferGeometry();ge.setAttribute('position',new THREE.Float32BufferAttribute([x0,yR,cz,x1,yR,cz,x1,yE,zb,x0,yE,zb,x0,yR,cz,x1,yR,cz,x1,yE,za,x0,yE,za],3));
