@@ -92,6 +92,19 @@ select:disabled{opacity:.55}
 
 .pw-mask{-webkit-text-security:disc;text-security:disc;font-family:inherit;letter-spacing:.02em}
 .pw-mask::placeholder{letter-spacing:normal}
+.pw-wrap{position:relative;display:block;min-width:0}
+.auth-field .pw-wrap input{padding-right:44px}
+.pw-eye{position:absolute;right:4px;top:50%;transform:translateY(-50%);width:38px;height:38px;border:0;background:none;
+  color:var(--mut);cursor:pointer;border-radius:10px;display:grid;place-items:center;font-size:14px;padding:0;transition:color .16s,background .16s}
+.pw-eye:hover{color:#93c5fd;background:rgba(59,130,246,.12)}
+.pw-eye.on{color:#60a5fa}
+.forgot-row{display:flex;justify-content:flex-end;margin-top:-4px}
+.link-btn{border:0;background:none;padding:2px 0;color:#60a5fa;font-size:12px;font-weight:700;cursor:pointer;letter-spacing:-.01em}
+.link-btn:hover{color:#93c5fd;text-decoration:underline}
+#fpBox{display:grid;gap:10px}
+#fpBox .fp-msg{font-size:12.5px;font-weight:600;min-height:18px;line-height:1.4}
+#fpBox .fp-msg.ok{color:#6ee7b7}
+#fpBox .fp-msg.bad{color:var(--rose)}
 
 #login{min-height:100vh;min-height:100dvh;display:flex;flex-direction:column;justify-content:center;align-items:center;
   padding:14px 16px calc(14px + env(safe-area-inset-bottom,0px));
@@ -621,14 +634,25 @@ code{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:11.5px;ba
             <label for="em" data-i18n="email">Email</label>
             <input id="em" type="email" autocomplete="username" autocorrect="off" autocapitalize="none" spellcheck="false" inputmode="email" placeholder="nama@perusahaan.com">
           </div>
-          <div class="auth-field">
+          <div class="auth-field" id="pwField">
             <label for="pw" data-i18n="password">Kata sandi</label>
-            <input id="pw" type="text" class="pw-mask" autocomplete="current-password" autocorrect="off" autocapitalize="none" spellcheck="false" inputmode="text" data-i18n-ph="ph.pass" placeholder="Minimal 6 karakter">
+            <div class="pw-wrap"><input id="pw" type="text" class="pw-mask" autocomplete="current-password" autocorrect="off" autocapitalize="none" spellcheck="false" inputmode="text" data-i18n-ph="ph.pass" placeholder="Minimal 6 karakter"><button type="button" class="pw-eye" data-eye="pw" aria-label="Tampilkan kata sandi" tabindex="-1"><i class="fa-solid fa-eye"></i></button></div>
           </div>
+          <div class="forgot-row" id="fpRow"><button type="button" class="link-btn" id="fpOpen" data-i18n="fp.link">Lupa kata sandi?</button></div>
           <div class="err" id="errLogin"></div>
           <button class="btn" id="go" type="submit">
             <i class="fa-solid fa-right-to-bracket"></i><span data-i18n="login">Masuk</span>
           </button>
+          <div id="fpBox" class="hide">
+            <p class="mut" style="margin:0" data-i18n="fp.hint">Masukkan email akun Anda. Kami akan mengirim tautan untuk mengatur ulang kata sandi.</p>
+            <div class="auth-field">
+              <label for="fpem" data-i18n="email">Email</label>
+              <input id="fpem" type="email" autocomplete="email" autocorrect="off" autocapitalize="none" spellcheck="false" inputmode="email" placeholder="nama@perusahaan.com">
+            </div>
+            <div class="fp-msg" id="fpMsg"></div>
+            <button class="btn" id="fpSend" type="button"><i class="fa-solid fa-paper-plane"></i><span data-i18n="fp.send">Kirim tautan reset</span></button>
+            <button class="link-btn" id="fpBack" type="button" style="justify-self:center"><i class="fa-solid fa-arrow-left"></i> <span data-i18n="fp.back">Kembali ke Masuk</span></button>
+          </div>
         </form>
 
         <form class="auth-panel" id="panel-register" role="tabpanel" novalidate autocomplete="on">
@@ -646,11 +670,11 @@ code{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:11.5px;ba
           </div>
           <div class="auth-field">
             <label for="rpw" data-i18n="password">Kata sandi</label>
-            <input id="rpw" type="text" class="pw-mask" autocomplete="new-password" autocorrect="off" autocapitalize="none" spellcheck="false" inputmode="text" data-i18n-ph="ph.pass" placeholder="Minimal 6 karakter">
+            <div class="pw-wrap"><input id="rpw" type="text" class="pw-mask" autocomplete="new-password" autocorrect="off" autocapitalize="none" spellcheck="false" inputmode="text" data-i18n-ph="ph.pass" placeholder="Minimal 6 karakter"><button type="button" class="pw-eye" data-eye="rpw" aria-label="Tampilkan kata sandi" tabindex="-1"><i class="fa-solid fa-eye"></i></button></div>
           </div>
           <div class="auth-field">
             <label for="rpw2" data-i18n="auth.confirm">Ulangi kata sandi</label>
-            <input id="rpw2" type="text" class="pw-mask" autocomplete="new-password" autocorrect="off" autocapitalize="none" spellcheck="false" inputmode="text" data-i18n-ph="ph.pass" placeholder="Minimal 6 karakter">
+            <div class="pw-wrap"><input id="rpw2" type="text" class="pw-mask" autocomplete="new-password" autocorrect="off" autocapitalize="none" spellcheck="false" inputmode="text" data-i18n-ph="ph.pass" placeholder="Minimal 6 karakter"><button type="button" class="pw-eye" data-eye="rpw2" aria-label="Tampilkan kata sandi" tabindex="-1"><i class="fa-solid fa-eye"></i></button></div>
           </div>
           <div class="err" id="errReg"></div>
           <button class="btn ok" id="reg" type="submit">
@@ -1250,6 +1274,15 @@ function closeSheet(){pmKill();$('#sheet').classList.add('hide')}
 
 /* ======================= PREMIUM: TEKS BARU ======================= */
 const addT=(k,id,en)=>{D[k]=[id,en,en,en,en,en,en,en,en]};
+D['fp.link']=['Lupa kata sandi?','Forgot password?','비밀번호를 잊으셨나요?','忘记密码？','パスワードをお忘れですか？','Mot de passe oublié ?','Забыли пароль?','Passwort vergessen?','Password dimenticata?'];
+D['fp.hint']=['Masukkan email akun Anda. Kami akan mengirim tautan untuk mengatur ulang kata sandi.','Enter your account email. We will send you a link to reset your password.','계정 이메일을 입력하세요. 비밀번호 재설정 링크를 보내드립니다.','请输入账号邮箱，我们将发送重置密码的链接。','アカウントのメールを入力してください。パスワード再設定のリンクを送信します。','Saisissez l\'e-mail de votre compte. Nous vous enverrons un lien de réinitialisation.','Введите email аккаунта. Мы отправим ссылку для сброса пароля.','Geben Sie Ihre Konto-E-Mail ein. Wir senden Ihnen einen Link zum Zurücksetzen.','Inserisci l\'email del tuo account. Ti invieremo un link per reimpostare la password.'];
+D['fp.send']=['Kirim tautan reset','Send reset link','재설정 링크 보내기','发送重置链接','再設定リンクを送信','Envoyer le lien','Отправить ссылку','Link senden','Invia link'];
+D['fp.back']=['Kembali ke Masuk','Back to Log in','로그인으로 돌아가기','返回登录','ログインに戻る','Retour à la connexion','Назад ко входу','Zurück zur Anmeldung','Torna all\'accesso'];
+D['fp.sent']=['Jika email terdaftar, tautan reset sudah dikirim. Cek inbox atau folder spam.','If the email is registered, a reset link has been sent. Check your inbox or spam folder.','등록된 이메일이면 재설정 링크가 발송되었습니다. 받은편지함 또는 스팸함을 확인하세요.','如果该邮箱已注册，重置链接已发送。请检查收件箱或垃圾邮件。','登録済みのメールであれば、再設定リンクを送信しました。受信トレイまたは迷惑メールをご確認ください。','Si l\'e-mail est enregistré, un lien a été envoyé. Vérifiez votre boîte de réception ou vos spams.','Если email зарегистрирован, ссылка отправлена. Проверьте входящие или спам.','Falls die E-Mail registriert ist, wurde ein Link gesendet. Prüfen Sie Posteingang oder Spam.','Se l\'email è registrata, il link è stato inviato. Controlla posta in arrivo o spam.'];
+addT('fp.need','Masukkan email Anda terlebih dahulu','Please enter your email first');
+addT('fp.sending','Mengirim...','Sending...');
+addT('eye.show','Tampilkan kata sandi','Show password');
+addT('eye.hide','Sembunyikan kata sandi','Hide password');
 addT('pm.popup','Popup di 3D (Premium)','3D popup (Premium)');
 addT('pm.popup.d','Iklan tampil sebagai popup saat pengguna membuka gudang 3D.','Ad shows as a popup when users open the 3D warehouse.');
 addT('pm.img','Gambar iklan','Ad image');
@@ -1529,7 +1562,38 @@ async function authGo(mode){
 }
 
 /* ======================= EVENTS ======================= */
-$('#panel-login').addEventListener('submit',e=>{e.preventDefault();authGo('login')});
+/* --- mata hide/show password --- */
+document.addEventListener('mousedown',e=>{if(e.target.closest('.pw-eye'))e.preventDefault()});
+document.addEventListener('click',e=>{const b=e.target.closest('.pw-eye');if(!b)return;
+  const inp=document.getElementById(b.dataset.eye);if(!inp)return;
+  const show=inp.classList.contains('pw-mask');
+  inp.classList.toggle('pw-mask',!show);
+  b.classList.toggle('on',show);
+  b.setAttribute('aria-label',t(show?'eye.hide':'eye.show'));
+  const i=b.querySelector('i');if(i)i.className='fa-solid '+(show?'fa-eye-slash':'fa-eye')});
+/* --- lupa kata sandi --- */
+let fpMode=false;
+function fpToggle(on){fpMode=on;
+  ['#pwField','#fpRow','#go','#errLogin'].forEach(q=>{const el=$(q);if(el)el.classList.toggle('hide',on)});
+  const box=$('#fpBox');if(box)box.classList.toggle('hide',!on);
+  const msg=$('#fpMsg');if(msg){msg.textContent='';msg.className='fp-msg'}
+  if(on){const fe_=$('#fpem');if(fe_){fe_.value=($('#em').value||'').trim();fe_.focus()}}
+  sizeAuthPanels()}
+async function fpSend(){
+  const msg=$('#fpMsg'),btn=$('#fpSend'),email=($('#fpem').value||'').trim();
+  msg.className='fp-msg';msg.textContent='';
+  if(!READY){msg.className='fp-msg bad';msg.textContent=t('e.nocfg');return sizeAuthPanels()}
+  if(!email){msg.className='fp-msg bad';msg.textContent=t('fp.need');return sizeAuthPanels()}
+  btn.disabled=true;
+  try{await auth.sendPasswordResetEmail(email);msg.className='fp-msg ok';msg.textContent=t('fp.sent')}
+  catch(x){
+    if(x.code==='auth/user-not-found'){msg.className='fp-msg ok';msg.textContent=t('fp.sent')}
+    else{msg.className='fp-msg bad';msg.textContent=AE[x.code]?t(AE[x.code]):(x.message||t('e.generic'))}}
+  btn.disabled=false;sizeAuthPanels()}
+$('#fpOpen').onclick=()=>fpToggle(true);
+$('#fpBack').onclick=()=>fpToggle(false);
+$('#fpSend').onclick=fpSend;
+$('#panel-login').addEventListener('submit',e=>{e.preventDefault();fpMode?fpSend():authGo('login')});
 $('#panel-register').addEventListener('submit',e=>{e.preventDefault();authGo('register')});
 document.querySelectorAll('.auth-tab').forEach(b=>{b.onclick=()=>setAuthMode(b.dataset.mode)});
 $('#out').onclick=()=>auth&&auth.signOut();
