@@ -688,6 +688,65 @@ code{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:11.5px;ba
   nav button.on i{transform:none}
   .dash-t{font-size:26px}
 }
+
+/* ===== Layout final: top bar + breadcrumb + sidebar di semua ukuran layar ===== */
+.mob-only{display:none!important}
+.menu-btn{display:grid;place-items:center;background:var(--paper);border:1px solid var(--line);color:var(--ink);cursor:pointer;margin-right:2px}
+#app{max-width:none;margin:0;padding:0 0 28px;display:grid;grid-template-columns:minmax(0,1fr);grid-template-areas:"hd" "main";grid-template-rows:auto 1fr;align-items:start}
+header{grid-area:hd;position:sticky;top:0;z-index:50;display:flex;flex-wrap:wrap;align-items:center;justify-content:flex-start;gap:0 10px;margin:0;padding:10px 14px 0;
+  background:rgba(8,24,46,.95);border-bottom:1px solid #1e3a5f}
+header .brandmark{flex:1 1 auto}
+header #ttl,#langbtn2{display:none}
+header .dxname{display:block;font-family:"Space Grotesk",sans-serif;font-size:20px;font-weight:700;letter-spacing:-.03em}
+header .dxname em{font-style:normal;color:#38bdf8}
+.bc{display:flex;flex:none;align-items:center;justify-content:space-between;gap:12px;width:calc(100% + 28px);margin:10px -14px 0;padding:8px 14px;
+  background:rgba(18,44,76,.7);border-top:1px solid #1e3a5f;font-size:13.5px;color:var(--ink2);min-width:0}
+.bc b{color:#7dd3fc;font-weight:600}
+.flags{display:flex;gap:6px;overflow-x:auto;scrollbar-width:none;flex:none;max-width:55%}
+.flags::-webkit-scrollbar{display:none}
+.flag{flex:none;width:30px;height:30px;border-radius:50%;border:2px solid transparent;background:#0f2a48;cursor:pointer;font-size:16px;line-height:1;display:grid;place-items:center;padding:0}
+.flag.on{border-color:#38bdf8}
+main{grid-area:main;padding:18px 14px 0;gap:16px;max-width:1320px;width:100%}
+#app>nav{position:fixed;top:0;bottom:0;left:0;right:auto;width:min(280px,84vw);max-width:none;margin:0;z-index:70;
+  display:flex;flex-direction:column;gap:3px;padding:14px 12px;border-radius:0 20px 20px 0;overflow-y:auto;
+  background:linear-gradient(180deg,#0f2a48,#0c2038);border:1px solid #1e3a5f;border-left:0;box-shadow:var(--sh3);
+  transform:translateX(-104%);transition:transform .25s ease;backdrop-filter:none;-webkit-backdrop-filter:none}
+#app.navopen>nav{transform:none}
+.navscrim{position:fixed;inset:0;z-index:65;background:rgba(3,10,22,.6);opacity:0;pointer-events:none;transition:opacity .2s}
+#app.navopen .navscrim{opacity:1;pointer-events:auto}
+#app>nav button{flex:none;flex-direction:row;justify-content:flex-start;gap:12px;min-height:44px;padding:10px 14px;font-size:14px;border-radius:11px;color:var(--ink2);overflow:visible}
+#app>nav button i{font-size:16px;width:20px;text-align:center}
+#app>nav button:hover{background:#12335a}
+#app>nav button.on{color:#fff;background:#1b4a80;box-shadow:inset 3px 0 0 #38bdf8}
+#app>nav button.on i{transform:none}
+.navsec{display:block;font-size:12px;color:var(--mut);font-weight:700;padding:14px 12px 4px}
+.navuser{display:flex;margin-top:auto}
+.pg-h{display:flex;justify-content:space-between;align-items:flex-start;gap:14px;flex-wrap:wrap}
+.pg-h h2{margin:0;font-size:26px}
+.pg-h p{margin:4px 0 0;color:#60a5fa;font-size:13.5px;max-width:60ch}
+.adt-wide{gap:14px}
+.adx-cols{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:12px;align-items:stretch}
+.adx-c{display:flex;gap:12px;align-items:flex-start;padding:12px;border:1px solid var(--line);border-radius:14px;background:#0d2038;min-width:0}
+.adx-c>i{color:#60a5fa;font-size:18px;margin-top:3px;width:22px;text-align:center}
+.adx-c small{display:block;color:var(--mut);font-size:12px}
+.adx-c b{display:block;font-size:15px}
+.adx-c p{margin:4px 0 0;font-size:12.5px;color:var(--ink2)}
+.adx-c.pv{flex-direction:column;gap:6px}
+.adx-c.pv .adt-prev{width:100%}
+.adt-prev.big{aspect-ratio:16/9}
+.adx-foot{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px}
+.adt-note{display:flex;gap:8px;align-items:center}
+.adt-note i{color:#60a5fa}
+@media(min-width:1000px){
+  #app{grid-template-columns:260px minmax(0,1fr);grid-template-areas:"hd hd" "nav main"}
+  header{padding:14px 28px 0}
+  header .dxname{font-size:25px}
+  .bc{width:calc(100% + 56px);margin:12px -28px 0;padding:9px 28px}
+  .menu-btn,.navscrim{display:none}
+  #app>nav{grid-area:nav;position:sticky;top:116px;bottom:auto;width:auto;margin:22px 0 0 20px;align-self:start;max-height:calc(100vh - 136px);
+    border-radius:18px;border-left:1px solid #1e3a5f;transform:none;box-shadow:var(--sh)}
+  main{padding:22px 28px 0}
+}
 </style>
 </head>
 <body>
@@ -785,16 +844,18 @@ code{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:11.5px;ba
 
 <div id="app" class="hide">
   <header>
+    <button class="icon-btn menu-btn" id="menubtn" aria-label="Menu"><i class="fa-solid fa-bars"></i></button>
     <div class="brandmark"><span><i class="fa-solid fa-warehouse"></i></span><div id="ttl">Beranda</div><b class="dxname">Bifetindo <em>WMS</em></b></div>
     <div style="display:flex;gap:8px;align-items:center;flex:none">
       <button class="lang-btn" id="langbtn2" aria-label="Language">
         <i class="fa-solid fa-globe"></i><span id="langcur2">ID</span>
       </button>
-      <button class="btn g s" id="out"><i class="fa-solid fa-right-from-bracket"></i><span data-i18n="logout">Keluar</span></button><span class="avatar dx" id="avt" aria-hidden="true">AD</span>
+      <button class="btn g s" id="out"><i class="fa-solid fa-right-from-bracket"></i><span data-i18n="logout">Keluar</span></button><span class="avatar" id="avt" aria-hidden="true">AD</span>
     </div>
-    <div class="bc" id="bc"></div>
+    <div class="bc" id="bc"><span id="bctxt"></span><span class="flags" id="flags"></span></div>
   </header>
   <main id="view"></main>
+  <div class="navscrim" id="navscrim"></div>
   <nav id="nav"></nav>
 </div>
 
@@ -1144,20 +1205,32 @@ const CATN=c=>({"Ready Stock":t("f.ready"),"Pre-Order":t("f.po"),"Jasa":t("f.svc
 
 function adTypes(){
   const biz=plan()=='bisnis';
-  const card=(cls,title,pill,prevAd,specs,price,type,locked)=>`<div class="adt ${cls}">
-    <div class="adt-h"><h3>${title}</h3><span class="adt-pill">${pill}</span></div>
-    <div class="adt-prev" aria-hidden="true"><i class="ln"></i><i class="ln b"></i><i class="ln c"></i>${prevAd}</div>
-    <ul class="adt-spec">${specs.map(([a,b])=>`<li><span>${a}</span><b>${b}</b></li>`).join('')}</ul>
-    <div class="adt-price">Rp ${price}<small> ${t('adt.day')}</small></div>
-    ${locked?`<button class="btn g s" data-go="langganan">${ic('crown')}${t('adt.need')}</button>`:`<button class="btn s" data-act="newad" data-type="${type}">${ic('plus')}${t('adt.use')}</button>`}
-  </div>`;
   const L='<i class="ad r"></i><i class="ad bt"></i>';
-  return `<div class="adt-grid">`+
-   card('adt-std',t('adt.std'),t('adt.cheap'),'<i class="ad"></i>',[[t('adt.size'),t('adt.small')],[t('adt.pos'),t('adt.bottom')]],'5.000','feed',false)+
-   card('gold',t('adt.gold'),t('adt.prem'),L,[[t('adt.size'),t('adt.big')],[t('adt.pos'),t('adt.rb')]],'25.000','3d',!biz)+
-   card('glass',t('adt.glass'),t('adt.prem'),L,[[t('adt.size'),t('adt.big')],[t('adt.pos'),t('adt.rb')]],'25.000','3d',!biz)+
-   `</div><p class="adt-note">${t('adt.note')}</p>`;
+  const spec=(a,b)=>`<li><span>${a}</span><b>${b}</b></li>`;
+  const sp=(cls,variant,prevAd)=>`<div class="adt ${cls}">
+    <div class="adt-h"><h3>${t('adx.special')}</h3><span class="adt-pill">${t('adx.premium')}</span></div>
+    <div class="mut" style="font-weight:700;color:var(--ink2)">${variant}</div>
+    <div class="adt-prev big" aria-hidden="true"><i class="ln"></i><i class="ln b"></i><i class="ln c"></i>${prevAd}</div>
+    <ul class="adt-spec">${spec(t('adt.size'),t('adt.big'))}${spec(t('adt.pos'),t('adt.rb'))}${spec(t('adt.price'),'Rp 25.000 '+t('adt.day'))}</ul>
+    ${biz?`<button class="btn s" data-act="newad" data-type="3d">${ic('plus')}${t('adt.use')}</button>`:`<button class="btn g s" data-go="langganan">${ic('crown')}${t('adt.need')}</button>`}
+  </div>`;
+  return `<div class="pg-h"><div><h2>${t('nav.ads')}</h2><p>${t('adx.sub')}</p></div><button class="btn s" data-act="newad">${ic('plus')}${t('ad.new')}</button></div>
+  <section class="adt adt-std adt-wide">
+    <div class="adt-h"><h3>${t('adt.std')}</h3><span class="adt-pill">${t('adt.cheap')}</span></div>
+    <div class="adx-cols">
+      <div class="adx-c">${ic('expand')}<div><small>${t('adt.size')}</small><b>${t('adt.small')}</b><p>${t('adx.s1')}</p></div></div>
+      <div class="adx-c">${ic('location-dot')}<div><small>${t('adt.pos')}</small><b>${t('adt.bottom')}</b><p>${t('adx.s2')}</p></div></div>
+      <div class="adx-c">${ic('money-bill-wave')}<div><small>${t('adt.price')}</small><b>Rp 5.000 ${t('adt.day')}</b></div></div>
+      <div class="adx-c pv"><div class="adt-prev" aria-hidden="true"><i class="ln"></i><i class="ln b"></i><i class="ln c"></i><i class="ad"></i></div><small>${t('adx.cap')}</small></div>
+    </div>
+    <button class="btn s" style="width:fit-content" data-act="newad" data-type="feed">${ic('plus')}${t('adt.use')}</button>
+  </section>
+  <div class="adt-grid">${sp('gold',t('adx.va'),L)}${sp('glass',t('adx.vb'),L)}</div>
+  <p class="adt-note">${ic('circle-info')} ${t('adx.hint')}</p>
+  <div class="adx-foot"><button class="btn g" data-act="adprev">${ic('eye')}${t('adx.prev')}</button><button class="btn g" data-go="langganan">${ic('wallet')}${t('adx.manage')}</button></div>`;
 }
+function adPrev(){const on=S.ads.filter(a=>a.end>Date.now());
+ sheet(`<h2>${t('adx.prev')}</h2>`+(on.length?on.map(a=>`<div class="card">${imgOk(a.img)?`<img src="${esc(cldImg(a.img,800))}" alt="" style="width:100%;max-height:160px;object-fit:cover;border-radius:12px;margin-bottom:10px">`:''}<b>${esc(a.t)}</b><div class="mut">${esc(a.d||'')}</div></div>`).join(''):`<div class="card">${empty('bullhorn',t('ad.none'))}</div>`)+`<button class="btn g" data-act="close">${t('f.cancel')}</button>`)}
 /* ======================= VIEWS ======================= */
 const V={
 home(){
@@ -1373,13 +1446,13 @@ function admUsersView(){
 function navHTML(){
   const it=[['home','house','nav.home',1],['wms','warehouse','nav.wms',1],['pasar','store','nav.market',1],['iklan','bullhorn','nav.ads',0],['lelang','gavel','nav.auction',0],['langganan','crown','nav.plans',1]];
   const it2=[['set','gear','nav.settings',0]];if(isAdmin())it2.push(['admin','user-shield','adm.title',0]);
-  const b=([k,i,l,m])=>`<button class="${k==tab?'on':''}${m?'':' dx'}" ${k=='wms'?'data-open="1"':'data-go="'+k+'"'}>${ic(i)}${t(l)}</button>`;
+  const b=([k,i,l,m])=>`<button class="${k==tab?'on':''}" ${k=='wms'?'data-open="1"':'data-go="'+k+'"'}>${ic(i)}${t(l)}</button>`;
   const ini=(user||'AD').split(' ').map(w=>w[0]||'').join('').slice(0,2).toUpperCase();
-  return it.map(b).join('')+'<div class="navsec dx">'+t('nav.group.set')+'</div>'+it2.map(b).join('')
-   +`<div class="navuser dx"><span class="avatar">${esc(ini)}</span><div><b>${esc(user||'')}</b><small>${esc(pname(plan()))}</small></div></div>`;
+  return it.map(b).join('')+'<div class="navsec">'+t('nav.group.set')+'</div>'+it2.map(b).join('')
+   +`<div class="navuser"><span class="avatar">${esc(ini)}</span><div><b>${esc(user||'')}</b><small>${esc(pname(plan()))}</small></div></div>`;
 }
 function render(){$('#ttl').textContent=t(T[tab]);$('#view').innerHTML=V[tab]();
- $('#nav').innerHTML=navHTML();$('#bc').innerHTML=tab=='home'?'<b>'+t('nav.home')+'</b>':t('nav.home')+' &bull; <b>'+t(T[tab])+'</b>';$('#avt').textContent=(user||'AD').split(' ').map(w=>w[0]||'').join('').slice(0,2).toUpperCase();scrollTo(0,0);if(tab=='home')homeMap()}
+ $('#nav').innerHTML=navHTML();$('#bctxt').innerHTML=tab=='home'?'<b>'+t('nav.home')+'</b>':t('nav.home')+' &bull; <b>'+t(T[tab])+'</b>';$('#flags').innerHTML=LANGS.map(l=>`<button class="flag${l.c===lang?' on':''}" data-lang="${l.c}" title="${l.n}" aria-label="${l.n}">${l.f}</button>`).join('');$('#app').classList.remove('navopen');$('#avt').textContent=(user||'AD').split(' ').map(w=>w[0]||'').join('').slice(0,2).toUpperCase();scrollTo(0,0);if(tab=='home')homeMap()}
 function go(k){tab=k;render()}
 function pmKill(){if(PM){try{PM.remove()}catch(e){}PM=null;PMK=null}}
 function sheet(h){pmKill();$('#sheetc').innerHTML=h;$('#sheet').classList.remove('hide')}
@@ -1410,6 +1483,15 @@ addT('dash.avail','Tersedia','Available');addT('dash.unit','unit','units');addT(
 addT('dash.noitem','Belum ada barang. Tambahkan produk pertama kamu di Pasar.','No products yet. Add your first product in Market.');
 addT('dash.add','Tambah barang','Add product');
 addT('nav.group.set','Pengaturan','Settings');
+
+addT('adx.sub','Pilih jenis iklan yang akan tampil di platform Bifetindo sesuai kebutuhan.','Choose which ad type appears on the Bifetindo platform.');
+addT('adx.special','Iklan khusus','Featured ad');addT('adx.premium','Khusus / Premium','Featured / Premium');
+addT('adx.va','Versi A: emas solid','Version A: solid gold');addT('adx.vb','Versi B: kaca transparan','Version B: clear glass');
+addT('adx.cap','Contoh tampilan','Preview');
+addT('adx.s1','Menampilkan banner kecil standar','Shows a small standard banner');
+addT('adx.s2','Ditampilkan di bagian bawah halaman','Shown at the bottom of the page');
+addT('adx.prev','Pratinjau iklan','Preview ads');addT('adx.manage','Kelola paket iklan','Manage ad plan');
+addT('adx.hint','Iklan khusus mendapat prioritas tayang lebih tinggi dan jangkauan lebih luas. Biaya ditagih per hari.','Featured ads get higher priority and wider reach. Billed per day.');
 addT('adt.std','Iklan biasa','Standard ad');
 addT('adt.gold','Iklan khusus: emas','Featured ad: gold');
 addT('adt.glass','Iklan khusus: kaca transparan','Featured ad: clear glass');
@@ -1737,7 +1819,7 @@ $('#panel-register').addEventListener('submit',e=>{e.preventDefault();authGo('re
 document.querySelectorAll('.auth-tab').forEach(b=>{b.onclick=()=>setAuthMode(b.dataset.mode)});
 $('#out').onclick=()=>auth&&auth.signOut();
 $('#langbtn').onclick=langSheet;
-$('#langbtn2').onclick=langSheet;
+$('#langbtn2').onclick=langSheet;$('#menubtn').onclick=()=>$('#app').classList.toggle('navopen');$('#navscrim').onclick=()=>$('#app').classList.remove('navopen');
 
 document.addEventListener('change',e=>{const g=e.target.dataset.tg;
  if(g)db.doc('users/'+uid).set({prof:{['t_'+g]:e.target.checked}},{merge:true}).catch(fe)});
@@ -1788,7 +1870,7 @@ document.addEventListener('click',e=>{const q=s=>e.target.closest(s);let x;
  if(x=q('[data-act]')){const a=x.dataset.act,v=id=>($('#'+id)||{}).value;
   if(a=='close')return closeSheet();
   if(a=='newitem')return itemForm();
-  if(a=='newad')return adForm(x.dataset.type);
+  if(a=='newad')return adForm(x.dataset.type);if(a=='adprev')return adPrev();
   if(a=='saveitem'){if(UPL)return toast(t('cl.wait'));if(!v('f1')||!(+v('f2')>0))return toast(t('t.fillnp'));if(S.items.length>=P().list)return toast(t('t.limitp'));
    const nit={n:v('f1'),p:+v('f2'),s:+v('f3')||0,c:v('f4'),owner:uid,ownerName:user,at:Date.now(),img:PIMG||''};
    const opt={wid:v('fw')||'auto',rack:+(v('fr')||-1),berat:+v('fb')>0?+v('fb'):1,nn:(v('fnn')||'').trim(),nr:Math.min(30,Math.max(1,Math.round(+v('fnr')||2)))};
